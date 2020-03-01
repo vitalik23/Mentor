@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentor", "Mentor\Mentor.csproj", "{48D94BFE-DE2C-42D7-940F-ED6904EF639E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48D94BFE-DE2C-42D7-940F-ED6904EF639E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48D94BFE-DE2C-42D7-940F-ED6904EF639E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48D94BFE-DE2C-42D7-940F-ED6904EF639E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48D94BFE-DE2C-42D7-940F-ED6904EF639E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B5BBE7D-1D01-47B0-97A6-5C21F338FABD}
+	EndGlobalSection
+EndGlobal
