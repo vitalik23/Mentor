@@ -11,11 +11,11 @@ namespace Mentor.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private DataBaseContext db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(DataBaseContext db)
         {
-            _logger = logger;
+            this.db = db;
         }
 
         public IActionResult Index()
@@ -23,15 +23,5 @@ namespace Mentor.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
