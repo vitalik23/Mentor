@@ -1,0 +1,15 @@
+﻿.navbar-brand img {
+    width: 50px;
+}
+
+.navbar-nav li{
+    padding-right:10px;
+}
+
+.nav-link{
+    font-size:1.0em !important;
+}
+
+#colorHeader{
+    background-color:black;
+}
