@@ -18,6 +18,7 @@ namespace Mentor.Controllers
             this.db = db;
         }
 
+        //Home page
         public IActionResult Index()
         {
             return View();
