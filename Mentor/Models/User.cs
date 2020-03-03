@@ -12,5 +12,6 @@ namespace Mentor.Models
         public string Patronymic { get; set; }
         public DateTime Birthday { get; set; }
         public DateTime RegistrationDate { get; set; }
+        public bool IsAccepted { get; set; }
     }
 }
