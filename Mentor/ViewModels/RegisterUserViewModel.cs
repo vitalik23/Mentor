@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace Mentor.ViewModels
 {
-    public abstract class RegisterUserViewModel
+    public class RegisterUserViewModel
     {
-
         public string Password { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }

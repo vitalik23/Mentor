@@ -25,7 +25,11 @@ namespace Mentor.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register(string whoIsRegistering) => View(whoIsRegistering);
+        public IActionResult Register(ChooseUserType chooseUserType) => View(chooseUserType);
+        
+        public IActionResult Register(string userType) => View(new ChooseUserType { UserType = userType});
+        
+
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterUserViewModel registerUserViewModel)
@@ -83,5 +87,14 @@ namespace Mentor.Controllers
             return View(registerUserViewModel);
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            // удаляем аутентификационные куки
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

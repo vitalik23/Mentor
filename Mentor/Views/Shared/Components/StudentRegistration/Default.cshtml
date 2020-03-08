@@ -1,0 +1,44 @@
+﻿@model Mentor.ViewModels.RegisterStudentViewModel
+
+<h2>Регистрация нового пользователя</h2>
+<form method="post" asp-controller="Account" asp-action="Register">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <input type="hidden" name="Birthday" value="" />
+    <input type="hidden" name="RegistrationDate" value="" />
+    <input type="hidden" name="IsAccepted" value="@false"
+
+    <div>
+        <label asp-for="Name"></label><br />
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    <div>
+        <label asp-for="Surname"></label><br />
+        <input asp-for="Surname" />
+        <span asp-validation-for="Surname"></span>
+    </div>
+
+    <div>
+        <label asp-for="Patronymic"></label><br />
+        <input asp-for="Patronymic" />
+        <span asp-validation-for="Patronymic"></span>
+    </div>
+
+    <div>
+        <label asp-for="Email"></label><br />
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    <div>
+        <label asp-for="Password"></label><br />
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <div>
+        <input type="submit" value="Регистрация" />
+    </div>
+</form>

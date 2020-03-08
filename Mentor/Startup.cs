@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mentor.Interfaces;
 using Mentor.Models;
+using Mentor.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +30,8 @@ namespace Mentor
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(connection));
+
+            services.AddTransient<IAuthentication, AuthenticationService>();
 
             services.AddIdentity<User, IdentityRole>(opts => {
                 //opts.Password.RequiredLength = 5;   // минимальная длина
