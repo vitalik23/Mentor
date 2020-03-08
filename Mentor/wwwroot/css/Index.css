@@ -1,8 +1,12 @@
-﻿body ,html{
-    width: 100%;
-    height:100%;
+﻿html {
+    height: 100%;
 }
 
+body { 
+    height: 100%; /* Высота страницы */
+    background-size: cover; /* Фон занимает всю доступную площадь */
+}
+/*Slider*/
 .carousel-inner{
     height: 500px;
 }
@@ -10,4 +14,44 @@
 .carousel-inner img {
     width: 100%;
     height: 100%;
+}
+/*Content*/
+table {
+    
+    width: 100%;    
+}
+
+/*td, th {
+
+    padding: 3px;
+    border: 1px solid black; 
+}
+th {
+    background: #b0e0e6; 
+}
+*/
+#left {    
+    width: 70%;
+    vertical-align: top;
+}
+#right {
+    width: 30%;
+    vertical-align: top;
+}
+
+#calendar {
+    margin-top:20px;
+    color: #0040FF;
+    font-family: Courier, monospace;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.calendarClass{
+    margin-left:20px;
+}
+
+#newsSite {
+    margin-top: 20px;
+    font-size: 24px;
 }

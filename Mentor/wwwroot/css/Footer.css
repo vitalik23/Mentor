@@ -1,0 +1,32 @@
+﻿body {
+}
+#footer {
+    background: #2E64FE;
+    height: auto;
+}
+
+#sizeTd{
+    height:auto;
+    width:33%;
+}
+
+#who {
+    padding-top:0;
+    font-size: 23px;
+    color: white;
+    font-family: Times, Times New Roman, serif;
+    font-weight: 100;
+}
+#kindText {
+    padding-left:20px;
+    font-size: 14px;
+    color: white;
+    font-family: Times, Times New Roman, serif;
+    font-weight: 100;
+}
+#crazydiv {
+    font-size: 18px;
+    color: white;
+    font-family: Times, Times New Roman, serif;
+    font-weight: 100;
+}

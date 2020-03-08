@@ -1,4 +1,7 @@
-﻿.navbar-brand img {
+﻿#header {
+    background-color: #2E64FE;
+}
+.navbar-brand img {
     width: 50px;
 }
 
@@ -8,9 +11,5 @@
 
 .nav-link{
     font-size:1.1em !important;
-}
-
-#colorHeader{
-    background-color:black;
 }
 

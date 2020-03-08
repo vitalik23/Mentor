@@ -6,14 +6,17 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/Header.css" />
     <link rel="stylesheet" href="~/css/Index.css" />
+    <link rel="stylesheet" href="~/css/Calendar.css" />
+    <link rel="stylesheet" href="~/css/Footer.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
-            <div class="container-fluid" >
-                <a href="/" class="navbar-brand"><img src="~/img/загружено.png" id="logo" /></a>
+        <nav class="navbar navbar-expand-md navbar-light bg- sticky-top" id="header">
+            <div class="container-fluid">
+                <a href="~/Home/Index.cshtml" class="navbar-brand"><img src="~/img/загружено.png" id="logo" /></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarResponsive">
                     <span class="navbar-toggler-icon"></span>
@@ -21,31 +24,58 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <button id="btn-login" class="btn btn-outline-success" type="button">Вход</button>
+                            <button type="button" class="btn btn-danger">Вход</button>
                         </li>
-                        <li class="nav-item">
+                        @*<li class="nav-item">
+                            <button type="button" class="btn btn-warning">Регистрация</button>
                             <button class="btn btn-outline-success my-2 my-sm-0 ml-1" type="button">Регистрация</button>
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-   
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - Mentor
-        </div>
-    </footer>
+    @RenderBody()
+
+
+<footer id="footer">
+    <table>
+        <tr>
+            <td id="sizeTd">
+                <p id="who">Учителям</p>
+                <div id="infoFoot">
+                    <a href=""><p id="kindText">Добавить курс</p></a>
+                    <a href=""><p id="kindText">Повышение квалификации</p></a>
+                    <a href=""><p id="kindText">Мероприятия</p></a>
+                </div>
+            </td>
+            <td id="sizeTd">
+                <p id="who">Студентам</p>
+                <div id="infoFoot">
+                    <a href=""><p id="kindText">Курсы</p></a>
+                    <a href=""><p id="kindText">Журнал оценнок</p></a>
+                    <a href=""><p id="kindText">Новости</p></a>
+                    <a href=""><p id="kindText">Тесты</p></a>
+                    <a href=""><p id="kindText">Трудоустройство</p></a>
+                </div>
+            </td>
+            <td id="sizeTd">
+                <p id="who">Администратору</p>
+                <div id="infoFoot">
+                    <a href=""><p id="kindText">Добавить новости</p></a>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+    &copy; 2020 - CrazyDev
+</footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/Calendar.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
