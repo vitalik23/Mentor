@@ -31,7 +31,7 @@ namespace Mentor.Controllers
         [HttpGet]
         public IActionResult StudentRegister() {
 
-            RegisterStudentViewModel model = new RegisterStudentViewModel { Groups = _databaseWorker.GetAllGroups()};
+            RegisterStudentViewModel model = new RegisterStudentViewModel { Groups = _databaseWorker.GetAllGroups(), Name = "bobik"};
             return View(model);
         }
         [HttpGet]
@@ -81,7 +81,7 @@ namespace Mentor.Controllers
         [HttpPost]
         public async Task<IActionResult> StudentRegister(RegisterStudentViewModel registerUserViewModel)
         {
-
+            //Console.WriteLine("GroupId " + registerUserViewModel.GroupId);
             if (ModelState.IsValid)
             {
 

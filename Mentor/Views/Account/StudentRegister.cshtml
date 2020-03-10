@@ -46,7 +46,13 @@
 
     <div>
         <label asp-for="GroupId"></label><br />
-        <input asp-for="GroupId" />
+        <select name="GroupId">
+            <option selected="selected">Выбирите факультет</option>
+            @foreach (var group in Model.Groups)
+            {
+                <option asp-for="GroupId">group.Name</option>
+            }
+        </select>
         <span asp-validation-for="GroupId"></span>
     </div>
 
