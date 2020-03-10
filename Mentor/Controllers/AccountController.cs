@@ -25,58 +25,86 @@ namespace Mentor.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register(ChooseUserType chooseUserType) => View(chooseUserType);
-        
-        public IActionResult Register(string userType) => View(new ChooseUserType { UserType = userType});
-        
+        public IActionResult ChooseUserType() => View();
 
+
+        public IActionResult StudentRegister() => View();
+        public IActionResult TeacherRegister() => View();
+
+        [HttpGet]
+        public IActionResult Login(string returnUrl = null)
+        {
+            return View(new LoginUserViewModel { ReturnUrl = returnUrl });
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterUserViewModel registerUserViewModel)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginUserViewModel model)
         {
             if (ModelState.IsValid)
             {
+             
+                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    // проверяем, принадлежит ли URL приложению
+                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                    {
+                        return Redirect(model.ReturnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                }
+            }
 
-                User user = new User { 
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> StudentRegister(RegisterStudentViewModel registerUserViewModel)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                Console.WriteLine("is valid");
+
+                User user = new User
+                {
                     Email = registerUserViewModel.Email,
                     UserName = registerUserViewModel.Email,
+                    Name     = registerUserViewModel.Name,
                     Surname = registerUserViewModel.Surname,
-                    Birthday = registerUserViewModel.Birthday,
+                    RegistrationDate = DateTime.Now,
+                    //      Birthday = registerUserViewModel.Birthday,
                     IsAccepted = false
                 };
-                
+
+
                 // добавляем пользователя
                 var result = await this.userManager.CreateAsync(user, registerUserViewModel.Password);
                 if (result.Succeeded)
                 {
                     // установка куки
+
                     await this.signInManager.SignInAsync(user, false);
 
-                    User us = await userManager.FindByEmailAsync(user.Email);
-
-                    if (registerUserViewModel is RegisterStudentViewModel)
-                    {
-                        RegisterStudentViewModel rsvm = (RegisterStudentViewModel) registerUserViewModel;
-                        this.authentication.ConnectStudentToUser(us.Id, rsvm.GroupId);
-
-                    }
-                    else if (registerUserViewModel is RegisterTeacherViewModel)
-                    {
-                        RegisterTeacherViewModel rtvm = (RegisterTeacherViewModel) registerUserViewModel;
-
-
-                    }
-                    else
-                    { 
-                     /// error
-                    }
+                    Console.WriteLine(" Succeeded");
 
                     return RedirectToAction("Index", "Home");
+                    //   User us = await userManager.FindByEmailAsync(user.Email);
+
 
                 }
                 else
                 {
-
+                    Console.WriteLine(" not Succeeded");
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
@@ -84,7 +112,60 @@ namespace Mentor.Controllers
                 }
             }
 
+            Console.WriteLine("is not valid");
+
             return View(registerUserViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> TeacherRegister(RegisterTeacherViewModel registerUserViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+
+                Console.WriteLine("is valid");
+
+                User user = new User
+                {
+                    Email = registerUserViewModel.Email,
+                    UserName = registerUserViewModel.Email,
+                    Name = registerUserViewModel.Name,
+                    Surname = registerUserViewModel.Surname,
+                    RegistrationDate = DateTime.Now,
+                    //      Birthday = registerUserViewModel.Birthday,
+                    IsAccepted = false
+                };
+                
+
+                // добавляем пользователя
+                var result = await this.userManager.CreateAsync(user, registerUserViewModel.Password);
+                if (result.Succeeded)
+                {
+                    // установка куки
+
+                    await this.signInManager.SignInAsync(user, false);
+
+                    Console.WriteLine(" Succeeded");
+
+                    return RedirectToAction("Index", "Home");
+                    //   User us = await userManager.FindByEmailAsync(user.Email);
+
+
+                }
+
+                else
+                {
+                    Console.WriteLine(" not Succeeded");
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+
+            Console.WriteLine("is not valid");
+            return View(registerUserViewModel);
+
         }
 
 

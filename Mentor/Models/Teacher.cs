@@ -10,7 +10,7 @@ namespace Mentor.Models
         public int Id { get; set; }
         public int DepartamentId { get; set; }
         public int PositionId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public bool IsAdmin { get; set; }
         public virtual Departament Departament { get; set; }
         public virtual User User { get; set; }

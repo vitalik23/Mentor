@@ -1,12 +1,12 @@
 ﻿@model Mentor.ViewModels.RegisterStudentViewModel
 
 <h2>Регистрация нового пользователя</h2>
-<form method="post" asp-controller="Account" asp-action="Register">
+<form method="post" asp-controller="Account" asp-action="StudentRegister">
     <div asp-validation-summary="ModelOnly"></div>
 
-    <input type="hidden" name="Birthday" value="" />
-    <input type="hidden" name="RegistrationDate" value="" />
-    <input type="hidden" name="IsAccepted" value="@false"
+    @*<input type="hidden" name="Birthday" value="" />
+        <input type="hidden" name="RegistrationDate" value="" />
+        <input type="hidden" name="IsAccepted" value="@false"*@
 
     <div>
         <label asp-for="Name"></label><br />
@@ -30,6 +30,12 @@
         <label asp-for="Email"></label><br />
         <input asp-for="Email" />
         <span asp-validation-for="Email"></span>
+    </div>
+
+    <div>
+        <label asp-for="PhoneNumber"></label><br />
+        <input asp-for="PhoneNumber" />
+        <span asp-validation-for="PhoneNumber"></span>
     </div>
 
     <div>

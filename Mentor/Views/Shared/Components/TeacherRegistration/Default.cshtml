@@ -1,4 +1,4 @@
-﻿@model Mentor.ViewModels.RegisterStudentViewModel
+﻿@model Mentor.ViewModels.RegisterTeacherViewModel
 
 <h2>Регистрация нового пользователя</h2>
 <form method="post" asp-controller="Account" asp-action="Register">
@@ -39,9 +39,15 @@
     </div>
 
     <div>
-        <label asp-for="GroupId"></label><br />
-        <input asp-for="GroupId" />
-        <span asp-validation-for="GroupId"></span>
+        <label asp-for="DepartmentId"></label><br />
+        <input asp-for="DepartmentId" />
+        <span asp-validation-for="DepartmentId"></span>
+    </div>
+
+    <div>
+        <label asp-for="PositionId"></label><br />
+        <input asp-for="PositionId" />
+        <span asp-validation-for="PositionId"></span>
     </div>
 
     <div>
