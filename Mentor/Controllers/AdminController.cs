@@ -31,5 +31,28 @@ namespace Mentor.Controllers
 
             return View(allUsers);
         }
+
+        //[HttpGet]
+        //public IActionResult DeleteUser(string? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return View("Users");
+        //    }
+        //    var user = _databaseWorker.GetUsers()
+        //        .FirstOrDefault(u => u.Id == id);
+
+        //    return View(user);
+        //}
+
+        //[HttpPost, ActionName("DeleteUser")]
+        //public RedirectToActionResult DeleteConfirmed(string id)
+        //{
+        //    var user = _databaseWorker.GetUsers().FirstOrDefault(u => u.Id == id);
+        //    _dataBaseContext.Remove(user);
+        //    _dataBaseContext.SaveChanges();
+        //    return RedirectToAction("Users");
+            
+        //}
     }
 }
