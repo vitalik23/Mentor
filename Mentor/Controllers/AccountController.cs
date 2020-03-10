@@ -243,8 +243,7 @@ namespace Mentor.Controllers
             return View(registerUserViewModel);
 
         }
-
-
+         
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
