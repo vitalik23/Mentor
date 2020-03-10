@@ -5,6 +5,8 @@
 @{using (Html.BeginForm("TeacherRegister", "Account", FormMethod.Post))
     {
 
+        <div asp-validation-summary="ModelOnly"></div>
+
         <div>
             <label asp-for="Name"></label><br />
             <input asp-for="Name" />

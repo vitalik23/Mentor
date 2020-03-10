@@ -16,14 +16,13 @@ namespace Mentor.Controllers
 
         private IAuthentication _authentication;
         private IDatabaseWorker _databaseWorker;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
 
-        public AccountController(IAuthentication authentication, IDatabaseWorker databaseWorker, UserManager<User> userManager, SignInManager<User> signInManager) 
+        private readonly UserManager<User> _userManager;
+
+        public AccountController(IAuthentication authentication, IDatabaseWorker databaseWorker, UserManager<User> userManager) 
         {
             _authentication = authentication;
             _userManager =    userManager;
-            _signInManager =  signInManager;
             _databaseWorker = databaseWorker;
         }
 
@@ -93,8 +92,8 @@ namespace Mentor.Controllers
         {
             if (ModelState.IsValid)
             {
-             
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
+                Microsoft.AspNetCore.Identity.SignInResult result = await _authentication.SignInAsync(model);
                 if (result.Succeeded)
                 {
                     // проверяем, принадлежит ли URL приложению
@@ -125,67 +124,45 @@ namespace Mentor.Controllers
 
             registerUserViewModel.GroupItems = populateGroups();
 
-         /*   var selectedItem = registerUserViewModel.GroupItems.Find(p => p.Value == registerUserViewModel.GroupId.ToString());
-            if (selectedItem != null)
+            if (_databaseWorker.GroupExists(registerUserViewModel.GroupId))
             {
-                selectedItem.Selected = true;
-                ViewBag.Message = "Group: " + selectedItem.Text;
-                ViewBag.Message += "\\nGroup id: " + registerUserViewModel.GroupId;
-            }*/
+                if (ModelState.IsValid)
+                {
+                    IdentityResult result = await _authentication.CreateUserAsync(registerUserViewModel);
 
+                    if (result.Succeeded)
+                    {
+                        User user = await _authentication.FindUserByEmail(registerUserViewModel.Email);
+                        if (!_authentication.CreateStudentUser(user.Id, registerUserViewModel.GroupId))
+                        {
+                            await _authentication.DeleteUserAsync(user);
+                            return View(registerUserViewModel);
+                        }
 
-           if (ModelState.IsValid)
-           {
+                        // установка куки
+                        await _authentication.SignInAsync(user);
+                        return RedirectToAction("Index", "Home");
 
-               Console.WriteLine("is valid");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
 
-               User user = new User
-               {
-                   Email = registerUserViewModel.Email,
-                   UserName = registerUserViewModel.Email,
-                   Name     = registerUserViewModel.Name,
-                   Surname = registerUserViewModel.Surname,
-                   RegistrationDate = DateTime.Now,
-                   //      Birthday = registerUserViewModel.Birthday,
-                   IsAccepted = false
-               };
+                }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Choosen Group does not exists!");
+            }
+           
 
-               // добавляем пользователя
-               var result = await _userManager.CreateAsync(user, registerUserViewModel.Password);
-               if (result.Succeeded)
-               {
-                   User us = await _userManager.FindByEmailAsync(user.Email);
-                   if (!_authentication.CreateStudentUser(us.Id, registerUserViewModel.GroupId)) {
+            Console.WriteLine("is not valid or upper else group does not exists!");
 
-                       IdentityResult identityResult = await _userManager.DeleteAsync(us);
-                       ModelState.AddModelError(string.Empty, "Choosen group does not exists");
-
-                       return View(registerUserViewModel);
-                   }
-
-                   // установка куки
-                   await _signInManager.SignInAsync(user, false);
-
-                   Console.WriteLine(" Succeeded");
-
-                   return RedirectToAction("Index", "Home");
-                   
-
-
-               }
-               else
-               {
-                   Console.WriteLine(" not Succeeded");
-                   foreach (var error in result.Errors)
-                   {
-                       ModelState.AddModelError(string.Empty, error.Description);
-                   }
-               }
-           }
-
-           Console.WriteLine("is not valid");
-
-           return View(registerUserViewModel);
+            return View(registerUserViewModel);
         }
 
         [HttpPost]
@@ -221,7 +198,7 @@ namespace Mentor.Controllers
                     _authentication.CreateTeacherUser(us.Id, registerUserViewModel.DepartmentId, registerUserViewModel.PositionId);
 
                     // установка куки
-                    await _signInManager.SignInAsync(user, false);
+                    await _authentication.SignInAsync(user);
 
                     Console.WriteLine(" Succeeded");
 
@@ -249,7 +226,7 @@ namespace Mentor.Controllers
         public async Task<IActionResult> Logout()
         {
             // удаляем аутентификационные куки
-            await _signInManager.SignOutAsync();
+            await _authentication.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }

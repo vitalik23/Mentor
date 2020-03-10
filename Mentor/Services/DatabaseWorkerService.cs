@@ -16,18 +16,25 @@ namespace Mentor.Services
             _dataBaseContext = dataBaseContext;
         }
 
-        public void DeleteUser(User user)
+        public bool DepartmentExists(int departmentId)
         {
-            var delUser = new User
-            {
-                
-            }
+            return _dataBaseContext.Departament.FirstOrDefault(p => p.Id == departmentId) != null;
         }
+        public bool GroupExists(int groupId)
+        {
+            return _dataBaseContext.Group.FirstOrDefault(p => p.Id == groupId) != null;
+        }
+        public bool PositionExists(int positionId)
+        {
+            return _dataBaseContext.Position.FirstOrDefault(p => p.Id == positionId) != null;
+        }
+
 
         public IEnumerable<Department> GetAllDepartments() => _dataBaseContext.Departament;
         public IEnumerable<Group> GetAllGroups() => _dataBaseContext.Group;
         public IEnumerable<Position> GetAllPositions() => _dataBaseContext.Position;
         public IEnumerable<User> GetUsers() => _dataBaseContext.Users;
 
+        
     }
 }

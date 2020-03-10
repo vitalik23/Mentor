@@ -1,8 +1,11 @@
 ﻿@model Mentor.ViewModels.RegisterStudentViewModel
+
 <h2>Регистрация студента</h2>
- 
+
 @{using (Html.BeginForm("StudentRegister", "Account", FormMethod.Post))
     {
+
+        <div asp-validation-summary="ModelOnly"></div>
 
         <div>
             <label asp-for="Name"></label><br />
@@ -41,7 +44,6 @@
         </div>
 
         @Html.DropDownListFor(m => m.GroupId, Model.GroupItems, "Please select", new { @class = "form-control" });
-
 
         <input type="submit" value="Регистрация" />
     }

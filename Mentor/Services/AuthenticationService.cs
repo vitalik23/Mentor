@@ -1,5 +1,7 @@
 ﻿using Mentor.Interfaces;
 using Mentor.Models;
+using Mentor.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -12,9 +14,13 @@ namespace Mentor.Services
     {
 
         private readonly DataBaseContext _dataBaseContext;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public AuthenticationService(DataBaseContext dataBaseContext) {
+        public AuthenticationService(DataBaseContext dataBaseContext, UserManager<User> userManager, SignInManager<User> signInManager) {
             _dataBaseContext = dataBaseContext;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public bool CreateStudentUser(string userId, int groupId)
@@ -61,6 +67,58 @@ namespace Mentor.Services
                 return true;
             }
 
+        }
+
+        public async Task<IdentityResult> CreateUserAsync(RegisterUserViewModel model)
+        {
+            User user = new User
+            {
+                Email = model.Email,
+                UserName = model.Email,
+                Name = model.Name,
+                Surname = model.Surname,
+                RegistrationDate = DateTime.Now,
+                IsAccepted = false
+            };
+
+            // добавляем пользователя
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            return result;
+        }
+
+        public async System.Threading.Tasks.Task DeleteUserAsync(string userId)
+        {
+            User user = await _userManager.FindByIdAsync(userId);
+
+            if (user != null)
+            {
+                IdentityResult result = await _userManager.DeleteAsync(user);
+            }
+        }
+
+        public async System.Threading.Tasks.Task DeleteUserAsync(User user) {
+            await _userManager.DeleteAsync(user);
+        }
+
+        public async Task<User> FindUserByEmail(string email)
+        {
+            return await _userManager.FindByEmailAsync(email);
+        }
+
+        public async System.Threading.Tasks.Task SignInAsync(User user)
+        {
+            await _signInManager.SignInAsync(user, false);
+        }
+
+        public async Task<SignInResult> SignInAsync(LoginUserViewModel model)
+        {
+            SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+            return result;
+        }
+
+        public async System.Threading.Tasks.Task SignOutAsync()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }

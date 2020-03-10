@@ -6,6 +6,7 @@ using Mentor.Interfaces;
 using Mentor.Models;
 using Mentor.ViewModels;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mentor.Controllers
@@ -14,9 +15,11 @@ namespace Mentor.Controllers
     {
 
         private IDatabaseWorker _databaseWorker;
+        private IAuthentication _authentication;
 
-        public AdminController(IDatabaseWorker databaseWorker)
+        public AdminController(IAuthentication authentication, IDatabaseWorker databaseWorker)
         {
+            _authentication = authentication;
             _databaseWorker = databaseWorker;
         }
 
@@ -26,33 +29,20 @@ namespace Mentor.Controllers
             IEnumerable<User> users = _databaseWorker.GetUsers();
             var allUsers = new UsersViewModel
             {
-                GetAllUsers = users
+                AllUsers = users
             };
 
             return View(allUsers);
         }
 
-        //[HttpGet]
-        //public IActionResult DeleteUser(string? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return View("Users");
-        //    }
-        //    var user = _databaseWorker.GetUsers()
-        //        .FirstOrDefault(u => u.Id == id);
+        [HttpGet]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            if (id != null) {
+                await _authentication.DeleteUserAsync(id);
+            }
 
-        //    return View(user);
-        //}
-
-        //[HttpPost, ActionName("DeleteUser")]
-        //public RedirectToActionResult DeleteConfirmed(string id)
-        //{
-        //    var user = _databaseWorker.GetUsers().FirstOrDefault(u => u.Id == id);
-        //    _dataBaseContext.Remove(user);
-        //    _dataBaseContext.SaveChanges();
-        //    return RedirectToAction("Users");
-            
-        //}
+            return RedirectToAction("Users");
+        }
     }
 }

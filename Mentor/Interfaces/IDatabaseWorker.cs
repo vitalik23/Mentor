@@ -9,10 +9,14 @@ namespace Mentor.Interfaces
     public interface IDatabaseWorker
     {
 
-        public IEnumerable<Group> GetAllGroups();
-        public IEnumerable<Department> GetAllDepartments();
-        public IEnumerable<Position> GetAllPositions();
-        public IEnumerable<User> GetUsers();
+        IEnumerable<Group> GetAllGroups();
+        IEnumerable<Department> GetAllDepartments();
+        IEnumerable<Position> GetAllPositions();
+        IEnumerable<User> GetUsers();
+        bool GroupExists(int groupId);
+        bool DepartmentExists(int departmentId);
+        bool PositionExists(int positionId);
+
 
     }
 }

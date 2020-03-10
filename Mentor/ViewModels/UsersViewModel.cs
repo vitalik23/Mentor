@@ -8,6 +8,6 @@ namespace Mentor.ViewModels
 {
     public class UsersViewModel
     {
-        public IEnumerable<User> GetAllUsers { get; set; }
+        public IEnumerable<User> AllUsers { get; set; }
     }
 }

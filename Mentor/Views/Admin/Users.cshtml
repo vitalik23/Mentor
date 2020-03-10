@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (User user in Model.GetAllUsers)
+        @foreach (User user in Model.AllUsers)
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => user.Surname)</td>
