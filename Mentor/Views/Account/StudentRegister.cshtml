@@ -1,64 +1,48 @@
 ﻿@model Mentor.ViewModels.RegisterStudentViewModel
+<h2>Регистрация студента</h2>
+ 
+@{using (Html.BeginForm("StudentRegister", "Account", FormMethod.Post))
+    {
 
-<h2>Регистрация нового пользователя</h2>
-<form method="post" asp-controller="Account" asp-action="StudentRegister">
-    <div asp-validation-summary="ModelOnly"></div>
+        <div>
+            <label asp-for="Name"></label><br />
+            <input asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
 
-    @*<input type="hidden" name="Birthday" value="" />
-        <input type="hidden" name="RegistrationDate" value="" />
-        <input type="hidden" name="IsAccepted" value="@false"*@
+        <div>
+            <label asp-for="Surname"></label><br />
+            <input asp-for="Surname" />
+            <span asp-validation-for="Surname"></span>
+        </div>
 
-    <div>
-        <label asp-for="Name"></label><br />
-        <input asp-for="Name" />
-        <span asp-validation-for="Name"></span>
-    </div>
+        <div>
+            <label asp-for="Patronymic"></label><br />
+            <input asp-for="Patronymic" />
+            <span asp-validation-for="Patronymic"></span>
+        </div>
 
-    <div>
-        <label asp-for="Surname"></label><br />
-        <input asp-for="Surname" />
-        <span asp-validation-for="Surname"></span>
-    </div>
+        <div>
+            <label asp-for="Email"></label><br />
+            <input asp-for="Email" />
+            <span asp-validation-for="Email"></span>
+        </div>
 
-    <div>
-        <label asp-for="Patronymic"></label><br />
-        <input asp-for="Patronymic" />
-        <span asp-validation-for="Patronymic"></span>
-    </div>
+        <div>
+            <label asp-for="PhoneNumber"></label><br />
+            <input asp-for="PhoneNumber" />
+            <span asp-validation-for="PhoneNumber"></span>
+        </div>
 
-    <div>
-        <label asp-for="Email"></label><br />
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
-    </div>
+        <div>
+            <label asp-for="Password"></label><br />
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
 
-    <div>
-        <label asp-for="PhoneNumber"></label><br />
-        <input asp-for="PhoneNumber" />
-        <span asp-validation-for="PhoneNumber"></span>
-    </div>
-
-    <div>
-        <label asp-for="Password"></label><br />
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-
-    <div>
-        <label asp-for="GroupId"></label><br />
-        <select name="GroupId">
-            <option selected="selected">Выбирите факультет</option>
-            @foreach (var group in Model.Groups)
-            {
-                <option asp-for="GroupId">group.Name</option>
-            }
-        </select>
-        <span asp-validation-for="GroupId"></span>
-    </div>
+        @Html.DropDownListFor(m => m.GroupId, Model.GroupItems, "Please select", new { @class = "form-control" });
 
 
-
-    <div>
         <input type="submit" value="Регистрация" />
-    </div>
-</form>
+    }
+}

@@ -1,59 +1,50 @@
 ﻿@model Mentor.ViewModels.RegisterTeacherViewModel
 
 <h2>Регистрация преподавателя</h2>
-<form method="post" asp-controller="Account" asp-action="TeacherRegister">
-    <div asp-validation-summary="ModelOnly"></div>
 
-    <div>
-        <label asp-for="Name"></label><br />
-        <input asp-for="Name" />
-        <span asp-validation-for="Name"></span>
-    </div>
+@{using (Html.BeginForm("TeacherRegister", "Account", FormMethod.Post))
+    {
 
-    <div>
-        <label asp-for="Surname"></label><br />
-        <input asp-for="Surname" />
-        <span asp-validation-for="Surname"></span>
-    </div>
+        <div>
+            <label asp-for="Name"></label><br />
+            <input asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
 
-    <div>
-        <label asp-for="Patronymic"></label><br />
-        <input asp-for="Patronymic" />
-        <span asp-validation-for="Patronymic"></span>
-    </div>
+        <div>
+            <label asp-for="Surname"></label><br />
+            <input asp-for="Surname" />
+            <span asp-validation-for="Surname"></span>
+        </div>
 
-    <div>
-        <label asp-for="Email"></label><br />
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
-    </div>
+        <div>
+            <label asp-for="Patronymic"></label><br />
+            <input asp-for="Patronymic" />
+            <span asp-validation-for="Patronymic"></span>
+        </div>
 
-    <div>
-        <label asp-for="PhoneNumber"></label><br />
-        <input asp-for="PhoneNumber" />
-        <span asp-validation-for="PhoneNumber"></span>
-    </div>
+        <div>
+            <label asp-for="Email"></label><br />
+            <input asp-for="Email" />
+            <span asp-validation-for="Email"></span>
+        </div>
 
-    <div>
-        <label asp-for="Password"></label><br />
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-    </div>
+        <div>
+            <label asp-for="PhoneNumber"></label><br />
+            <input asp-for="PhoneNumber" />
+            <span asp-validation-for="PhoneNumber"></span>
+        </div>
 
-    <div>
-        <label asp-for="DepartmentId"></label><br />
-        <input asp-for="DepartmentId" />
-        <span asp-validation-for="DepartmentId"></span>
-    </div>
+        <div>
+            <label asp-for="Password"></label><br />
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
 
-    <div>
-        <label asp-for="PositionId"></label><br />
-        <input asp-for="PositionId" />
-        <span asp-validation-for="PositionId"></span>
-    </div>
+        @Html.DropDownListFor(m => m.DepartmentId, Model.DeparmentItems, "Please select department", new { @class = "form-control" });
+        @Html.DropDownListFor(m => m.PositionId, Model.PositionItems, "Please select position", new { @class = "form-control" });
 
-    <div>
         <input type="submit" value="Регистрация" />
-    </div>
-</form>
+    }
+}
 
