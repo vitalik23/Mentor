@@ -19,5 +19,6 @@ namespace Mentor.Services
         public IEnumerable<Department> GetAllDepartments() => _dataBaseContext.Departament;
         public IEnumerable<Group> GetAllGroups() => _dataBaseContext.Group;
         public IEnumerable<Position> GetAllPositions() => _dataBaseContext.Position;
+        public IEnumerable<User> GetUsers() => _dataBaseContext.Users;
     }
 }

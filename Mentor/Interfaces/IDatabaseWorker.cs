@@ -12,6 +12,7 @@ namespace Mentor.Interfaces
         public IEnumerable<Group> GetAllGroups();
         public IEnumerable<Department> GetAllDepartments();
         public IEnumerable<Position> GetAllPositions();
+        public IEnumerable<User> GetUsers();
 
     }
 }

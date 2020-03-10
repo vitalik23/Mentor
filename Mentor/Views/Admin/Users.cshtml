@@ -1,0 +1,36 @@
+﻿@model UsersViewModel;
+
+@{ 
+    Layout = "_LayoutForAdmin";
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Потдтвержден ?!</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (User user in Model.GetAllUsers)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => user.Surname)</td>
+                <td>@Html.DisplayFor(modelItem => user.Name)</td>
+                <td>@Html.DisplayFor(modelItem => user.Patronymic)</td>
+                <td>@Html.DisplayFor(modelItem => user.IsAccepted)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@user.Id">Редактировать</a> |
+                    <a asp-action="Details" asp-route-id="@user.Id">Детали</a> |
+                    <a asp-action="Delete" asp-route-id="@user.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
