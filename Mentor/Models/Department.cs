@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Mentor.Models
 {
-    public class Departament
+    public class Department
     {
         public int Id { get; set; }
         public string Name { get; set; }

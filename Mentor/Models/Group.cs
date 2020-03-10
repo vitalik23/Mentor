@@ -11,7 +11,7 @@ namespace Mentor.Models
         public string Name { get; set; }
         public int DepartamentId { get; set; }
 
-        public virtual Departament Departament { get; set; }
+        public virtual Department Departament { get; set; }
 
 
     }

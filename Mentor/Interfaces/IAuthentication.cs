@@ -7,7 +7,7 @@ namespace Mentor.Interfaces
 {
     public interface IAuthentication
     {
-        void ConnectTeacherToUser(string userId, int departmentId);
-        void ConnectStudentToUser(string userId, int groupId);
+        bool CreateTeacherUser(string userId, int departmentId, int positionId);
+        bool CreateStudentUser(string userId, int groupId);
     }
 }

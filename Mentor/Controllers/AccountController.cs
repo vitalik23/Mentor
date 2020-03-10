@@ -13,22 +13,22 @@ namespace Mentor.Controllers
     public class AccountController : Controller
     {
 
-        private IAuthentication authentication;
-        private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
+        private IAuthentication _authentication;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
         public AccountController(IAuthentication authentication, UserManager<User> userManager, SignInManager<User> signInManager) 
         {
-            this.authentication = authentication;
-            this.userManager    =    userManager;
-            this.signInManager  =  signInManager;
+            _authentication = authentication;
+            _userManager =    userManager;
+            _signInManager =  signInManager;
         }
 
         [HttpGet]
         public IActionResult ChooseUserType() => View();
-
-
+        [HttpGet]
         public IActionResult StudentRegister() => View();
+        [HttpGet]
         public IActionResult TeacherRegister() => View();
 
         [HttpGet]
@@ -44,7 +44,7 @@ namespace Mentor.Controllers
             if (ModelState.IsValid)
             {
              
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
                     // проверяем, принадлежит ли URL приложению
@@ -88,17 +88,25 @@ namespace Mentor.Controllers
 
 
                 // добавляем пользователя
-                var result = await this.userManager.CreateAsync(user, registerUserViewModel.Password);
+                var result = await _userManager.CreateAsync(user, registerUserViewModel.Password);
                 if (result.Succeeded)
                 {
-                    // установка куки
+                    User us = await _userManager.FindByEmailAsync(user.Email);
+                    if (!_authentication.CreateStudentUser(us.Id, registerUserViewModel.GroupId)) {
 
-                    await this.signInManager.SignInAsync(user, false);
+                        IdentityResult identityResult = await _userManager.DeleteAsync(us);
+                        ModelState.AddModelError(string.Empty, "Choosen group does not exists");
+
+                        return View(registerUserViewModel);
+                    }
+
+                    // установка куки
+                    await _signInManager.SignInAsync(user, false);
 
                     Console.WriteLine(" Succeeded");
 
                     return RedirectToAction("Index", "Home");
-                    //   User us = await userManager.FindByEmailAsync(user.Email);
+                    //   
 
 
                 }
@@ -138,18 +146,19 @@ namespace Mentor.Controllers
                 
 
                 // добавляем пользователя
-                var result = await this.userManager.CreateAsync(user, registerUserViewModel.Password);
+                var result = await _userManager.CreateAsync(user, registerUserViewModel.Password);
                 if (result.Succeeded)
                 {
-                    // установка куки
 
-                    await this.signInManager.SignInAsync(user, false);
+                    User us = await _userManager.FindByEmailAsync(user.Email);
+                    _authentication.CreateTeacherUser(us.Id, registerUserViewModel.DepartmentId, registerUserViewModel.PositionId);
+
+                    // установка куки
+                    await _signInManager.SignInAsync(user, false);
 
                     Console.WriteLine(" Succeeded");
 
                     return RedirectToAction("Index", "Home");
-                    //   User us = await userManager.FindByEmailAsync(user.Email);
-
 
                 }
 
@@ -174,7 +183,7 @@ namespace Mentor.Controllers
         public async Task<IActionResult> Logout()
         {
             // удаляем аутентификационные куки
-            await signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }

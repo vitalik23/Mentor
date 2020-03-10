@@ -14,7 +14,7 @@ namespace Mentor.Models
             Database.EnsureCreated();
         }
 
-        public DbSet<Departament> Departament { get; set; }
+        public DbSet<Department> Departament { get; set; }
         public DbSet<Faculty> Faculty { get; set; }
         public DbSet<Group> Group { get; set; }
         public DbSet<N_To_N_StudentSubject> N_To_N_StudentSubject { get; set; }
@@ -24,6 +24,7 @@ namespace Mentor.Models
         public DbSet<Subject> Subject { get; set; }
         public DbSet<Task> Task { get; set; }
         public DbSet<Teacher> Teacher { get; set; }
+        public DbSet<Position> Position { get; set; }
 
 
     }
