@@ -18,11 +18,12 @@ namespace Mentor.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(IAuthentication authentication, UserManager<User> userManager, SignInManager<User> signInManager) 
+        public AccountController(IAuthentication authentication, IDatabaseWorker databaseWorker, UserManager<User> userManager, SignInManager<User> signInManager) 
         {
             _authentication = authentication;
             _userManager =    userManager;
             _signInManager =  signInManager;
+            _databaseWorker = databaseWorker;
         }
 
         [HttpGet]
