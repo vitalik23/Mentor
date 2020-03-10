@@ -32,6 +32,7 @@ namespace Mentor
             services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(connection));
 
             services.AddTransient<IAuthentication, AuthenticationService>();
+            services.AddTransient<IDatabaseWorker, DatabaseWorkerService>();
 
             services.AddIdentity<User, IdentityRole>(opts => {
                 opts.Password.RequiredLength = 5;   // минимальная длина

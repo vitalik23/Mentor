@@ -14,6 +14,7 @@ namespace Mentor.Controllers
     {
 
         private IAuthentication _authentication;
+        private IDatabaseWorker _databaseWorker;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
@@ -27,9 +28,19 @@ namespace Mentor.Controllers
         [HttpGet]
         public IActionResult ChooseUserType() => View();
         [HttpGet]
-        public IActionResult StudentRegister() => View();
+        public IActionResult StudentRegister() {
+
+            RegisterStudentViewModel model = new RegisterStudentViewModel { Groups = _databaseWorker.GetAllGroups()};
+            return View(model);
+        }
         [HttpGet]
-        public IActionResult TeacherRegister() => View();
+        public IActionResult TeacherRegister() {
+
+            RegisterTeacherViewModel model = new RegisterTeacherViewModel { Departments = _databaseWorker.GetAllDepartments(),
+                                                                            Positions = _databaseWorker.GetAllPositions()};
+
+            return View(model);
+        } 
 
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
