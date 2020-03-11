@@ -7,6 +7,7 @@ using Mentor.Models;
 using Mentor.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,8 @@ namespace Mentor
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(connection));
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<IAuthentication, AuthenticationService>();
             services.AddTransient<IDatabaseWorker, DatabaseWorkerService>();

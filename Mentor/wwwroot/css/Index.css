@@ -55,3 +55,18 @@ th {
     margin-top: 20px;
     font-size: 24px;
 }
+
+
+a{
+    padding-right: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+}
+A:visited {
+    color: white; /* Цвет посещенных ссылок */
+}
+
+A:active {
+    color: red; /* Цвет активных ссылок */
+}
