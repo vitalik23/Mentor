@@ -7,9 +7,9 @@ namespace Mentor
     public class RoleInitializer
     {
 
-        public readonly static string ROLE_ADMIN = "admin";
-        public readonly static string ROLE_STUDENT = "student";
-        public readonly static string ROLE_TEACHER = "teacher";
+        public const string ROLE_ADMIN = "admin";
+        public const string ROLE_STUDENT = "student";
+        public const string ROLE_TEACHER = "teacher";
 
         public static async System.Threading.Tasks.Task InitializeAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {

@@ -1,0 +1,16 @@
+﻿@model Subject
+@{
+    ViewData["Title"] = "Mentor";
+}
+
+
+<form>
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <label asp-for="Name"></label><br />
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="addCourse">Добавить курс</button>
+</form>

@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="~/css/Calendar.css" />
     <link rel="stylesheet" href="~/css/Footer.css" />
     <link rel="stylesheet" href="~/css/TeacherProfile.css" />
+    <link rel="stylesheet" href="~/css/AddCourse.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+   
 
 
 </head>
@@ -29,7 +31,21 @@
 
                         @if (User.Identity.IsAuthenticated)
                         {
-                            @*<p>@User.Identity.Name</p>*@
+
+                            if (User.IsInRole("teacher"))
+                            {
+                                <a asp-controller="Teacher" asp-action="TeacherProfile">@User.Identity.Name</a>
+
+                            }
+                            else if (User.IsInRole("student"))
+                            {
+                                <a asp-controller="Student" asp-action="StudentProfile">@User.Identity.Name</a>
+
+                            }
+                            else if (User.IsInRole("admin"))
+                            {
+                                
+                            }
 
                             <form method="post" asp-controller="Account" asp-action="Logout">
                                 <button type="submit" class="btn btn-danger">Выход</button>
@@ -41,7 +57,7 @@
                                 <form method="get" asp-controller="Account" asp-action="Login">
                                     <button type="submit" class="btn btn-danger">Вход</button>
                                 </form>
-                            
+
                             </li>
 
                             <li class="nav-item active">
@@ -51,13 +67,7 @@
                             </li>
                         }
 
-
-
-                        @*
-        <li class="nav-item">
-            <button type="button" class="btn btn-warning">Регистрация</button>
-            <button class="btn btn-outline-success my-2 my-sm-0 ml-1" type="button">Регистрация</button>
-        </li>*@
+                        
                     </ul>
                 </div>
             </div>
@@ -68,42 +78,44 @@
     @RenderBody()
 
 
-@*<footer id="footer">
-    <table>
-        <tr>
-            <td id="sizeTd">
-                <p id="who">Учителям</p>
-                <div id="infoFoot">
-                    <a href=""><p id="kindText">Добавить курс</p></a>
-                    <a href=""><p id="kindText">Повышение квалификации</p></a>
-                    <a href=""><p id="kindText">Мероприятия</p></a>
-                </div>
-            </td>
-            <td id="sizeTd">
-                <p id="who">Студентам</p>
-                <div id="infoFoot">
-                    <a href=""><p id="kindText">Курсы</p></a>
-                    <a href=""><p id="kindText">Журнал оценнок</p></a>
-                    <a href=""><p id="kindText">Новости</p></a>
-                    <a href=""><p id="kindText">Тесты</p></a>
-                    <a href=""><p id="kindText">Трудоустройство</p></a>
-                </div>
-            </td>
-            <td id="sizeTd">
-                <p id="who">Администратору</p>
-                <div id="infoFoot">
-                    <a href=""><p id="kindText">Добавить новости</p></a>
-                </div>
-            </td>
-        </tr>
+    @*<footer id="footer">
+            <table>
+                <tr>
+                    <td id="sizeTd">
+                        <p id="who">Учителям</p>
+                        <div id="infoFoot">
+                            <a href=""><p id="kindText">Добавить курс</p></a>
+                            <a href=""><p id="kindText">Повышение квалификации</p></a>
+                            <a href=""><p id="kindText">Мероприятия</p></a>
+                        </div>
+                    </td>
+                    <td id="sizeTd">
+                        <p id="who">Студентам</p>
+                        <div id="infoFoot">
+                            <a href=""><p id="kindText">Курсы</p></a>
+                            <a href=""><p id="kindText">Журнал оценнок</p></a>
+                            <a href=""><p id="kindText">Новости</p></a>
+                            <a href=""><p id="kindText">Тесты</p></a>
+                            <a href=""><p id="kindText">Трудоустройство</p></a>
+                        </div>
+                    </td>
+                    <td id="sizeTd">
+                        <p id="who">Администратору</p>
+                        <div id="infoFoot">
+                            <a href=""><p id="kindText">Добавить новости</p></a>
+                        </div>
+                    </td>
+                </tr>
 
-    </table>
-    &copy; 2020 - CrazyDev
-</footer>*@
+            </table>
+            &copy; 2020 - CrazyDev
+        </footer>*@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/Calendar.js"></script>
+
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
