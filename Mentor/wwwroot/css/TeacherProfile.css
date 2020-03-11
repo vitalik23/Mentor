@@ -1,0 +1,40 @@
+﻿body {
+}
+
+table {
+    width: 100%;
+}
+
+td, th {
+    padding: 3px;
+    border: 1px solid black; 
+}
+th {
+    background: #b0e0e6; 
+}
+
+#leftPast{
+    height: 100px;
+}
+#rightPast {
+    height: 100px;
+}
+#widthTableInfo {
+    margin-left:80px;
+    width: 60%;
+}
+#noName{
+    width:150px;
+    height:150px;
+}
+#tdContentPol {
+   padding-top:0;
+}
+
+
+#buttInfo {
+    width: 200px;
+}
+#location{
+    float:left;
+}
