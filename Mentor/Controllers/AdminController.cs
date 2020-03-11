@@ -41,8 +41,13 @@ namespace Mentor.Controllers
             var model = new EditUserViewModel
             {
                 Id = user.Id,
+                //UserName = user.UserName,
+                Surname = user.Surname,
                 Name = user.Name,
-                Surname = user.Surname
+                Patronymic = user.Patronymic,
+                PhoneNumber = user.PhoneNumber,
+                IsAccepted = user.IsAccepted
+                
             };
 
             return View(model);
@@ -59,8 +64,12 @@ namespace Mentor.Controllers
             }
             else
             {
-                user.Name = model.Name;
+                //user.UserName = model.UserName;
                 user.Surname = model.Surname;
+                user.Name = model.Name;
+                user.Patronymic = model.Patronymic;
+                user.PhoneNumber = model.PhoneNumber;
+                user.IsAccepted = model.IsAccepted;
 
                 var result = await _userManager.UpdateAsync(user);
 
