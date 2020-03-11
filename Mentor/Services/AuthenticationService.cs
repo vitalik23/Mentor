@@ -30,7 +30,6 @@ namespace Mentor.Services
 
             if (group == null)
             {
-                // Console.WriteLine(" Group is null");
                 return false;
             }
             else 
@@ -40,8 +39,6 @@ namespace Mentor.Services
                 _dataBaseContext.SaveChanges();
 
                 return true;
-
-              //  Console.WriteLine(" Group is not null");
             }
 
     

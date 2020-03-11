@@ -14,6 +14,11 @@ namespace Mentor.Models
             Database.EnsureCreated();
         }
 
+        public DataBaseContext()
+        {
+            Database.EnsureCreated();
+        }
+
         public DbSet<Department> Departament { get; set; }
         public DbSet<Faculty> Faculty { get; set; }
         public DbSet<Group> Group { get; set; }
