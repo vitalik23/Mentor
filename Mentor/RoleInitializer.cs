@@ -6,6 +6,11 @@ namespace Mentor
 {
     public class RoleInitializer
     {
+
+        public readonly static string ROLE_ADMIN = "admin";
+        public readonly static string ROLE_STUDENT = "student";
+        public readonly static string ROLE_TEACHER = "teacher";
+
         public static async System.Threading.Tasks.Task InitializeAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
 
@@ -14,17 +19,17 @@ namespace Mentor
             string password = "qwertyasdfgh";
 
             // role creating
-            if (await roleManager.FindByNameAsync("admin") == null)
+            if (await roleManager.FindByNameAsync(ROLE_ADMIN) == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("admin"));
+                await roleManager.CreateAsync(new IdentityRole(ROLE_ADMIN));
             }
-            if (await roleManager.FindByNameAsync("student") == null)
+            if (await roleManager.FindByNameAsync(ROLE_STUDENT) == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("student"));
+                await roleManager.CreateAsync(new IdentityRole(ROLE_STUDENT));
             }
-            if (await roleManager.FindByNameAsync("teacher") == null)
+            if (await roleManager.FindByNameAsync(ROLE_TEACHER) == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("teacher"));
+                await roleManager.CreateAsync(new IdentityRole(ROLE_TEACHER));
             }
 
             // connect admin role with admin user
@@ -38,7 +43,7 @@ namespace Mentor
                 // connect to this user admin role
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(admin, "admin");
+                    await userManager.AddToRoleAsync(admin, ROLE_ADMIN);
                 }
             }
 

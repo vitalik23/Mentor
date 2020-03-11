@@ -17,12 +17,9 @@ namespace Mentor.Controllers
         private IAuthentication _authentication;
         private IDatabaseWorker _databaseWorker;
 
-        private readonly UserManager<User> _userManager;
-
-        public AccountController(IAuthentication authentication, IDatabaseWorker databaseWorker, UserManager<User> userManager) 
+        public AccountController(IAuthentication authentication, IDatabaseWorker databaseWorker) 
         {
             _authentication = authentication;
-            _userManager =    userManager;
             _databaseWorker = databaseWorker;
         }
 
@@ -60,8 +57,7 @@ namespace Mentor.Controllers
 
             return items;
         }
-
-
+    
         [HttpGet]
         public IActionResult ChooseUserType() => View();
         [HttpGet]
@@ -133,7 +129,7 @@ namespace Mentor.Controllers
                     if (result.Succeeded)
                     {
                         User user = await _authentication.FindUserByEmail(registerUserViewModel.Email);
-                        if (!_authentication.CreateStudentUser(user.Id, registerUserViewModel.GroupId))
+                        if (! await _authentication.CreateStudentUser(user.Id, registerUserViewModel.GroupId))
                         {
                             await _authentication.DeleteUserAsync(user);
                             return View(registerUserViewModel);
@@ -172,51 +168,45 @@ namespace Mentor.Controllers
             registerUserViewModel.DeparmentItems = populateDepartments();
             registerUserViewModel.PositionItems = populatePositions();
 
-            if (ModelState.IsValid)
+            if (_databaseWorker.DepartmentExists(registerUserViewModel.DepartmentId) && _databaseWorker.PositionExists(registerUserViewModel.PositionId))
             {
-
-                Console.WriteLine("is valid");
-
-                User user = new User
+                if (ModelState.IsValid)
                 {
-                    Email = registerUserViewModel.Email,
-                    UserName = registerUserViewModel.Email,
-                    Name = registerUserViewModel.Name,
-                    Surname = registerUserViewModel.Surname,
-                    RegistrationDate = DateTime.Now,
-                    //      Birthday = registerUserViewModel.Birthday,
-                    IsAccepted = false
-                };
-                
+                    IdentityResult result = await _authentication.CreateUserAsync(registerUserViewModel);
 
-                // добавляем пользователя
-                var result = await _userManager.CreateAsync(user, registerUserViewModel.Password);
-                if (result.Succeeded)
-                {
 
-                    User us = await _userManager.FindByEmailAsync(user.Email);
-                    _authentication.CreateTeacherUser(us.Id, registerUserViewModel.DepartmentId, registerUserViewModel.PositionId);
-
-                    // установка куки
-                    await _authentication.SignInAsync(user);
-
-                    Console.WriteLine(" Succeeded");
-
-                    return RedirectToAction("Index", "Home");
-
-                }
-
-                else
-                {
-                    Console.WriteLine(" not Succeeded");
-                    foreach (var error in result.Errors)
+                    if (result.Succeeded)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+
+                        User user = await _authentication.FindUserByEmail(registerUserViewModel.Email);
+
+                        if (! await _authentication.CreateTeacherUser(user.Id, registerUserViewModel.DepartmentId, registerUserViewModel.PositionId))
+                        {
+                            await _authentication.DeleteUserAsync(user);
+                            return View(registerUserViewModel);
+                        }
+
+                        // установка куки
+                        await _authentication.SignInAsync(user);
+
+                        return RedirectToAction("Index", "Home");
                     }
-                }
+                    else 
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+
+                } 
+            }
+            else 
+            {
+                ModelState.AddModelError(string.Empty, "Choosen Department or Position does not exists!");
             }
 
-            Console.WriteLine("is not valid");
+            
             return View(registerUserViewModel);
 
         }

@@ -11,8 +11,8 @@ namespace Mentor.Interfaces
 {
     public interface IAuthentication
     {
-        bool CreateTeacherUser(string userId, int departmentId, int positionId);
-        bool CreateStudentUser(string userId, int groupId);
+        Task<bool> CreateTeacherUser(string userId, int departmentId, int positionId);
+        Task<bool> CreateStudentUser(string userId, int groupId);
         Task<IdentityResult> CreateUserAsync(RegisterUserViewModel model);
         Task<User> FindUserByEmail(string email);
         System.Threading.Tasks.Task SignInAsync(User user);

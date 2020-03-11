@@ -23,7 +23,7 @@ namespace Mentor.Services
             _signInManager = signInManager;
         }
 
-        public bool CreateStudentUser(string userId, int groupId)
+        public async Task<bool> CreateStudentUser(string userId, int groupId)
         {
 
             Group group = _dataBaseContext.Group.FirstOrDefault(p => p.Id == groupId);
@@ -38,13 +38,17 @@ namespace Mentor.Services
                 _dataBaseContext.Student.Add(student);
                 _dataBaseContext.SaveChanges();
 
+                // attach role to this user
+                User user = await _userManager.FindByIdAsync(userId);
+                await _userManager.AddToRoleAsync(user, RoleInitializer.ROLE_STUDENT);
+
                 return true;
             }
 
     
         }
 
-        public bool CreateTeacherUser(string userId, int departmentId, int positionId)
+        public async Task<bool> CreateTeacherUser(string userId, int departmentId, int positionId)
         {
 
             Department department = _dataBaseContext.Departament.FirstOrDefault(p => p.Id == departmentId);
@@ -60,6 +64,10 @@ namespace Mentor.Services
 
                 _dataBaseContext.Teacher.Add(teacher);
                 _dataBaseContext.SaveChanges();
+
+                // attach role to this user
+                User user = await _userManager.FindByIdAsync(userId);
+                await _userManager.AddToRoleAsync(user, RoleInitializer.ROLE_TEACHER);
 
                 return true;
             }
