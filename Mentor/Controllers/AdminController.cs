@@ -30,6 +30,11 @@ namespace Mentor.Controllers
 
         }
 
+        public ViewResult Index()
+        {
+            return View();
+        }
+
         [HttpGet]
         public async Task<ViewResult> Edit(string id)
         {
