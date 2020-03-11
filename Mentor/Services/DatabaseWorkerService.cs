@@ -36,7 +36,6 @@ namespace Mentor.Services
         public IEnumerable<Group> GetAllGroups() => _dataBaseContext.Group;
         public IEnumerable<Position> GetAllPositions() => _dataBaseContext.Position;
         public IEnumerable<User> GetUsers() => _dataBaseContext.Users;
-
-        
+        public IEnumerable<Faculty> GetFaculties() => _dataBaseContext.Faculty;
     }
 }

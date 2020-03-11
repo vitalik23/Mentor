@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Student\" />
-    <Folder Include="wwwroot\img\" />
+    <Folder Include="wwwroot\img\forFacAndDep\" />
   </ItemGroup>
 
 

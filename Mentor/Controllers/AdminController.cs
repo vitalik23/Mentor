@@ -35,8 +35,25 @@ namespace Mentor.Controllers
             return View();
         }
 
+        public ViewResult FacultyOrDepartment()
+        {
+            return View();
+        }
+
         [HttpGet]
-        public async Task<ViewResult> Edit(string id)
+        public ViewResult Faculties()
+        {
+            IEnumerable<Faculty> faculties = _databaseWorker.GetFaculties();
+
+            var allFaculties = new FacultyViewModel
+            {
+                AllFaculties = faculties
+            };
+            return View(allFaculties);
+        }
+
+        [HttpGet]
+        public async Task<ViewResult> EditUser(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
             if (user == null)
@@ -59,7 +76,7 @@ namespace Mentor.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditUserViewModel model)
+        public async Task<IActionResult> EditUser(EditUserViewModel model)
         {
             var user = await _userManager.FindByIdAsync(model.Id);
 
