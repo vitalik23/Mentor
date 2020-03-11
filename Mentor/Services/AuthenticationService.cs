@@ -1,11 +1,13 @@
 ﻿using Mentor.Interfaces;
 using Mentor.Models;
 using Mentor.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Mentor.Services
@@ -16,8 +18,10 @@ namespace Mentor.Services
         private readonly DataBaseContext _dataBaseContext;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IHttpContextAccessor _httpControllerAccessor;
 
-        public AuthenticationService(DataBaseContext dataBaseContext, UserManager<User> userManager, SignInManager<User> signInManager) {
+        public AuthenticationService(IHttpContextAccessor httpControllerAccessor, DataBaseContext dataBaseContext, UserManager<User> userManager, SignInManager<User> signInManager) {
+            _httpControllerAccessor = httpControllerAccessor;
             _dataBaseContext = dataBaseContext;
             _userManager = userManager;
             _signInManager = signInManager;
@@ -81,6 +85,7 @@ namespace Mentor.Services
             {
                 Email = model.Email,
                 UserName = model.Email,
+                PhoneNumber = model.PhoneNumber,
                 Name = model.Name,
                 Surname = model.Surname,
                 RegistrationDate = DateTime.Now,
@@ -109,6 +114,14 @@ namespace Mentor.Services
         public async Task<User> FindUserByEmail(string email)
         {
             return await _userManager.FindByEmailAsync(email);
+        }
+
+        public async Task<User> GetCurrentUser()
+        {
+            string userId = _httpControllerAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            User user = await _userManager.FindByIdAsync(userId);
+
+            return user;
         }
 
         public async System.Threading.Tasks.Task SignInAsync(User user)

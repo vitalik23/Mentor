@@ -1,4 +1,5 @@
-﻿@{
+﻿@model User
+@{
     ViewData["Title"] = "Mentor";
 }
     <table>
@@ -14,9 +15,15 @@
                     </tr>
                     <tr>
                         <td height="350px" id="tdContentPol">
-                            <p><button type="button" class="btn btn-primary" id="buttInfo">Добавить курс</button></p>
-                            <p><button type="button" class="btn btn-danger" id="buttInfo">Удалить курс</button></p>
-                            <p><button type="button" class="btn btn-success" id="buttInfo">Написать сообщение</button></p>
+                            <form method="get" asp-controller="Teacher" asp-action="AddCourse">
+                                <p><button type="submit" class="btn btn-primary" id="buttInfo">Добавить курс</button></a></p>
+                            </form>
+                            <form method="get" asp-controller="Teacher" asp-action="AddCourse">
+                                <p><button type="button" class="btn btn-danger" id="buttInfo">Удалить курс</button></p>
+                            </form>
+                            <form method="get" asp-controller="Teacher" asp-action="AddCourse">
+                                <p><button type="button" class="btn btn-success" id="buttInfo">Написать сообщение</button></p>
+                            </form>
 
                         </td>
                     </tr>
@@ -28,19 +35,22 @@
                     <tr>
                         <td height="200px">
                             <div id="location">
-                                <p>Имя: </p>
-                                <p>Фамилия: </p>
-                                <p>Дата рождения:</p>
-                                <p>Email: </p>
+                                <p>Имя: @Model.Name</p>
+                                <p>Фамилия: @Model.Surname</p>
+                                <p>Номер телефона: @Model.PhoneNumber</p>
+                                <p>Время регистрации: @Model.RegistrationDate</p>
+                                <p>Email: @Model.Email</p>
                             </div>
                         </td>
                     </tr>
                     <tr height="400px">
                         <td>
                             <p>Курсы: </p>
+                            
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
     </table>
+

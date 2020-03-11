@@ -34,22 +34,52 @@ namespace Mentor.Controllers
         public async Task<ViewResult> Edit(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
-            return View(user);
+            if (user == null)
+            {
+                return View();
+            }
+            var model = new EditUserViewModel
+            {
+                Id = user.Id,
+                //UserName = user.UserName,
+                Surname = user.Surname,
+                Name = user.Name,
+                Patronymic = user.Patronymic,
+                PhoneNumber = user.PhoneNumber,
+                IsAccepted = user.IsAccepted
+                
+            };
+
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(User user)
+        public async Task<IActionResult> Edit(EditUserViewModel model)
         {
-            if (!ModelState.IsValid)
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            if (user == null)
             {
-                return View(user);
+                return View("Error");
             }
+            else
+            {
+                //user.UserName = model.UserName;
+                user.Surname = model.Surname;
+                user.Name = model.Name;
+                user.Patronymic = model.Patronymic;
+                user.PhoneNumber = model.PhoneNumber;
+                user.IsAccepted = model.IsAccepted;
 
-            var store = new UserStore<User>(new DataBaseContext());
-            //var manager = UserManager
-            await _userManager.UpdateAsync(user);
+                var result = await _userManager.UpdateAsync(user);
 
-            return RedirectToAction("Users");
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Users");
+                }
+
+                return View(model);
+            }
         }
 
         [HttpGet]
