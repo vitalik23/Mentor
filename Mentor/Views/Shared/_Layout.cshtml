@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="~/css/TeacherProfile.css" />
     <link rel="stylesheet" href="~/css/AddCourse.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-   
+    
+    
+
 
 
 </head>
@@ -44,7 +46,7 @@
                             }
                             else if (User.IsInRole("admin"))
                             {
-                                
+
                             }
 
                             <form method="post" asp-controller="Account" asp-action="Logout">
@@ -67,7 +69,7 @@
                             </li>
                         }
 
-                        
+
                     </ul>
                 </div>
             </div>
@@ -120,3 +122,4 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
