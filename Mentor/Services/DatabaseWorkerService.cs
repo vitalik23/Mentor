@@ -26,6 +26,8 @@ namespace Mentor.Services
         }
         public bool PositionExists(int positionId)
         {
+
+            
             return _dataBaseContext.Position.FirstOrDefault(p => p.Id == positionId) != null;
         }
 
