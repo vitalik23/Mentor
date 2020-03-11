@@ -32,10 +32,18 @@
 
                             if (User.IsInRole("teacher"))
                             {
-                               
+                                <a asp-controller="Teacher" asp-action="TeacherProfile">@User.Identity.Name</a>
 
                             }
-                            @*<p>@User.Identity.Name</p>*@
+                            else if (User.IsInRole("student"))
+                            {
+                                <a asp-controller="Student" asp-action="StudentProfile">@User.Identity.Name</a>
+
+                            }
+                            else if (User.IsInRole("admin"))
+                            {
+
+                            }
 
                             <form method="post" asp-controller="Account" asp-action="Logout">
                                 <button type="submit" class="btn btn-danger">Выход</button>
@@ -47,7 +55,7 @@
                                 <form method="get" asp-controller="Account" asp-action="Login">
                                     <button type="submit" class="btn btn-danger">Вход</button>
                                 </form>
-                            
+
                             </li>
 
                             <li class="nav-item active">
