@@ -219,5 +219,6 @@ namespace Mentor.Controllers
             await _authentication.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+    
     }
 }

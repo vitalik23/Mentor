@@ -29,7 +29,12 @@
 
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <p>@User.Identity.Name</p>
+
+                            if (User.IsInRole("teacher"))
+                            {
+                               
+                            }
+                            @*<p>@User.Identity.Name</p>*@
 
                             <form method="post" asp-controller="Account" asp-action="Logout">
                                 <button type="submit" class="btn btn-danger">Выход</button>
@@ -50,8 +55,6 @@
                                 </form>
                             </li>
                         }
-
-
 
                         @*
         <li class="nav-item">
