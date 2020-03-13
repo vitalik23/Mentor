@@ -4,7 +4,7 @@
 }
 
 
-<form>
+<form  method="post" asp-controller="Teacher" asp-action="AddSubject">>
     <div asp-validation-summary="ModelOnly"></div>
     <div>
         <label asp-for="Name"></label><br />
@@ -12,5 +12,5 @@
         <span asp-validation-for="Name"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary" id="addCourse">Добавить курс</button>
+    <button type="submit" class="btn btn-primary">Добавить курс</button>
 </form>

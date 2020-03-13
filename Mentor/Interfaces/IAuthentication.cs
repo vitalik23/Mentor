@@ -21,5 +21,10 @@ namespace Mentor.Interfaces
         System.Threading.Tasks.Task DeleteUserAsync(string userId);
         System.Threading.Tasks.Task DeleteUserAsync(User user);
         Task<User> GetCurrentUser();
+        Task<Teacher> GetCurrentTeacher();
+
+        Department GetTeachersDepartment(Teacher teacher);
+        Position GetTeachersPosition(Teacher teacher);
+
     }
 }

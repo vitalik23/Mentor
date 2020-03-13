@@ -1,9 +1,11 @@
 ﻿using Mentor.Interfaces;
 using Mentor.Models;
+using Mentor.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -14,24 +16,48 @@ namespace Mentor.Controllers
     {
         IAuthentication _authentication;
         IDatabaseWorker _databaseWorker;
+        ISubjectService _subjectService;
 
-        public TeacherController(IAuthentication authentication,IDatabaseWorker databaseWorker)
+        public TeacherController(IAuthentication authentication, IDatabaseWorker databaseWorker, ISubjectService subjectService)
         {
             _authentication = authentication;
             _databaseWorker = databaseWorker;
+            _subjectService = subjectService;
 
         }
 
-        public async Task<IActionResult> TeacherProfile()
+        public async Task<IActionResult> Profile()
         {
-            User currentUser = await _authentication.GetCurrentUser();
             
-            return View(currentUser);
+            User currentUser = await _authentication.GetCurrentUser();
+            Teacher currentTeacher = await _authentication.GetCurrentTeacher();
+            Department department = _authentication.GetTeachersDepartment(currentTeacher);
+            Position position = _authentication.GetTeachersPosition(currentTeacher);
+
+            IEnumerable<Subject> subjects = _subjectService.GetTeachersSubjects(currentTeacher);
+
+            TeacherProfileViewModel model = new TeacherProfileViewModel { User = currentUser, 
+                                                                          Department = department, 
+                                                                          Position = position,
+                                                                          Subjects = subjects
+            };
+
+            return View(model);
         }
 
-        public IActionResult AddCourse()
+        public IActionResult AddSubject()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddSubject(Subject subject) 
+        {
+
+            Teacher teacher = await _authentication.GetCurrentTeacher();
+            await _subjectService.AddSubject(subject, teacher.Id);
+
+            return RedirectToAction("Profile");
         }
 
     }

@@ -36,6 +36,7 @@ namespace Mentor
 
             services.AddTransient<IAuthentication, AuthenticationService>();
             services.AddTransient<IDatabaseWorker, DatabaseWorkerService>();
+            services.AddTransient<ISubjectService, SubjectService>();
 
             services.AddIdentity<User, IdentityRole>(opts => {
                 opts.Password.RequiredLength = 5;   // минимальная длина

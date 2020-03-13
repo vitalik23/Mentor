@@ -116,12 +116,32 @@ namespace Mentor.Services
             return await _userManager.FindByEmailAsync(email);
         }
 
+        public async Task<Teacher> GetCurrentTeacher()
+        {
+            User user = await GetCurrentUser();
+            Teacher teacher = _dataBaseContext.Teacher.FirstOrDefault(x => x.UserId == user.Id);
+
+            return teacher;
+
+        }
+
         public async Task<User> GetCurrentUser()
         {
             string userId = _httpControllerAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User user = await _userManager.FindByIdAsync(userId);
 
             return user;
+        }
+
+
+        public Department GetTeachersDepartment(Teacher teacher)
+        {
+            return _dataBaseContext.Departament.FirstOrDefault(x=> x.Id == teacher.DepartamentId);
+        }
+
+        public Position GetTeachersPosition(Teacher teacher)
+        {
+            return _dataBaseContext.Position.FirstOrDefault(x => x.Id == teacher.PositionId);
         }
 
         public async System.Threading.Tasks.Task SignInAsync(User user)

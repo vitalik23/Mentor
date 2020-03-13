@@ -1,6 +1,6 @@
-﻿@model User
+﻿@model TeacherProfileViewModel
 @{
-    ViewData["Title"] = @Model.Name;
+    ViewData["Title"] = @Model.User.Name;
 }
     <table>
         <col width="30%" valign="top">
@@ -15,7 +15,7 @@
                     </tr>
                     <tr>
                         <td height="350px" id="tdContentPol">
-                            <form method="get" asp-controller="Teacher" asp-action="AddCourse">
+                            <form method="get" asp-controller="Teacher" asp-action="AddSubject">
                                 <p><button type="submit" class="btn btn-primary" id="buttInfo">Добавить курс</button></a></p>
                             </form>
                             <form method="get" asp-controller="Teacher" asp-action="AddCourse">
@@ -35,11 +35,14 @@
                     <tr>
                         <td height="200px" id="elmList" width="600px">
                             <div id="location">
-                                <p>Имя: @Model.Name</p>
-                                <p>Фамилия: @Model.Surname</p>
-                                <p>Номер телефона: @Model.PhoneNumber</p>
-                                <p>Время регистрации: @Model.RegistrationDate</p>
-                                <p>Email: @Model.Email</p>
+                                <p>Имя: @Model.User.Name</p>
+                                <p>Фамилия: @Model.User.Surname</p>
+                                <p>Номер телефона: @Model.User.PhoneNumber</p>
+                                <p>Время регистрации: @Model.User.RegistrationDate</p>
+                                <p>Email: @Model.User.Email</p>
+
+                                <p>Department: @Model.Department.Name</p>
+                                <p>Position: @Model.Position.Name</p>
                             </div>
                         </td>
                         <td rowspan="2">
@@ -65,12 +68,24 @@
                         
                         <td height="400px" id="elmList" width="600px">   
                             <p id="calendar">Мои курсы</p>
-                            <ol class="rounded" >
-                                <li><a href="#" >Элемент списка</a></li>
-                                <li><a href="#" >Элемент списка</a></li>
-                                <li><a href="#" >Элемент списка</a></li>
-                                <li><a href="#" >Элемент списка</a></li>
-                                <li><a href="#" >Элемент списка</a></li>
+                            <ol class="rounded">
+
+                                @{
+                                    if (Model.Subjects != null)
+                                    {
+                                        foreach (Subject subject in Model.Subjects)
+                                        {
+                                            <li><a href="#">@subject.Name</a></li>
+                                        }
+                                    }
+                                }
+
+
+                                @*
+                                <li><a href="#">Элемент списка</a></li>
+                                <li><a href="#">Элемент списка</a></li>
+                                <li><a href="#">Элемент списка</a></li>
+                                <li><a href="#">Элемент списка</a></li>*@
                             </ol>
                             
                         </td>
