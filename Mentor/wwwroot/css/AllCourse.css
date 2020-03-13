@@ -1,0 +1,17 @@
+﻿body {
+}
+.row .col-lg-3 img{
+    display:flex;
+    margin-top:20px;
+    margin-bottom:20px;
+    margin-left:40px;
+    height:200px;
+    width:200px;
+}
+.col-lg-3 a:hover img {
+    border: 3px solid red;
+}
+
+.col-lg-3 a img {
+    border: 3px solid #53da3f; /* Рамка вокруг изображения-ссылки */
+} 
