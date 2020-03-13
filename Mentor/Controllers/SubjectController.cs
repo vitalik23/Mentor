@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Mentor.Controllers
 {
-    public class CourseController : Controller
+    public class SubjectController : Controller
     {
         public IActionResult AllCourse()
         {
             return View();
         }
 
-        public IActionResult CoursePage()
+        public IActionResult Index()
         {
             return View();
         }
