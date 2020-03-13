@@ -1,6 +1,6 @@
 ﻿@model User
 @{
-    ViewData["Title"] = "Mentor";
+    ViewData["Title"] = @Model.Name;
 }
     <table>
         <col width="30%" valign="top">
@@ -31,9 +31,9 @@
             </td>
 
             <td id="rightPast">
-                <table>
+                <table class="table">
                     <tr>
-                        <td height="200px">
+                        <td height="200px" id="elmList" width="600px">
                             <div id="location">
                                 <p>Имя: @Model.Name</p>
                                 <p>Фамилия: @Model.Surname</p>
@@ -42,10 +42,36 @@
                                 <p>Email: @Model.Email</p>
                             </div>
                         </td>
+                        <td rowspan="2">
+                            <div id="margintoTop">
+                                <p id="calendar" padding-top="0">Навигация</p>
+                                <div id="listCourse">
+                                    <p><a href="">На главную</a></p>
+                                    <p>
+                                        <select>
+                                            <option disabled selected value="Мои курсы">Мои курсы</option>
+                                            <option href="">Какой то курс</option>
+                                            <option href="">Какой то курс</option>
+                                            <option href="">Какой то курс</option>
+                                        </select>
+                                    </p>
+                                    <p><a href="">Информационная страница</a></p>
+                                </div>
+                            </div>
+    
+                        </td>
                     </tr>
-                    <tr height="400px">
-                        <td>
-                            <p>Курсы: </p>
+                    <tr >
+                        
+                        <td height="400px" id="elmList" width="600px">   
+                            <p id="calendar">Мои курсы</p>
+                            <ol class="rounded" >
+                                <li><a href="#" >Элемент списка</a></li>
+                                <li><a href="#" >Элемент списка</a></li>
+                                <li><a href="#" >Элемент списка</a></li>
+                                <li><a href="#" >Элемент списка</a></li>
+                                <li><a href="#" >Элемент списка</a></li>
+                            </ol>
                             
                         </td>
                     </tr>

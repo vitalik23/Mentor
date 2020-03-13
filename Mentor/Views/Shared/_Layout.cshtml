@@ -12,18 +12,15 @@
     <link rel="stylesheet" href="~/css/Footer.css" />
     <link rel="stylesheet" href="~/css/TeacherProfile.css" />
     <link rel="stylesheet" href="~/css/AddCourse.css" />
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    
-    
-
-
 
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-light" id="header">
             <div class="container-fluid">
-                <a href="~/Home/Index.cshtml" class="navbar-brand"><img src="~/img/загружено.png" id="logo" /></a>
+                <a href="~/Home/Index" class="navbar-brand"><img src="~/img/загружено.png" id="logo" /></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarResponsive">
                     <span class="navbar-toggler-icon"></span>
@@ -36,12 +33,11 @@
 
                             if (User.IsInRole("teacher"))
                             {
-                                <a asp-controller="Teacher" asp-action="TeacherProfile">@User.Identity.Name</a>
-
+                                <a id="userName"  asp-controller="Teacher" asp-action="TeacherProfile">@User.Identity.Name</a>
                             }
                             else if (User.IsInRole("student"))
                             {
-                                <a asp-controller="Student" asp-action="StudentProfile">@User.Identity.Name</a>
+                                <a id="userName" asp-controller="Student" asp-action="StudentProfile">@User.Identity.Name</a>
 
                             }
                             else if (User.IsInRole("admin"))
@@ -117,6 +113,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/Calendar.js"></script>
 
+
+   
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)

@@ -5,13 +5,13 @@ table {
     width: 100%;
 }
 
-td, th {
+/*td, th {
     padding: 3px;
     border: 1px solid black; 
 }
 th {
     background: #b0e0e6; 
-}
+}*/
 
 #leftPast{
     height: 100px;
@@ -29,6 +29,7 @@ th {
 }
 #tdContentPol {
    padding-top:0;
+   padding-left:30px;
 }
 
 
@@ -36,6 +37,7 @@ th {
     width: 200px;
 }
 #location{
+    padding-top:20px;
     float:left;
 }
 
@@ -56,4 +58,72 @@ th {
     height: 200px;
     color: #fff;
     text-align: center;
+}
+
+/*Список курсов*/
+.rounded {
+    counter-reset: li;
+    list-style: none;
+    font: 16px "Trebuchet MS", "Lucida Sans";
+    padding: 0;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+.rounded a {
+    position: relative;
+    display: block;
+    padding: .4em .4em .4em 2em;
+    margin: .5em 0;
+    background: white;
+    color: #444;
+    text-decoration: none;
+    border-radius: .3em;
+    transition: .3s ease-out;
+}
+
+.rounded a:hover {
+    background: white;
+}
+
+.rounded a:hover:before {
+    transform: rotate(360deg);
+}
+
+.rounded a:before {
+    padding-top:1px;
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    left: -1.3em;
+    top: 50%;
+    margin-top: -1.3em;
+    background: #8FD4C1;
+    height: 3em;
+    width: 3em;
+    line-height: 2em;
+    border: .3em solid white;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 2em;
+    transition: all .3s ease-out;
+}
+
+#elmList{
+    padding-left:100px;
+}
+/*Список курсов*/
+
+#listCourse{
+    padding-left:15px;
+}
+
+
+#listCourse p a {
+    color:black;
+    font-size:16px;
+}
+
+.table tr td #margintoTop {
+    padding-top:0px;
+    vertical-align: top; /* Выравнивание по верхнему краю ячеек */
 }
