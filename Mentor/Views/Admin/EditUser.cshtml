@@ -7,7 +7,7 @@
 
 <h2>Редактирование информации о пользователе</h2>
 
-<form asp-action="Edit" asp-controller="Admin" asp-route-id="@Model.Id">
+<form asp-action="EditUser" asp-controller="Admin" asp-route-id="@Model.Id">
     <div class="form-group">
         <label asp-for="Surname" class="control-label">Фамилия</label>
         <input type="text" asp-for="Surname" class="form-control" />

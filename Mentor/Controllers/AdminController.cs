@@ -18,7 +18,7 @@ namespace Mentor.Controllers
         private IDatabaseWorker _databaseWorker;
         private IAuthentication _authentication;
 
-        private DataBaseContext _baseContext;
+        private readonly DataBaseContext _baseContext;
         private readonly UserManager<User> _userManager;
 
         public AdminController(IAuthentication authentication, IDatabaseWorker databaseWorker, UserManager<User> userManager, DataBaseContext baseContext)
@@ -40,6 +40,7 @@ namespace Mentor.Controllers
             return View();
         }
 
+        //Methods for Faculties
         [HttpGet]
         public ViewResult Faculties()
         {
@@ -53,6 +54,38 @@ namespace Mentor.Controllers
         }
 
         [HttpGet]
+        public ViewResult AddFaculty()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddFaculcty(AddFacultyViewModel model)
+        {
+            Faculty faculty = new Faculty
+            {
+                Name = model.Name
+            };
+
+            _baseContext.Faculty.Add(faculty);
+            _baseContext.SaveChanges();
+
+            return RedirectToAction("Faculties");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteFaculty(int id)
+        {
+            var faculty = _baseContext.Faculty.FirstOrDefault(i => i.Id == id);
+            _baseContext.Faculty.Remove(faculty);
+            _baseContext.SaveChanges();
+
+            return RedirectToAction("Faculties");
+        }
+
+
+        //Methods for Users
+        [HttpGet]
         public async Task<ViewResult> EditUser(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
@@ -63,7 +96,6 @@ namespace Mentor.Controllers
             var model = new EditUserViewModel
             {
                 Id = user.Id,
-                //UserName = user.UserName,
                 Surname = user.Surname,
                 Name = user.Name,
                 Patronymic = user.Patronymic,
@@ -86,7 +118,7 @@ namespace Mentor.Controllers
             }
             else
             {
-                //user.UserName = model.UserName;
+
                 user.Surname = model.Surname;
                 user.Name = model.Name;
                 user.Patronymic = model.Patronymic;

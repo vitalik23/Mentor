@@ -4,10 +4,13 @@
     Layout = "_LayoutForAdmin";
 }
 
-    <table>
+<div class="align-content-xl-center">
+    <a asp-controller="Admin" asp-action="AddFaculty">Добавить факультет</a>
+</div>
+    <table class="table">
         <thead>
             <tr>
-                <th>Название</th>
+                <th>Название факультета</th>
                 <th></th>
             </tr>
         </thead>
@@ -18,9 +21,8 @@
                     <td>@Html.DisplayFor(modelItem => faculty.Name)</td>
 
                     <td>
-                        <a asp-controller="Admin" asp-action="EditUser" asp-route-id="@faculty.Id">Редактировать</a> |
                         <a asp-action="Details" asp-route-id="@faculty.Id">Детали</a> |
-                        <a asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@faculty.Id">Удалить</a>
+                        <a asp-controller="Admin" asp-action="DeleteFaculty" asp-route-id="@faculty.Id">Удалить</a>
                     </td>
                 </tr>
             }
