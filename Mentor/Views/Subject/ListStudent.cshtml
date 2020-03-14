@@ -1,22 +1,41 @@
-﻿@{
+﻿@model StudentSubjectViewModel
+
+@{
     ViewData["Title"] = "Список студентов";
 }
 
 <h3>Студенты</h3>
 <table>
     <tr>
-        <td>Модель</td>
-        <td>Производитель</td>
-        <td>Цена</td>
+        <td>Имя</td>
+        <td>Фамилия</td>
+        <td>Отчество</td>
+        <td>Группа</td>
         <td></td>
     </tr>
-    @foreach (var phone in Model)
+
+    @if (Model != null)
     {
-        <tr>
-            <td>@phone.Name</td>
-            <td>@phone.Company</td>
-            <td>@phone.Price</td>
-            <td><a href="~/Home/Buy/@phone.Id">Купить</a></td>
-        </tr>
+        @foreach (Student student in Model.Students)
+        {
+
+            if (student != null)
+            {
+                <tr>
+
+
+                    <td>@student.User.Name</td>
+                    <td>@student.User.Surname</td>
+                    <td>@student.User.Patronymic</td>
+
+                    <td>@student.Group.Name</td>
+                    <td><a asp-controller="Subject" asp-action="DeleteStudentFromSubject" asp-route-subjectId="@Model.Subject.Id" asp-route-studentId="@student.Id">Удалить</a> |</td>
+                    
+                </tr>
+            }
+
+        }
     }
+
+
 </table>

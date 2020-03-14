@@ -11,9 +11,11 @@ namespace Mentor.Services
     {
 
         DataBaseContext _dataBaseContext;
+        IAuthentication _authentication;
 
-        public SubjectService(DataBaseContext dataBaseContext) {
+        public SubjectService(DataBaseContext dataBaseContext, IAuthentication authentication) {
             _dataBaseContext = dataBaseContext;
+            _authentication = authentication;
         }
 
         public async System.Threading.Tasks.Task AddSubject(string subjectName, int teacherId)
@@ -57,7 +59,7 @@ namespace Mentor.Services
 
         }
 
-        public IEnumerable<Subject> GetTeachersSubjects(Teacher teacher)
+        public IEnumerable<Subject> GetSubjectsByTeacher(Teacher teacher)
         {
 
             IEnumerable<N_To_N_TeacherSubject> ns = _dataBaseContext.N_To_N_TeacherSubject.Where(c => c.TeacherId == teacher.Id).ToList();
@@ -69,6 +71,129 @@ namespace Mentor.Services
             }
 
             return subjects;
+        }
+
+        public bool DoesSubjectBelongsToTeacher(int subjectId, int teacherId)
+        {
+            return _dataBaseContext.N_To_N_TeacherSubject.FirstOrDefault(x => x.SubjectId == subjectId && x.TeacherId == teacherId) != null;
+        }
+
+        public async Task<IEnumerable<Teacher>> GetTeachersBySubject(Subject subject)
+        {
+            IEnumerable<N_To_N_TeacherSubject> list = _dataBaseContext.N_To_N_TeacherSubject.Where(x => x.SubjectId == subject.Id);
+
+            List<N_To_N_TeacherSubject> na = new List<N_To_N_TeacherSubject>(list);
+            List<Teacher> teachers = new List<Teacher>();
+
+            foreach (N_To_N_TeacherSubject n in na)
+            {
+                teachers.Add(_dataBaseContext.Teacher.FirstOrDefault(h => h.Id == n.TeacherId));
+            }
+
+            foreach (Teacher teacher in teachers)
+            {
+                teacher.User = await _authentication.FindUserByIdAsync(teacher.UserId);
+                teacher.Departament = _dataBaseContext.Departament.FirstOrDefault(k => k.Id == teacher.DepartamentId);
+                teacher.Position = _dataBaseContext.Position.FirstOrDefault(m => m.Id == teacher.PositionId);
+            }
+
+            return teachers;
+        }
+
+        public async Task<IEnumerable<Student>> GetStudentsBySubject(Subject subject)
+        {
+
+            IEnumerable<N_To_N_StudentSubject> list = _dataBaseContext.N_To_N_StudentSubject.Where(x => (x.SubjectId == subject.Id));
+
+            List<N_To_N_StudentSubject> na = new List<N_To_N_StudentSubject>(list);
+            List<Student> students = new List<Student>();
+
+            foreach (N_To_N_StudentSubject n in na)
+            {
+                students.Add(_dataBaseContext.Student.FirstOrDefault(h => h.Id == n.StudentId));
+            }
+
+            foreach (Student student in students)
+            {
+                student.User = await _authentication.FindUserByIdAsync(student.UserId);
+                student.Group = _dataBaseContext.Group.FirstOrDefault(x => x.Id == student.GroupId);
+            }
+
+            return students;
+        }
+
+        public async Task<IEnumerable<Teacher>> GetTeachersWithoutThisSubject(Subject subject)
+        {
+            List<Teacher> allTeachers = new List<Teacher>();
+            allTeachers.AddRange(_dataBaseContext.Teacher);
+
+            List<Teacher> teachersAttachedToSubject = (List<Teacher>) await GetTeachersBySubject(subject);
+
+            foreach (Teacher teacher in teachersAttachedToSubject)
+            {
+                allTeachers.Remove(teacher);
+            }
+
+            foreach (Teacher teacher in allTeachers) {
+                if (teacher.User == null || teacher.Departament == null || teacher.Position == null) 
+                {
+                    teacher.User = await _authentication.FindUserByIdAsync(teacher.UserId);
+                    teacher.Departament = _dataBaseContext.Departament.FirstOrDefault(k => k.Id == teacher.DepartamentId);
+                    teacher.Position = _dataBaseContext.Position.FirstOrDefault(m => m.Id == teacher.PositionId);
+                }
+            }
+
+
+            return allTeachers;
+        }
+
+        public async Task<IEnumerable<Student>> GetStudentsWithoutThisSubject(Subject subject)
+        {
+
+            List<Student> allStudents = new List<Student>();
+            allStudents.AddRange(_dataBaseContext.Student);
+
+            List<Student> studentsAttachedToSubject = (List<Student>) await GetStudentsBySubject(subject);
+
+            foreach (Student student in studentsAttachedToSubject)
+            {
+                allStudents.Remove(student);
+            }
+
+            foreach (Student student in allStudents)
+            {
+                if (student.User == null || student.Group == null)
+                {
+                    student.User = await _authentication.FindUserByIdAsync(student.UserId);
+                    student.Group = _dataBaseContext.Group.FirstOrDefault(k => k.Id == student.GroupId);
+                }
+            }
+
+            return allStudents;
+        }
+
+        public void DeleteTeacherFromSubject(int subjectId, int teacherId)
+        {
+            N_To_N_TeacherSubject m = _dataBaseContext.N_To_N_TeacherSubject.FirstOrDefault(x => x.SubjectId == subjectId && x.TeacherId == teacherId);
+
+            if (m != null) 
+            {
+                _dataBaseContext.N_To_N_TeacherSubject.Remove(m);
+                _dataBaseContext.SaveChanges();
+            }
+
+        }
+
+        public void DeleteStudentFromSubject(int subjectId, int studentId)
+        {
+            N_To_N_StudentSubject m = _dataBaseContext.N_To_N_StudentSubject.FirstOrDefault(x => x.SubjectId == subjectId && x.StudentId == studentId);
+
+
+            if (m != null)
+            {
+                _dataBaseContext.N_To_N_StudentSubject.Remove(m);
+                _dataBaseContext.SaveChanges();
+            }
         }
     }
 }

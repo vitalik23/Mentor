@@ -1,0 +1,39 @@
+﻿@model SubjectInfoViewModel
+
+@{
+    ViewData["Title"] = Model.Subject.Name;
+}
+
+<table>
+    <tr>
+        <td>
+            <div>
+                <h1>Лекции</h1>
+                <a href=""><p>Лекция 1</p></a>
+                <a href=""><p>Лекция 2</p></a>
+                <a href=""><p>Лекция 3</p></a>
+                <a href=""><p>Лекция 4</p></a>
+                <a href=""><p>Лекция 5</p></a>
+            </div>
+
+            <div>
+                <h1>Сюда заливаем отчет</h1>
+
+                <a href=""><p>лаба1</p></a>
+                <a href=""><p>лаба2</p></a>
+                <a href=""><p>лаба3</p></a>
+                <a href=""><p>лаба4</p></a>
+            </div>
+        </td>
+        <td id="tdInfo">
+            <p><a asp-controller="Subject" asp-action="ListTeacher" asp-route-subjectId="@Model.Subject.Id"> Список преподавателей</a></p>
+            <p><a asp-controller="Subject" asp-action="ListStudent" asp-route-subjectId="@Model.Subject.Id"> Список студентов</a></p>
+
+            <a href=""><p>Журнал</p></a>
+            <a id="add-cart-style-list" class="btn btn-success" asp-controller="Subject" asp-action="AddStudentToSubject" asp-route-subjectId="@Model.Subject.Id">Добавить студента</a>
+            <a id="add-cart-style-list" class="btn btn-success" asp-controller="Subject" asp-action="AddTeacherToSubject" asp-route-subjectId="@Model.Subject.Id">Добавить преподавателя</a>
+
+        </td>
+    </tr>
+</table>
+

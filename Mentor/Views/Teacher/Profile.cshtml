@@ -75,7 +75,8 @@
                                     {
                                         foreach (Subject subject in Model.Subjects)
                                         {
-                                            <li><a href="#">@subject.Name</a></li>
+                                            
+                                            <li><a asp-controller="Subject" asp-action="IndexTeacher" asp-route-subjectId ="@subject.Id">@subject.Name</a></li>
                                         }
                                     }
                                 }

@@ -18,6 +18,8 @@ namespace Mentor.Interfaces
         bool DepartmentExists(int departmentId);
         bool PositionExists(int positionId);
 
+        Subject GetSubjectById(int id);
+
 
     }
 }

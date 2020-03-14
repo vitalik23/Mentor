@@ -128,8 +128,8 @@ namespace Mentor.Controllers
 
                     if (result.Succeeded)
                     {
-                        User user = await _authentication.FindUserByEmail(registerUserViewModel.Email);
-                        if (! await _authentication.CreateStudentUser(user.Id, registerUserViewModel.GroupId))
+                        User user = await _authentication.FindUserByEmailAsync(registerUserViewModel.Email);
+                        if (! await _authentication.CreateStudentUserAsync(user.Id, registerUserViewModel.GroupId))
                         {
                             await _authentication.DeleteUserAsync(user);
                             return View(registerUserViewModel);
@@ -178,9 +178,9 @@ namespace Mentor.Controllers
                     if (result.Succeeded)
                     {
 
-                        User user = await _authentication.FindUserByEmail(registerUserViewModel.Email);
+                        User user = await _authentication.FindUserByEmailAsync(registerUserViewModel.Email);
 
-                        if (! await _authentication.CreateTeacherUser(user.Id, registerUserViewModel.DepartmentId, registerUserViewModel.PositionId))
+                        if (! await _authentication.CreateTeacherUserAsync(user.Id, registerUserViewModel.DepartmentId, registerUserViewModel.PositionId))
                         {
                             await _authentication.DeleteUserAsync(user);
                             return View(registerUserViewModel);

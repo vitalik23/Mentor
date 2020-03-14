@@ -1,22 +1,38 @@
-﻿@{
+﻿@model TeacherSubjectViewModel
+
+@{
     ViewData["Title"] = "Список преподавателей";
 }
 
 <h3>Преподаватели</h3>
 <table>
     <tr>
-        <td>Модель</td>
-        <td>Производитель</td>
-        <td>Цена</td>
+        <td>Имя</td>
+        <td>Фамилия</td>
+        <td>Отчество</td>
+        <td>Кафедра</td>
+        <td>Должность</td>
         <td></td>
     </tr>
-    @foreach (var phone in Model)
+
+    @if (Model != null)
     {
-        <tr>
-            <td>@phone.Name</td>
-            <td>@phone.Company</td>
-            <td>@phone.Price</td>
-            <td><a href="~/Home/Buy/@phone.Id">Купить</a></td>
-        </tr>
+        @foreach (Teacher teacher in Model.Teachers)
+        {
+            <tr>
+
+                 <td>@Html.DisplayFor(modelItem => teacher.User.Name)</td>
+                 <td>@Html.DisplayFor(modelItem => teacher.User.Surname)</td>
+                 <td>@Html.DisplayFor(modelItem => teacher.User.Patronymic)</td>
+
+                 <td>@Html.DisplayFor(modelItem => teacher.Departament.Name)</td>
+                 <td>@Html.DisplayFor(modelItem => teacher.Position.Name)</td>
+                 <td><a asp-controller="Subject" asp-action="DeleteTeacherFromSubject" asp-route-subjectId="@Model.Subject.Id" asp-route-teacherId="@teacher.Id">Удалить</a></td>
+                  
+
+            </tr>
+        }
     }
+
+
 </table>

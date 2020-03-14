@@ -11,17 +11,18 @@ namespace Mentor.Interfaces
 {
     public interface IAuthentication
     {
-        Task<bool> CreateTeacherUser(string userId, int departmentId, int positionId);
-        Task<bool> CreateStudentUser(string userId, int groupId);
+        Task<bool> CreateTeacherUserAsync(string userId, int departmentId, int positionId);
+        Task<bool> CreateStudentUserAsync(string userId, int groupId);
         Task<IdentityResult> CreateUserAsync(RegisterUserViewModel model);
-        Task<User> FindUserByEmail(string email);
+        Task<User> FindUserByEmailAsync(string email);
+        Task<User> FindUserByIdAsync(string userId);
         System.Threading.Tasks.Task SignInAsync(User user);
         Task<Microsoft.AspNetCore.Identity.SignInResult> SignInAsync(LoginUserViewModel model);
         System.Threading.Tasks.Task SignOutAsync();
         System.Threading.Tasks.Task DeleteUserAsync(string userId);
         System.Threading.Tasks.Task DeleteUserAsync(User user);
-        Task<User> GetCurrentUser();
-        Task<Teacher> GetCurrentTeacher();
+        Task<User> GetCurrentUserAsync();
+        Task<Teacher> GetCurrentTeacherAsync();
 
         Department GetTeachersDepartment(Teacher teacher);
         Position GetTeachersPosition(Teacher teacher);

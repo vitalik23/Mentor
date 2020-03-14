@@ -28,7 +28,7 @@ namespace Mentor.Services
 
         }
 
-        public async Task<bool> CreateStudentUser(string userId, int groupId)
+        public async Task<bool> CreateStudentUserAsync(string userId, int groupId)
         {
 
             Group group = _dataBaseContext.Group.FirstOrDefault(p => p.Id == groupId);
@@ -53,7 +53,7 @@ namespace Mentor.Services
     
         }
 
-        public async Task<bool> CreateTeacherUser(string userId, int departmentId, int positionId)
+        public async Task<bool> CreateTeacherUserAsync(string userId, int departmentId, int positionId)
         {
 
             Department department = _dataBaseContext.Departament.FirstOrDefault(p => p.Id == departmentId);
@@ -107,25 +107,30 @@ namespace Mentor.Services
             }
         }
 
+        public async Task<User> FindUserByIdAsync(string userId) {
+            return await _userManager.FindByIdAsync(userId);
+        }
+
         public async System.Threading.Tasks.Task DeleteUserAsync(User user) {
             await _userManager.DeleteAsync(user);
         }
 
-        public async Task<User> FindUserByEmail(string email)
+        public async Task<User> FindUserByEmailAsync(string email)
         {
+            
             return await _userManager.FindByEmailAsync(email);
         }
 
-        public async Task<Teacher> GetCurrentTeacher()
+        public async Task<Teacher> GetCurrentTeacherAsync()
         {
-            User user = await GetCurrentUser();
+            User user = await GetCurrentUserAsync();
             Teacher teacher = _dataBaseContext.Teacher.FirstOrDefault(x => x.UserId == user.Id);
 
             return teacher;
 
         }
 
-        public async Task<User> GetCurrentUser()
+        public async Task<User> GetCurrentUserAsync()
         {
             string userId = _httpControllerAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User user = await _userManager.FindByIdAsync(userId);

@@ -1,0 +1,33 @@
+﻿@model StudentSubjectViewModel
+
+<h2>Добавить студента к курсу @Model.Subject.Name</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Отчество</th>
+            <th>Группа</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Student student in Model.Students)
+        {
+        <tr>
+
+            <td>@student.User.Name</td>
+            <td>@student.User.Surname</td>
+            <td>@student.User.Patronymic</td>
+
+            <td>@student.Group.Name</td>
+
+            <td>
+                <a asp-controller="Subject" asp-action="AddStudentToSubject" asp-route-subjectId="@Model.Subject.Id" asp-route-studentId="@student.Id">Добавить</a> |
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

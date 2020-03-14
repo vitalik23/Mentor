@@ -1,0 +1,33 @@
+﻿@model TeacherSubjectViewModel
+
+<h2>Добавить преподавателя к курсу @Model.Subject.Name</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Отчество</th>
+            <th>Кафедра</th>
+            <th>Должность</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Teacher teacher in Model.Teachers)
+        {
+        <tr>
+
+        <td>@Html.DisplayFor(modelItem => teacher.User.Name)</td>
+        <td>@Html.DisplayFor(modelItem => teacher.User.Surname)</td>
+        <td>@Html.DisplayFor(modelItem => teacher.User.Patronymic)</td>
+        <td>@Html.DisplayFor(modelItem => teacher.Departament.Name)</td>
+        <td>@Html.DisplayFor(modelItem => teacher.Position.Name)</td>
+            <td>
+                <a asp-controller="Subject" asp-action="AddTeacherToSubject" asp-route-subjectId="@Model.Subject.Id" asp-route-teacherId="@teacher.Id">Добавить</a> |
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
