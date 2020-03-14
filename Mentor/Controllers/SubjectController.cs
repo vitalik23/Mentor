@@ -17,5 +17,15 @@ namespace Mentor.Controllers
         {
             return View();
         }
+
+        public IActionResult ListTeacher()
+        {
+            return View();
+        }
+        public IActionResult ListStudent()
+        {
+            return View();
+        }
+
     }
 }
