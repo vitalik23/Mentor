@@ -35,6 +35,7 @@ namespace Mentor.Controllers
             return items;
         }
         private List<SelectListItem> populateDepartments() {
+
             IEnumerable<Department> departments = _databaseWorker.GetAllDepartments();
             List<SelectListItem> items = new List<SelectListItem>();
 

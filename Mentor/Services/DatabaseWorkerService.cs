@@ -40,5 +40,10 @@ namespace Mentor.Services
         {
             return _dataBaseContext.Subject.FirstOrDefault(p => p.Id == id);
         }
+
+        public Models.Task GetTaskById(int id)
+        {
+            return _dataBaseContext.Task.FirstOrDefault(p => p.Id == id);
+        }
     }
 }

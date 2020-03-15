@@ -98,7 +98,7 @@ namespace Mentor.Services
                     Directory.CreateDirectory(path);
                 }
 
-                string lastFileName = _appEnvironment.WebRootPath + task.Id;
+                string lastFileName = _appEnvironment.WebRootPath + task.TheoryPath;
 
                 if (task.TheoryPath != "" && File.Exists(lastFileName))
                 {
@@ -114,6 +114,42 @@ namespace Mentor.Services
 
                 _dataBaseContext.SaveChanges();
 
+            }
+        }
+
+        public async System.Threading.Tasks.Task UploadTaskSolutionFile(N_To_N_TaskStudent __model, IFormFile uploadedFile)
+        {
+            if (uploadedFile != null)
+            {
+
+                N_To_N_TaskStudent model = _dataBaseContext.N_To_N_TaskStudent.FirstOrDefault(x => x.Id == __model.Id);
+                string path = _appEnvironment.WebRootPath + "/files/task_answers/" + model.Id + "/";
+
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                using (FileStream fileStream = new FileStream(path + uploadedFile.FileName, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);
+                }
+
+                model.SolutionPath = "/files/task_answers/" + model.Id + "/" + uploadedFile.FileName;
+
+                _dataBaseContext.SaveChanges();
+
+            }
+        }
+
+
+        public void DeleteFile(string __path)
+        {
+            string path = _appEnvironment.WebRootPath + __path;
+            
+            if (File.Exists(path)) 
+            {
+                File.Delete(path);
             }
         }
     }

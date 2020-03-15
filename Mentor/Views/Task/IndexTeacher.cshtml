@@ -1,1 +1,49 @@
-﻿
+﻿@model StudentThatPassedViewModel
+
+@{
+    ViewData["Title"] = "Студенты сдавшие задание " + Model.Task.Name;
+}
+
+<h3>Студенты</h3>
+<table>
+    <tr>
+        <td>Имя</td>
+        <td>Фамилия</td>
+        <td>Отчество</td>
+        <td>Группа</td>
+        <td>Оценка</td>
+        <td></td>
+    </tr>
+
+    @if (Model != null)
+    {
+        @foreach (N_To_N_TaskStudent taskStudent in Model.TaskStudents)
+        {
+
+           
+         <tr>
+             <td>@taskStudent.Student.User.Name</td>
+             <td>@taskStudent.Student.User.Surname</td>
+             <td>@taskStudent.Student.User.Patronymic</td>
+
+             <td>@taskStudent.Student.Group.Name</td>
+
+             @if (taskStudent.MarkValue > 0)
+             {
+                <td>@taskStudent.MarkValue</td>
+             }
+             else
+             { 
+                <td>---</td>
+             }
+
+             <td><a asp-controller="" asp-action="" >Оценить</a> |</td>
+
+         </tr>
+            
+
+        }
+    }
+
+
+</table>

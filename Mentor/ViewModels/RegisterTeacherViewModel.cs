@@ -10,7 +10,6 @@ namespace Mentor.ViewModels
     public class RegisterTeacherViewModel : RegisterUserViewModel
     {
 
-
         public List<SelectListItem> DeparmentItems { get; set; }
         public List<SelectListItem> PositionItems { get; set; }
 
