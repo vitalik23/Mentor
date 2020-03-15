@@ -11,8 +11,8 @@
                 <h1>Лекции</h1>
 
                 @foreach (Mentor.Models.Task task in Model.Tasks)
-                { 
-                       <a href=""><p>@task.Name</p></a>
+                {
+                    <a asp-controller="Task" asp-action="IndexTeacher" asp-route-taskId="@task.Id"><p>@task.Name</p></a>
                 }
 
                 <a id="add-cart-style-list" class="btn btn-success" asp-controller="Task" asp-action="AddTask" asp-route-subjectId="@Model.Subject.Id">Добавить задание</a>

@@ -11,6 +11,8 @@ namespace Mentor.Models
         public int TaskId { get; set; }
         public int StudentId { get; set; }
         public string SolutionPath { get; set; }
+        public DateTime LoadTime { get; set; }
+        public DateTime CheckTime { get; set; }
 
         public int MarkValue { get; set; }
         public string MarkDescription { get; set; }

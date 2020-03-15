@@ -13,5 +13,8 @@ namespace Mentor.Interfaces
         System.Threading.Tasks.Task DeleteAvatar(User user);
 
         System.Threading.Tasks.Task UploadTaskFile(Models.Task task, IFormFile uploadFile);
+        System.Threading.Tasks.Task UploadTaskSolutionFile(N_To_N_TaskStudent model, IFormFile uploadFile);
+
+        void DeleteFile(string path);
     }
 }

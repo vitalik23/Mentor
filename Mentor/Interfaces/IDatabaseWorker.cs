@@ -19,6 +19,7 @@ namespace Mentor.Interfaces
         bool PositionExists(int positionId);
 
         Subject GetSubjectById(int id);
+        Models.Task GetTaskById(int id);
 
 
     }

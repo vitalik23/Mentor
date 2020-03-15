@@ -1,1 +1,111 @@
-﻿
+﻿@model StatusTaskViewModel
+
+@{
+    ViewData["Title"] = Model.Task.Name;
+}
+
+<h2>Статус работы</h2>
+
+<table>
+    <tr>
+        <td>
+            <div>
+                <p>Статус</p>
+
+                @if (Model.TaskStudent == null)
+                {
+                    <strong> Не сдано </strong>
+                }
+                else
+                {
+                    <strong> Сдано на оценивание </strong>
+
+                    @if (Model.TaskStudent.MarkValue < 0)
+                    {
+                        <strong> Не оценено </strong>
+                    }
+                    else
+                    {
+                        <strong> Оценено </strong>
+                    }
+
+                }
+
+
+
+
+            </div>
+
+
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div>
+                <p>Термин</p>
+                <strong> @Model.Task.DeadlineTime </strong>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div>
+                <p>Оставшееся время</p>
+                <strong> to be added </strong>
+            </div>
+
+        </td>
+    </tr>
+
+    @if (Model.TaskStudent != null && Model.TaskStudent.MarkValue >= 0)
+    {
+        <tr>
+            <td>
+                <div>
+                    <p>Оценка</p>
+                    <strong> @Model.TaskStudent.MarkValue </strong>
+                </div>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div>
+                    <p>Описание</p>
+                    <strong> @Model.TaskStudent.MarkDescription </strong>
+                </div>
+
+            </td>
+        </tr>
+
+    }
+
+    <tr>
+        <td>
+
+            @if (Model.TaskStudent == null || Model.TaskStudent.MarkValue < 0) { 
+                <form method="post" asp-controller="Task" asp-action="SendSolutionOnTask" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <input type="hidden" name="TaskId" value="@Model.Task.Id" />
+                
+                    <div>
+                        <label asp-for="UploadedFile"></label><br />
+                        <input asp-for="UploadedFile" type="file" name="uploadedFile" />
+                
+                    </div>
+                    <div>
+                        <input type="submit" value="Создать" />
+                    </div>
+                </form>
+            }
+
+                
+        </td>
+    </tr>
+
+
+</table>

@@ -28,11 +28,6 @@ namespace Mentor.Controllers
             Console.WriteLine(" SUBJECT CONTROLLER CONSTRUCTOR ");
         }
 
-        public IActionResult AllCourse()
-        {
-            return View();
-        }
-
         [Authorize(Roles = RoleInitializer.ROLE_STUDENT)]
         public async Task<IActionResult> IndexStudent(int subjectId)
         {
@@ -45,6 +40,9 @@ namespace Mentor.Controllers
             }
 
             Subject subject = _databaseWorker.GetSubjectById(subjectId);
+
+            // should be remade
+
             IEnumerable<Models.Task> tasks = _taskService.GetTasksRelatedToSubject(subject);
             SubjectInfoViewModel model = new SubjectInfoViewModel { Subject = subject, Tasks = tasks };
 
@@ -73,12 +71,15 @@ namespace Mentor.Controllers
         public async Task<IActionResult> AddStudentToSubject(int subjectId, int studentId = -1)
         {
 
+            if (_subjectService.DoesSubjectBelongsToStudent(subjectId, studentId)) 
+            {
+                return RedirectToAction("IndexTeacher", new { subjectId  = subjectId });
+            }
+
             if (studentId != -1) 
             {
-
                 // studentId checking
 
-                Console.WriteLine(" idddd = " + studentId);
                 await _subjectService.AddStudentToSubject(subjectId, studentId);
             }
 
@@ -86,7 +87,7 @@ namespace Mentor.Controllers
 
             if (!_subjectService.DoesSubjectBelongsToTeacher(subjectId, teacher.Id))
             {
-                return RedirectToAction("IndexTeacher");
+                return RedirectToAction("IndexTeacher", new { subjectId = subjectId });
             }
 
             Subject subject = _databaseWorker.GetSubjectById(subjectId);
@@ -101,6 +102,11 @@ namespace Mentor.Controllers
         public async Task<IActionResult> AddTeacherToSubject(int subjectId, int teacherId = -1)
         {
 
+            if (_subjectService.DoesSubjectBelongsToTeacher(subjectId, teacherId))
+            {
+                return RedirectToAction("IndexTeacher", new { subjectId = subjectId });
+            }
+
             if (teacherId != -1)
             {
 
@@ -114,7 +120,7 @@ namespace Mentor.Controllers
 
             if (!_subjectService.DoesSubjectBelongsToTeacher(subjectId, teacher.Id))
             {
-                return RedirectToAction("IndexTeacher");
+                return RedirectToAction("IndexTeacher", new { subjectId = subjectId });
             }
 
             Subject subject = _databaseWorker.GetSubjectById(subjectId);
