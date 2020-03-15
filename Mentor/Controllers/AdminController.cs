@@ -67,7 +67,7 @@ namespace Mentor.Controllers
             return items;
         }
         ///--------------------------------------------------------------------
-        
+
         ///Methods for Groups
         public ViewResult Groups()
         {
@@ -82,7 +82,7 @@ namespace Mentor.Controllers
         }
 
         [HttpGet]
-        public ViewResult СreateGroup()
+        public ViewResult CreateGroup()
         {
             GroupViewModel model = new GroupViewModel { DepartmentItems = PopulateDepartments() };
             return View(model);
@@ -96,12 +96,22 @@ namespace Mentor.Controllers
                 Name = group.Name,
                 DepartamentId = group.DepartmentId
             };
+
             _baseContext.Group.Add(newGroup);
             _baseContext.SaveChanges();
 
             return RedirectToAction("Groups");
         }
 
+        [HttpGet]
+        public ActionResult DeleteGroup(int id)
+        {
+            Group group = _baseContext.Group.FirstOrDefault(i => i.Id == id);
+            _baseContext.Group.Remove(group);
+            _baseContext.SaveChanges();
+
+            return RedirectToAction("Groups");
+        }
         ///--------------------------------------------------------------------
 
         //Methods for Departments
@@ -109,9 +119,9 @@ namespace Mentor.Controllers
         public ViewResult Departments()
         {
             IEnumerable<Department> departments = new List<Department>(_databaseWorker.GetAllDepartments());
-        
-            foreach(Department department in departments)
-            { 
+
+            foreach (Department department in departments)
+            {
                 department.Faculty = _baseContext.Faculty.FirstOrDefault(x => x.Id == department.FacultyId);
             }
 
@@ -218,7 +228,7 @@ namespace Mentor.Controllers
                 Patronymic = user.Patronymic,
                 PhoneNumber = user.PhoneNumber,
                 IsAccepted = user.IsAccepted
-                
+
             };
 
             return View(model);
@@ -256,7 +266,8 @@ namespace Mentor.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            if (id != null) {
+            if (id != null)
+            {
                 await _authentication.DeleteUserAsync(id);
             }
 

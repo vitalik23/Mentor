@@ -4,7 +4,7 @@
 }
 
 <div class="align-content-xl-center">
-    <a asp-controller="Admin" asp-action="СreateDepartment">Добавить группу</a>
+    <a asp-controller="Admin" asp-action="CreateGroup">Добавить группу</a>
 </div>
 <table class="table">
     <thead>
@@ -22,7 +22,7 @@
                 <td>@Html.DisplayFor(modelItem => group.Departament.Name)</td>
                 <td>
                     <a asp-controller="Admin" asp-action="Details">Детали</a> |
-                    <a asp-controller="Admin" asp-action="DeleteDepartment" asp-route-id="@group.Id">Удалить</a>
+                    <a asp-controller="Admin" asp-action="DeleteGroup" asp-route-id="@group.Id">Удалить</a>
                 </td>
             </tr>
         }
