@@ -10,7 +10,18 @@
                 <table id="widthTableInfo">
                     <tr>
                         <td height="250px">
-                            <p align="center"><img src="~/img/noName.png" id="noName" /></p>
+                            <p align="center"><a asp-controller="UserSettings" asp-action="AvatarSettings">
+
+                                @if (Model.User.AvatarPath == "")
+                                {
+                                    <img src="~/img/noName.png" id="noName" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(Model.User.AvatarPath)" id="noName" />
+                                }
+                                 
+                            </a></p>
                         </td>
                     </tr>
                     <tr>

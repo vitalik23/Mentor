@@ -59,6 +59,8 @@ namespace Mentor.Services
 
         }
 
+
+
         public IEnumerable<Subject> GetSubjectsByTeacher(Teacher teacher)
         {
 
@@ -73,9 +75,26 @@ namespace Mentor.Services
             return subjects;
         }
 
+        public IEnumerable<Subject> GetSubjectsByStudent(Student student) {
+            IEnumerable<N_To_N_StudentSubject> ns = _dataBaseContext.N_To_N_StudentSubject.Where(c => c.StudentId == student.Id).ToList();
+            List<Subject> subjects = new List<Subject>();
+
+            foreach (N_To_N_StudentSubject n in ns)
+            {
+                subjects.Add(_dataBaseContext.Subject.FirstOrDefault(c => c.Id == n.SubjectId));
+            }
+
+            return subjects;
+        }
+
+
         public bool DoesSubjectBelongsToTeacher(int subjectId, int teacherId)
         {
             return _dataBaseContext.N_To_N_TeacherSubject.FirstOrDefault(x => x.SubjectId == subjectId && x.TeacherId == teacherId) != null;
+        }
+
+        public bool DoesSubjectBelongsToStudent(int subjectId, int studentId) {
+            return _dataBaseContext.N_To_N_StudentSubject.FirstOrDefault(x => x.SubjectId == subjectId && x.StudentId == studentId) != null;
         }
 
         public async Task<IEnumerable<Teacher>> GetTeachersBySubject(Subject subject)

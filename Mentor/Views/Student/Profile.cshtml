@@ -1,88 +1,99 @@
-﻿@{
-    ViewData["Title"] = "Якийсь парень";
+﻿@model StudentProfileViewModel
+@{
+    ViewData["Title"] = @Model.Student.User.Name;
 }
-
-<div class="container">
-    <div id="main">
-
-
-        <div class="row" id="real-estates-detail">
-            <div class="col-lg-4 col-md-4 col-xs-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <header class="panel-title">
-                            <div class="text-center">
-                                <strong>Пользователь сайта</strong>
-                            </div>
-                        </header>
-                    </div>
-                    <div class="panel-body">
-                        <div class="text-center" id="author">
-                            <img src="~/img/noName.png">
-                            <h3>Василий Понторезов</h3>
-                            <small class="label label-warning">Харьков</small>
-                            <p>Я простой Сельский пацан и мне всё по барабану.</p>
+<table>
+    <col width="30%" valign="top">
+    <col width="70%" valign="top">
+    <tr>
+        <td id="leftPast">
+            <table id="widthTableInfo">
+                <tr>
+                    <td height="250px">
+                        <p align="center"><a  asp-controller="UserSettings" asp-action="AvatarSettings" >
                             
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-8 col-md-8 col-xs-12">
-                <div class="panel">
-                    <div class="panel-body">
-                        <ul id="myTab" class="nav nav-pills">
-                            <li class="active"><a href="#detail" data-toggle="tab">О пользователе </a></li>
-                            <li class=""><a href="#contact" data-toggle="tab">Отправить сообщение</a></li>
-                        </ul>
-                        <div id="myTabContent" class="tab-content">
-                            <hr>
-                            <div class="tab-pane fade active in" id="detail">
-                                <h4>История профиля</h4>
-                                <table class="table table-th-block">
-                                    <tbody>
-                                        <tr><td class="active">Зарегистрирован:</td><td>12-06-2016</td></tr>
-                                        <tr><td class="active">Полных лет:</td><td>43</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="tab-pane fade" id="contact">
-                                <p></p>
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label>Ваше имя</label>
-                                        <input type="text" class="form-control rounded" placeholder="Укажите Ваше Имя">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Ваш телефон</label>
-                                        <input type="text" class="form-control rounded" placeholder="(+38)(095)123456">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>E-mail адрес</label>
-                                        <input type="email" class="form-control rounded" placeholder="Е-майл кому отправляете">
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> Согласен с условиями
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Текст Вашего сообщения</label>
-                                        <textarea class="form-control rounded" style="height: 100px;"></textarea>
-                                        <p class="help-block">Текст сообщения будет отправлен пользователю</p>
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-success" data-original-title="" title="">Отправить</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                             @if (Model.Student.User.AvatarPath == "")
+                                {
+                                    <img src="~/img/noName.png" id="noName" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(Model.Student.User.AvatarPath)" id="noName" />
+                                }
+                             
+                             
+                             </a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="350px" id="tdContentPol">
+                 
+                        <form method="get" asp-controller="Teacher" asp-action="AddCourse">
+                            <p><button type="button" class="btn btn-success" id="buttInfo">Написать сообщение</button></p>
+                        </form>
 
-</div><!-- /.main -->
-</div><!-- /.container -->
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td id="rightPast">
+            <table class="table">
+                <tr>
+                    <td height="200px" id="elmList" width="600px">
+                        <div id="location">
+                            <p>Имя: @Model.Student.User.Name</p>
+                            <p>Фамилия: @Model.Student.User.Surname</p>
+                            <p>Номер телефона: @Model.Student.User.PhoneNumber</p>
+                            <p>Время регистрации: @Model.Student.User.RegistrationDate</p>
+                            <p>Email: @Model.Student.User.Email</p>
+
+                            <p>Группа: @Model.Student.Group.Name</p>
+                      
+                        </div>
+                    </td>
+                    <td rowspan="2">
+                        <div id="margintoTop">
+                            <p id="calendar" padding-top="0">Навигация</p>
+                            <div id="listCourse">
+                                <p><a href="">На главную</a></p>
+                                <p>
+                                    <select>
+                                        <option disabled selected value="Мои курсы">Мои курсы</option>
+                                        <option href="">Какой то курс</option>
+                                        <option href="">Какой то курс</option>
+                                        <option href="">Какой то курс</option>
+                                    </select>
+                                </p>
+                                <p><a href="">Информационная страница</a></p>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+
+                    <td height="400px" id="elmList" width="600px">
+                        <p id="calendar">Мои курсы</p>
+                        <ol class="rounded">
+
+                            @{
+                                if (Model.Subjects != null)
+                                {
+                                    foreach (Subject subject in Model.Subjects)
+                                    {
+
+                                        <li><a asp-controller="Subject" asp-action="IndexStudent" asp-route-subjectId="@subject.Id">@subject.Name</a></li>
+                                    }
+                                }
+                            }
+
+                        </ol>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+

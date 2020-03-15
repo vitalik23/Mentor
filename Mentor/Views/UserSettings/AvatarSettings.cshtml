@@ -1,0 +1,18 @@
+﻿@model Mentor.Models.User
+
+@if (Model.AvatarPath == "")
+{
+    <img src="~/img/noName.png" id="noName" />
+}
+else
+{
+    <img src="@Url.Content(Model.AvatarPath)" id="noName" />
+}
+
+
+<a asp-controller="UserSettings" asp-action="DeleteAvatar" >Удалить</a>
+
+<form asp-controller="UserSettings" asp-action="UploadAvatar" method="post" enctype="multipart/form-data">
+    <input type="file" name="uploadedFile" /><br>
+    <input type="submit" value="Загрузить новую аватарку" />
+</form>

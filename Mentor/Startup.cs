@@ -37,6 +37,7 @@ namespace Mentor
             services.AddTransient<IAuthentication, AuthenticationService>();
             services.AddTransient<IDatabaseWorker, DatabaseWorkerService>();
             services.AddTransient<ISubjectService, SubjectService>();
+            services.AddTransient<IFileService, FileService>();
 
             services.AddIdentity<User, IdentityRole>(opts => {
                 opts.Password.RequiredLength = 5;   // минимальная длина
@@ -44,7 +45,6 @@ namespace Mentor
                 opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
                 opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре
                 opts.Password.RequireDigit = false; // требуются ли цифры
-
 
                 opts.User.RequireUniqueEmail = true;    // уникальный email
                 opts.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz"; // допустимые символы

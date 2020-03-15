@@ -89,7 +89,9 @@ namespace Mentor.Services
                 Name = model.Name,
                 Surname = model.Surname,
                 RegistrationDate = DateTime.Now,
-                IsAccepted = false
+                IsAccepted = false,
+                AvatarPath = ""
+                
             };
 
             // добавляем пользователя
@@ -125,8 +127,20 @@ namespace Mentor.Services
         {
             User user = await GetCurrentUserAsync();
             Teacher teacher = _dataBaseContext.Teacher.FirstOrDefault(x => x.UserId == user.Id);
+            teacher.User = user;
 
             return teacher;
+
+        }
+
+        public async Task<Student> GetCurrentStudentAsync()
+        {
+            User user = await GetCurrentUserAsync();
+            Student student = _dataBaseContext.Student.FirstOrDefault(x => x.UserId == user.Id);
+            student.User = user;
+            student.Group = _dataBaseContext.Group.FirstOrDefault(x => x.Id == student.GroupId);
+
+            return student;
 
         }
 

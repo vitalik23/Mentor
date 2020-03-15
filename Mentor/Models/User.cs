@@ -14,5 +14,7 @@ namespace Mentor.Models
         public DateTime Birthday { get; set; }
         public DateTime RegistrationDate { get; set; }
         public bool IsAccepted { get; set; }
+        public string AvatarPath { get; set; }
+
     }
 }

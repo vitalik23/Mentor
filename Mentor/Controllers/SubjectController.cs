@@ -31,6 +31,23 @@ namespace Mentor.Controllers
             return View();
         }
 
+        [Authorize(Roles = RoleInitializer.ROLE_STUDENT)]
+        public async Task<IActionResult> IndexStudent(int subjectId)
+        {
+
+            Student student = await _authentication.GetCurrentStudentAsync();
+
+            if (!_subjectService.DoesSubjectBelongsToStudent(subjectId, student.Id))
+            {
+                return RedirectToAction("Profile", "Student");
+            }
+
+            Subject subject = _databaseWorker.GetSubjectById(subjectId);
+            SubjectInfoViewModel model = new SubjectInfoViewModel { Subject = subject };
+
+            return View(model);
+        }
+
         [Authorize(Roles = RoleInitializer.ROLE_TEACHER)]
         public async Task<IActionResult> IndexTeacher(int subjectId)
         {

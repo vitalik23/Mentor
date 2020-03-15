@@ -8,6 +8,7 @@ namespace Mentor.Interfaces
     {
 
         bool DoesSubjectBelongsToTeacher(int subjectId, int teacherId);
+        bool DoesSubjectBelongsToStudent(int subjectId, int studentId);
 
         System.Threading.Tasks.Task AddSubject(Subject subject, int teacherId);
         System.Threading.Tasks.Task AddSubject(string subjectName, int teacherId);
@@ -16,8 +17,9 @@ namespace Mentor.Interfaces
         System.Threading.Tasks.Task AddStudentToSubject(int subjectId, int studentId);
 
         IEnumerable<Subject> GetSubjectsByTeacher(Teacher teacher);
-        Task<IEnumerable<Teacher>> GetTeachersBySubject(Subject subject);
+        IEnumerable<Subject> GetSubjectsByStudent(Student student);
 
+        Task<IEnumerable<Teacher>> GetTeachersBySubject(Subject subject);
         Task<IEnumerable<Student>> GetStudentsBySubject(Subject subject);
 
         Task<IEnumerable<Teacher>> GetTeachersWithoutThisSubject(Subject subject);
