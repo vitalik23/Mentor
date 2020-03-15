@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Department>
+@{
+    Layout = "_LayoutForAdmin";
+}
+
+    <div class="align-content-xl-center">
+        <a asp-controller="Admin" asp-action="СreateDepartment">Добавить кафедру</a>
+    </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название кафедры</th>
+            <th>Принадлежность к факультету</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Department department in Model)
+        {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => department.Name)</td>
+            <td>@Html.DisplayFor(modelItem => department.Faculty.Name)</td>
+            <td>
+                <a asp-controller="Admin" asp-action="Details" >Детали</a> |
+                <a asp-controller="Admin" asp-action="DeleteDepartment" asp-route-id="@department.Id">Удалить</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

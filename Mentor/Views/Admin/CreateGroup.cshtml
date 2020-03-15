@@ -1,0 +1,24 @@
+﻿@model GroupViewModel
+
+@{
+    Layout = "_LayoutForAdmin";
+}
+
+<h2>Добавление группы</h2>
+
+@{using (Html.BeginForm("CreateGroupConfirmed", "Admin", FormMethod.Post))
+    {
+
+        <div asp-validation-summary="ModelOnly"></div>
+
+        <div>
+            <label asp-for="Name"></label><br />
+            <input asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
+
+        @Html.DropDownListFor(m => m.DepartmentId, Model.DepartmentItems, "Пожалуйста, выбирете кафедру", new { @class = "form-control" });
+
+        <input type="submit" value="Добавить группу" />
+    }
+}

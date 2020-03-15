@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Mentor.Interfaces;
 using Mentor.Models;
 using Mentor.ViewModels;
+using Mentor.ViewModels.AdminsRelated;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Mentor.Controllers
 {
@@ -39,6 +41,114 @@ namespace Mentor.Controllers
         {
             return View();
         }
+        ///--------------------------------------------------------------------
+        private List<SelectListItem> PopulateFaculties()
+        {
+            IEnumerable<Faculty> faculties = _databaseWorker.GetFaculties();
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            foreach (Faculty faculty in faculties)
+            {
+                items.Add(new SelectListItem { Text = faculty.Name, Value = faculty.Id.ToString() });
+            }
+
+            return items;
+        }
+        private List<SelectListItem> PopulateDepartments()
+        {
+            IEnumerable<Department> departments = _databaseWorker.GetAllDepartments();
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            foreach (Department department in departments)
+            {
+                items.Add(new SelectListItem { Text = department.Name, Value = department.Id.ToString() });
+            }
+
+            return items;
+        }
+        ///--------------------------------------------------------------------
+        
+        ///Methods for Groups
+        public ViewResult Groups()
+        {
+            IEnumerable<Group> groups = new List<Group>(_databaseWorker.GetAllGroups());
+
+            foreach (Group group in groups)
+            {
+                group.Departament = _baseContext.Departament.FirstOrDefault(x => x.Id == group.DepartamentId);
+            }
+
+            return View(groups);
+        }
+
+        [HttpGet]
+        public ViewResult СreateGroup()
+        {
+            GroupViewModel model = new GroupViewModel { DepartmentItems = PopulateDepartments() };
+            return View(model);
+        }
+
+        [HttpPost, ActionName("CreateGroupConfirmed")]
+        public ActionResult CreateGroup(GroupViewModel group)
+        {
+            Group newGroup = new Group
+            {
+                Name = group.Name,
+                DepartamentId = group.DepartmentId
+            };
+            _baseContext.Group.Add(newGroup);
+            _baseContext.SaveChanges();
+
+            return RedirectToAction("Groups");
+        }
+
+        ///--------------------------------------------------------------------
+
+        //Methods for Departments
+        [HttpGet]
+        public ViewResult Departments()
+        {
+            IEnumerable<Department> departments = new List<Department>(_databaseWorker.GetAllDepartments());
+        
+            foreach(Department department in departments)
+            { 
+                department.Faculty = _baseContext.Faculty.FirstOrDefault(x => x.Id == department.FacultyId);
+            }
+
+            return View(departments);
+        }
+
+        [HttpGet]
+        public ViewResult СreateDepartment()
+        {
+            DepartmentViewModel model = new DepartmentViewModel { FacultyItems = PopulateFaculties() };
+            return View(model);
+        }
+
+        [HttpPost, ActionName("CreateDepartmentConfirmed")]
+        public ActionResult CreateDepartment(DepartmentViewModel department)
+        {
+            Department newDepartment = new Department
+            {
+                Name = department.Name,
+                FacultyId = department.FacultyId
+            };
+            _baseContext.Departament.Add(newDepartment);
+            _baseContext.SaveChanges();
+
+            return RedirectToAction("Departments");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteDepartment(int id)
+        {
+            Department department = _baseContext.Departament.FirstOrDefault(i => i.Id == id);
+            _baseContext.Departament.Remove(department);
+            _baseContext.SaveChanges();
+
+            return RedirectToAction("Departments");
+        }
+        ///--------------------------------------------------------------------
 
         //Methods for Faculties
         [HttpGet]
@@ -54,19 +164,14 @@ namespace Mentor.Controllers
         }
 
         [HttpGet]
-        public ViewResult AddFaculty()
+        public ViewResult СreateFaculty()
         {
             return View();
         }
 
-        [HttpPost]
-        public IActionResult AddFaculcty(AddFacultyViewModel model)
+        [HttpPost, ActionName("СreateFacultyConfirmed")]
+        public ActionResult СreateFaculty(Faculty faculty)
         {
-            Faculty faculty = new Faculty
-            {
-                Name = model.Name
-            };
-
             _baseContext.Faculty.Add(faculty);
             _baseContext.SaveChanges();
 
@@ -82,9 +187,21 @@ namespace Mentor.Controllers
 
             return RedirectToAction("Faculties");
         }
-
+        ///--------------------------------------------------------------------
 
         //Methods for Users
+        [HttpGet]
+        public ViewResult Users()
+        {
+            IEnumerable<User> users = _databaseWorker.GetUsers();
+            var allUsers = new UsersViewModel
+            {
+                AllUsers = users
+            };
+
+            return View(allUsers);
+        }
+
         [HttpGet]
         public async Task<ViewResult> EditUser(string id)
         {
@@ -137,18 +254,6 @@ namespace Mentor.Controllers
         }
 
         [HttpGet]
-        public ViewResult Users()
-        {
-            IEnumerable<User> users = _databaseWorker.GetUsers();
-            var allUsers = new UsersViewModel
-            {
-                AllUsers = users
-            };
-
-            return View(allUsers);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> DeleteUser(string id)
         {
             if (id != null) {
@@ -157,5 +262,6 @@ namespace Mentor.Controllers
 
             return RedirectToAction("Users");
         }
+        ///--------------------------------------------------------------------
     }
 }

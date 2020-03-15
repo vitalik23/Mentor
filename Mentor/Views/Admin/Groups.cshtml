@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Group>
+@{
+    Layout = "_LayoutForAdmin";
+}
+
+<div class="align-content-xl-center">
+    <a asp-controller="Admin" asp-action="СreateDepartment">Добавить группу</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Группа</th>
+            <th>Принадлежность к факультету</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Group group in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => group.Name)</td>
+                <td>@Html.DisplayFor(modelItem => group.Departament.Name)</td>
+                <td>
+                    <a asp-controller="Admin" asp-action="Details">Детали</a> |
+                    <a asp-controller="Admin" asp-action="DeleteDepartment" asp-route-id="@group.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
