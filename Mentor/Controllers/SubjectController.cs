@@ -17,11 +17,13 @@ namespace Mentor.Controllers
         private IDatabaseWorker _databaseWorker;
         private IAuthentication _authentication;
         private ISubjectService _subjectService;
+        private ITaskService _taskService;
 
-        public SubjectController(IDatabaseWorker databaseWorker, IAuthentication authentication, ISubjectService subjectService) {
+        public SubjectController(IDatabaseWorker databaseWorker, IAuthentication authentication, ISubjectService subjectService, ITaskService taskService) {
             _databaseWorker = databaseWorker;
             _authentication = authentication;
             _subjectService = subjectService;
+            _taskService = taskService;
 
             Console.WriteLine(" SUBJECT CONTROLLER CONSTRUCTOR ");
         }
@@ -43,7 +45,8 @@ namespace Mentor.Controllers
             }
 
             Subject subject = _databaseWorker.GetSubjectById(subjectId);
-            SubjectInfoViewModel model = new SubjectInfoViewModel { Subject = subject };
+            IEnumerable<Models.Task> tasks = _taskService.GetTasksRelatedToSubject(subject);
+            SubjectInfoViewModel model = new SubjectInfoViewModel { Subject = subject, Tasks = tasks };
 
             return View(model);
         }
@@ -59,7 +62,9 @@ namespace Mentor.Controllers
             }
 
             Subject subject = _databaseWorker.GetSubjectById(subjectId);
-            SubjectInfoViewModel model = new SubjectInfoViewModel { Subject = subject };
+            IEnumerable<Models.Task> tasks = _taskService.GetTasksRelatedToSubject(subject);
+
+            SubjectInfoViewModel model = new SubjectInfoViewModel { Subject = subject, Tasks = tasks };
 
             return View(model);
         }
@@ -168,6 +173,7 @@ namespace Mentor.Controllers
             _subjectService.DeleteStudentFromSubject(subjectId, studentId);
             return RedirectToAction("ListStudent", new { subjectId = subjectId });
         }
+
 
     }
 }

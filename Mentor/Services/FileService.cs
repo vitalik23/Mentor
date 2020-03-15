@@ -15,12 +15,14 @@ namespace Mentor.Services
     {
 
         private IWebHostEnvironment _appEnvironment;
+        private DataBaseContext _dataBaseContext;
         private UserManager<User> _userManager;
 
-        public FileService(IWebHostEnvironment appEnvironment, UserManager<User> userManager) 
+        public FileService(IWebHostEnvironment appEnvironment, UserManager<User> userManager, DataBaseContext dataBaseContext) 
         {
             _appEnvironment = appEnvironment;
             _userManager = userManager;
+            _dataBaseContext = dataBaseContext;
         }
 
         public async System.Threading.Tasks.Task DeleteAvatar(User user)
@@ -43,7 +45,7 @@ namespace Mentor.Services
             if (uploadedFile != null)
             {
 
-                string path = _appEnvironment.WebRootPath + "/files/" + user.Id + "/";
+                string path = _appEnvironment.WebRootPath + "/files/users/" + user.Id + "/";
 
                 if (!Directory.Exists(path))
                 {
@@ -64,7 +66,7 @@ namespace Mentor.Services
                     await uploadedFile.CopyToAsync(fileStream);
                 }
 
-                user.AvatarPath = "/files/" + user.Id + "/" + uploadedFile.FileName;
+                user.AvatarPath = "/files/users/" + user.Id + "/" + uploadedFile.FileName;
 
                 IdentityResult result = await _userManager.UpdateAsync(user);
 
@@ -80,6 +82,39 @@ namespace Mentor.Services
             }
 
             return false;
+        }
+
+        public async System.Threading.Tasks.Task UploadTaskFile(Models.Task __task, IFormFile uploadedFile)
+        {
+
+            if (uploadedFile != null)
+            {
+
+                Models.Task task = _dataBaseContext.Task.FirstOrDefault(x => x.Id == __task.Id);
+                string path = _appEnvironment.WebRootPath + "/files/tasks/" + task.Id + "/";
+
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                string lastFileName = _appEnvironment.WebRootPath + task.Id;
+
+                if (task.TheoryPath != "" && File.Exists(lastFileName))
+                {
+                    File.Delete(lastFileName);
+                }
+
+                using (FileStream fileStream = new FileStream(path + uploadedFile.FileName, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);
+                }
+
+                task.TheoryPath = "/files/subject/" + task.Id + "/" + uploadedFile.FileName;
+
+                _dataBaseContext.SaveChanges();
+
+            }
         }
     }
 }

@@ -10,8 +10,10 @@ namespace Mentor.Models
         public int Id { get; set; }
         public int TaskId { get; set; }
         public int StudentId { get; set; }
-        public string Reference_To_Answer { get; set; }
-        public int Mark { get; set; }
+        public string SolutionPath { get; set; }
+
+        public int MarkValue { get; set; }
+        public string MarkDescription { get; set; }
 
         public virtual Task Task { get; set; }
         public virtual Student Student { get; set; }

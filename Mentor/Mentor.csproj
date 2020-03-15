@@ -18,8 +18,9 @@
 
   <ItemGroup>
     <Folder Include="ViewModels\TeacherRelated\" />
+    <Folder Include="wwwroot\files\tasks\" />
+    <Folder Include="wwwroot\files\users\" />
     <Folder Include="wwwroot\img\forFacAndDep\" />
-    <Folder Include="wwwroot\files\" />
   </ItemGroup>
 
 

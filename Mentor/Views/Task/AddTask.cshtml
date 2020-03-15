@@ -1,0 +1,23 @@
+﻿@model AddTaskViewModel
+
+<h2>Добавление задания к курсу</h2>
+
+<form method="post" asp-controller="Task" asp-action="AddTask" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly"></div>
+    <input type="hidden" name="SubjectId" value="@Model.SubjectId" />
+
+    <div>
+        <label asp-for="TaskName"></label><br />
+        <input asp-for="TaskName" />
+        <span asp-validation-for="TaskName"></span>
+    </div>
+
+    <div>
+        <label asp-for="UploadedFile"></label><br />
+        <input asp-for="UploadedFile" type="file" name="uploadedFile" />
+
+    </div>
+    <div>
+        <input type="submit" value="Создать" />
+    </div>
+</form>

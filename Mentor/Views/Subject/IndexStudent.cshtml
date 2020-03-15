@@ -9,8 +9,10 @@
         <td>
             <div>
                 <h1>Лекции</h1>
-                <a href=""><p>Лекция 1</p></a>
-                <a href=""><p>Лекция 2</p></a>
+                @foreach (Mentor.Models.Task task in Model.Tasks)
+                {
+                    <a href=""><p>@task.Name</p></a>
+                }
             </div>
 
             <div>

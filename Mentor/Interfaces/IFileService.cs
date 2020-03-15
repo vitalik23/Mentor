@@ -11,5 +11,7 @@ namespace Mentor.Interfaces
     {
         System.Threading.Tasks.Task<bool> UploadNewAvatar(User user, IFormFile uploadFile);
         System.Threading.Tasks.Task DeleteAvatar(User user);
+
+        System.Threading.Tasks.Task UploadTaskFile(Models.Task task, IFormFile uploadFile);
     }
 }
