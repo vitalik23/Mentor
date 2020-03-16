@@ -1,0 +1,34 @@
+﻿@{ 
+    ViewData["Title"] = "Оценить";
+}
+
+    <form>
+        <p>
+            Выберите дату: <input type="date" name="calendar">
+            <input type="submit" value="Отправить">
+        </p>
+    </form>
+
+<div class="form-group row">
+    <p class="col-sm-4" align="right">Оценка</p>
+    <div class="col-sm-4">
+        <select class="form-control" id="exampleFormControlSelect1">
+            @for (int i = 0; i <= 100; i++)
+            {
+                <option>@i</option>
+            }
+        </select>
+    </div>
+    
+</div>
+
+<div class="form-group row">
+    <p class="col-sm-4" align="right">Комментарий</p>
+    <div class="col-sm-4">
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+</div>
+
+<div class="form-group row">
+    <button type="button" class="btn btn-success mx-auto">Оценить</button>
+</div>
