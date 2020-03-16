@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = Model.Task.Name;
 }
-
+<a href="#" onclick="history.back();return false;">Вернуться назад</a>
 <h2>Статус работы</h2>
 
 <table>
@@ -87,15 +87,16 @@
     <tr>
         <td>
 
-            @if (Model.TaskStudent == null || Model.TaskStudent.MarkValue < 0) { 
+            @if (Model.TaskStudent == null || Model.TaskStudent.MarkValue < 0)
+            {
                 <form method="post" asp-controller="Task" asp-action="SendSolutionOnTask" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly"></div>
                     <input type="hidden" name="TaskId" value="@Model.Task.Id" />
-                
+
                     <div>
                         <label asp-for="UploadedFile"></label><br />
                         <input asp-for="UploadedFile" type="file" name="uploadedFile" />
-                
+
                     </div>
                     <div>
                         <input type="submit" value="Создать" />
@@ -103,7 +104,7 @@
                 </form>
             }
 
-                
+
         </td>
     </tr>
 

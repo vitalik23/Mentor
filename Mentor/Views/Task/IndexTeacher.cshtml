@@ -4,6 +4,23 @@
     ViewData["Title"] = "Студенты сдавшие задание " + Model.Task.Name;
 }
 
+<div id="mypopup" class="popup">
+    <div class="popup-content">
+        <div class="popup-header">
+            <h2>Вы действительно хотите удалить задание?</h2>
+            <span class="close">&times;</span>
+        </div>
+        <div class="popup-body">
+            <button type="button" class="btn btn-danger">Да</button>
+            <button type="button" class="btn btn-danger">Нет</button>
+        </div>
+        
+    </div>
+</div>
+
+
+<a href="#" onclick="history.back();return false;">Вернуться назад</a>
+<button id="myBtn">Удалить задание</button>
 <h3>Студенты</h3>
 <table>
     <tr>
@@ -20,27 +37,27 @@
         @foreach (N_To_N_TaskStudent taskStudent in Model.TaskStudents)
         {
 
-           
-         <tr>
-             <td>@taskStudent.Student.User.Name</td>
-             <td>@taskStudent.Student.User.Surname</td>
-             <td>@taskStudent.Student.User.Patronymic</td>
 
-             <td>@taskStudent.Student.Group.Name</td>
+            <tr>
+                <td>@taskStudent.Student.User.Name</td>
+                <td>@taskStudent.Student.User.Surname</td>
+                <td>@taskStudent.Student.User.Patronymic</td>
 
-             @if (taskStudent.MarkValue > 0)
-             {
-                <td>@taskStudent.MarkValue</td>
-             }
-             else
-             { 
-                <td>---</td>
-             }
+                <td>@taskStudent.Student.Group.Name</td>
 
-             <td><a asp-controller="" asp-action="" >Оценить</a> |</td>
+                @if (taskStudent.MarkValue > 0)
+                {
+                    <td>@taskStudent.MarkValue</td>
+                }
+                else
+                {
+                    <td>---</td>
+                }
 
-         </tr>
-            
+                <td><a asp-controller="" asp-action="">Оценить</a> |</td>
+
+            </tr>
+
 
         }
     }

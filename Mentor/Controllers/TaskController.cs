@@ -94,5 +94,10 @@ namespace Mentor.Controllers
             return RedirectToAction("IndexTeacher", "Subject", new { subjectId = model.SubjectId });
         }
 
+        public IActionResult PageMark()
+        {
+            return View();
+        }
+
     }
 }

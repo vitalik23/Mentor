@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="~/css/Course.css" />
     <link rel="stylesheet" href="~/css/CourseProfile.css" />
     <link rel="stylesheet" href="~/css/StudentProfile.css" />
+    <link rel="stylesheet" href="~/css/DeleteTask.css" />
 
     <script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
     <script src="https://bootstraptema.ru/plugins/2015/b-v3-3-6/bootstrap.min.js"></script>
@@ -39,7 +40,7 @@
 
                             if (User.IsInRole("teacher"))
                             {
-                                <a id="userName"  asp-controller="Teacher" asp-action="Profile">@User.Identity.Name</a>
+                                <a id="userName" asp-controller="Teacher" asp-action="Profile">@User.Identity.Name</a>
                             }
                             else if (User.IsInRole("student"))
                             {
@@ -118,11 +119,12 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/Calendar.js"></script>
+    <script src="~/js/Popup.js"></script>
 
 
-   
 
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
