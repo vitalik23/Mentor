@@ -1,0 +1,61 @@
+﻿@model N_To_N_TaskStudent
+
+@{
+    ViewData["Title"] = "Оценить";
+}
+
+@*<form>
+        <p>
+            Выберите дату: <input type="date" name="calendar">
+            <input type="submit" value="Отправить">
+        </p>
+    </form>*@
+
+<a href="@Url.Action("Download", new {path = Model.SolutionPath})" class="not-filled recent">Загрузить файл решения</a>
+<br />
+
+<form method="post" asp-controller="Task" asp-action="MarkTask">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <input type="hidden" name="TaskId" value="@Model.TaskId" />
+    <input type="hidden" name="StudentId" value="@Model.StudentId" />
+
+    <div class="form-group row">
+        <p class="col-sm-4" align="right">Оценка</p>
+
+        <label asp-for="MarkValue"></label><br />
+        <div class="col-sm-4">
+            <select asp-for="MarkValue" class="form-control" id="exampleFormControlSelect1">
+                @for (int i = 0; i <= 100; i++)
+                {
+                    <option>@i</option>
+                }
+            </select>
+        </div>
+
+    </div>
+
+    <div>
+        <label asp-for="MarkDescription"></label><br />
+        <input asp-for="MarkDescription" />
+        <span asp-validation-for="MarkDescription"></span>
+    </div>
+
+    <div>
+        <input type="submit" value="Оценить" />
+    </div>
+
+</form>
+
+
+
+@*<div class="form-group row">
+        <p class="col-sm-4" align="right">Комментарий</p>
+        <div class="col-sm-4">
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <button type="button" class="btn btn-success mx-auto">Оценить</button>
+    </div>*@

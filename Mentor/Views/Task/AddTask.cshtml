@@ -12,11 +12,21 @@
         <span asp-validation-for="TaskName"></span>
     </div>
 
+
+    <div>
+        <label asp-for="Deadline"></label><br />
+        <input asp-for="Deadline" type="date"/>
+        <span asp-validation-for="Deadline"></span>
+    </div>
+
+
     <div>
         <label asp-for="UploadedFile"></label><br />
         <input asp-for="UploadedFile" type="file" name="uploadedFile" />
 
     </div>
+
+
     <div>
         <input type="submit" value="Создать" />
     </div>

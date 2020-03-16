@@ -10,12 +10,17 @@ namespace Mentor.Services
     public class SubjectService : ISubjectService
     {
 
-        DataBaseContext _dataBaseContext;
-        IAuthentication _authentication;
+        private DataBaseContext _dataBaseContext;
+        private IAuthentication _authentication;
+        private IDatabaseWorker _databaseWorker;
+        private ITaskService _taskService;
 
-        public SubjectService(DataBaseContext dataBaseContext, IAuthentication authentication) {
+        public SubjectService(DataBaseContext dataBaseContext, IAuthentication authentication, IDatabaseWorker databaseWorker, ITaskService taskService) 
+        {
             _dataBaseContext = dataBaseContext;
             _authentication = authentication;
+            _databaseWorker = databaseWorker;
+            _taskService = taskService;
         }
 
         public async System.Threading.Tasks.Task AddSubject(string subjectName, int teacherId)
@@ -58,7 +63,6 @@ namespace Mentor.Services
             await _dataBaseContext.SaveChangesAsync();
 
         }
-
 
 
         public IEnumerable<Subject> GetSubjectsByTeacher(Teacher teacher)
@@ -213,6 +217,27 @@ namespace Mentor.Services
                 _dataBaseContext.N_To_N_StudentSubject.Remove(m);
                 _dataBaseContext.SaveChanges();
             }
+        }
+
+        public void DeleteSubject(int subjectId)
+        {
+            Subject subject = _databaseWorker.GetSubjectById(subjectId);
+            DeleteSubject(subject);
+        }
+
+        // should be with id (fetch from db)
+        public void DeleteSubject(Subject subject)
+        {
+            IEnumerable<Models.Task> tasks = new List<Models.Task>(_dataBaseContext.Task.Where(x => x.SubjectId == subject.Id));
+            
+            foreach(Models.Task task in tasks)
+            {
+                _taskService.DeleteTask(task);
+            }
+
+            _dataBaseContext.Subject.Remove(subject);
+            _dataBaseContext.SaveChanges();
+
         }
     }
 }

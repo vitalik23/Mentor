@@ -178,9 +178,11 @@ namespace Mentor.Controllers
             return RedirectToAction("ListStudent", new { subjectId = subjectId });
         }
 
-        public IActionResult DeleteSubject()
+        [Authorize(Roles = RoleInitializer.ROLE_TEACHER)]
+        public IActionResult DeleteSubject(int subjectId)
         {
-            return View();
+            _subjectService.DeleteSubject(subjectId);
+            return RedirectToAction("Profile", "Teacher");
         }
     }
 }

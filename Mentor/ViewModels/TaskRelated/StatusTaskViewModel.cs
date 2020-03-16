@@ -19,6 +19,7 @@ namespace Mentor.ViewModels.TaskRelated
         // for post
         public IFormFile UploadedFile { get; set; }
         public int TaskId { get; set; }
+        public int SubjectId { get; set; }
 
     }
 }

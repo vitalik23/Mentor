@@ -19,7 +19,9 @@
                                     <a asp-controller="Task" asp-action="IndexTeacher" asp-route-taskId="@task.Id">@task.Name</a>
                                 </td>
                                 <td width="50%" id="sizetdIndexTeach">
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">Удалить</button>
+                                    @*   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">Удалить</button>*@
+
+                                    <a  class="btn btn-danger" asp-controller="Task" asp-action="DeleteTask" asp-route-taskId="@task.Id" asp-route-subjectId="@Model.Subject.Id">Удалить!!</a>
                                 </td>
                             </tr>
                         </table>
@@ -40,6 +42,8 @@
                 <a href=""><p>Журнал</p></a>
                 <p><a id="add-cart-style-list" class="btn btn-success" asp-controller="Subject" asp-action="AddStudentToSubject" asp-route-subjectId="@Model.Subject.Id">Добавить студента</a></p>
                 <p><a id="add-cart-style-list" class="btn btn-success" asp-controller="Subject" asp-action="AddTeacherToSubject" asp-route-subjectId="@Model.Subject.Id">Добавить преподавателя</a></p>
+
+                <p><a id="add-cart-style-list" class="btn btn-danger" asp-controller="Subject" asp-action="DeleteSubject" asp-route-subjectId="@Model.Subject.Id">Удалить данный предмет</a></p>
             </div>
         </td>
     </tr>

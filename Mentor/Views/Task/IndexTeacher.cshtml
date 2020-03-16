@@ -9,8 +9,6 @@
 <p align="right">
 </p>
 
-
-
 <a href="#" onclick="history.back();return false;">Вернуться назад</a>
 
 <h3>Студенты</h3>
@@ -46,7 +44,17 @@
                     <td>---</td>
                 }
 
-                <td><a asp-controller="" asp-action="">Оценить</a> |</td>
+                @if (taskStudent.MarkValue < 0)
+                {
+                    <td><a asp-controller="Task" asp-action="MarkTask" asp-route-taskId="@taskStudent.TaskId" asp-route-studentId="@taskStudent.StudentId">Оценить</a> |</td>
+                }
+                else
+                { 
+                    <td><a asp-controller="Task" asp-action="DeleteTaskMark" asp-route-taskId="@taskStudent.TaskId" asp-route-studentId="@taskStudent.StudentId">Удалить оценку</a> |</td>
+                }
+
+
+
 
             </tr>
 
