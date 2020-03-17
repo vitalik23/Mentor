@@ -131,8 +131,6 @@ namespace Mentor.Controllers
             return View(model);
         }
 
-
-
         public async Task<IActionResult> ListTeacher(int subjectId)
         {
             Teacher teacher = await _authentication.GetCurrentTeacherAsync();
@@ -180,6 +178,11 @@ namespace Mentor.Controllers
             return RedirectToAction("ListStudent", new { subjectId = subjectId });
         }
 
-
+        [Authorize(Roles = RoleInitializer.ROLE_TEACHER)]
+        public IActionResult DeleteSubject(int subjectId)
+        {
+            _subjectService.DeleteSubject(subjectId);
+            return RedirectToAction("Profile", "Teacher");
+        }
     }
 }

@@ -23,23 +23,47 @@ namespace Mentor.Services
             _authentication = authentication;
         }
 
-        public void AddTaskToSubject(AddTaskViewModel model)
+        public async System.Threading.Tasks.Task AddTaskToSubject(AddTaskViewModel model)
         {
-            Models.Task task = new Models.Task { Name = model.TaskName, SubjectId = model.SubjectId};
+            Models.Task task = new Models.Task 
+            { 
+                Name = model.TaskName, 
+                SubjectId = model.SubjectId,
+                DeadlineTime = model.Deadline
+            };
+
             _dataBaseContext.Task.Add(task);
             _dataBaseContext.SaveChanges();
 
-            _fileService.UploadTaskFile(task, model.UploadedFile);
+            await _fileService.UploadTaskFile(task, model.UploadedFile);
 
         }
 
-        public void DeleteTask()
+        public void DeleteTask(int taskId)
         {
-            throw new NotImplementedException();
+            Models.Task task = _dataBaseContext.Task.FirstOrDefault(x => x.Id == taskId);
+
+            if (task != null)
+            {
+                IEnumerable<N_To_N_TaskStudent> taskStudents = new List<N_To_N_TaskStudent>(_dataBaseContext.N_To_N_TaskStudent.Where(x => x.TaskId == taskId));
+
+                foreach (N_To_N_TaskStudent taskStudent in taskStudents)
+                {
+                    RemoveSolutionOnTask(taskStudent);
+                }
+
+                _fileService.DeleteFile(task.TheoryPath);
+                _dataBaseContext.Task.Remove(task);
+                _dataBaseContext.SaveChanges();
+            
+            }
         }
 
+        public void DeleteTask(Models.Task task)
+        {
+            DeleteTask(task.Id);
+        }
 
-        
         public IEnumerable<Models.Task> GetTasksRelatedToSubject(int subjectId)
         {
             IEnumerable<Models.Task> tasks = _dataBaseContext.Task.Where(x => x.SubjectId == subjectId);
@@ -60,7 +84,6 @@ namespace Mentor.Services
         {
             return _dataBaseContext.N_To_N_TaskStudent.FirstOrDefault(x => x.TaskId == taskId && x.StudentId == studentId);
         }
-
 
 
         public async System.Threading.Tasks.Task SendSolutionOnTask(Student student, Models.Task task, IFormFile uploadedFile)
@@ -119,6 +142,32 @@ namespace Mentor.Services
                 _dataBaseContext.SaveChanges();
             }
 
+        }
+
+        public void SaveMarkOnTaskOfStudent(N_To_N_TaskStudent __model)
+        {
+            N_To_N_TaskStudent model = _dataBaseContext.N_To_N_TaskStudent.FirstOrDefault(x => x.TaskId == __model.TaskId
+                                                                           && x.StudentId == __model.StudentId);
+
+            model.MarkValue = __model.MarkValue;
+            model.MarkDescription = __model.MarkDescription;
+
+            _dataBaseContext.SaveChanges();
+
+        }
+
+        public void DeleteTaskMark(int taskId, int studentId)
+        {
+            N_To_N_TaskStudent model = _dataBaseContext.N_To_N_TaskStudent.FirstOrDefault(x => x.TaskId == taskId
+                                                                           && x.StudentId == studentId);
+
+            if (model != null)
+            {
+                model.MarkValue = -1;
+                model.MarkDescription = "";
+
+                _dataBaseContext.SaveChanges();
+            }
         }
     }
 }

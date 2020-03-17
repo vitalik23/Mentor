@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = Model.Task.Name;
 }
+<a href="#" onclick="history.back();return false;">Вернуться назад</a>
+
+<a href="@Url.Action("Download", new {path = Model.Task.TheoryPath})" class="not-filled recent">Загрузить теоретический материал</a>
 
 <h2>Статус работы</h2>
 
@@ -43,7 +46,7 @@
     <tr>
         <td>
             <div>
-                <p>Термин</p>
+                <p>Сдать до:</p>
                 <strong> @Model.Task.DeadlineTime </strong>
             </div>
 
@@ -87,23 +90,25 @@
     <tr>
         <td>
 
-            @if (Model.TaskStudent == null || Model.TaskStudent.MarkValue < 0) { 
-                <form method="post" asp-controller="Task" asp-action="SendSolutionOnTask" enctype="multipart/form-data">
-                    <div asp-validation-summary="ModelOnly"></div>
-                    <input type="hidden" name="TaskId" value="@Model.Task.Id" />
-                
-                    <div>
-                        <label asp-for="UploadedFile"></label><br />
-                        <input asp-for="UploadedFile" type="file" name="uploadedFile" />
-                
-                    </div>
-                    <div>
-                        <input type="submit" value="Создать" />
-                    </div>
-                </form>
+            @if (Model.TaskStudent == null || Model.TaskStudent.MarkValue < 0)
+            {
+            <form method="post" asp-controller="Task" asp-action="SendSolutionOnTask" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly"></div>
+                <input type="hidden" name="TaskId" value="@Model.Task.Id" />
+                <input type="hidden" name="SubjectId" value="@Model.SubjectId" />
+
+                <div>
+                    <label asp-for="UploadedFile"></label><br />
+                    <input asp-for="UploadedFile" type="file" name="uploadedFile" />
+
+                </div>
+                <div>
+                    <input type="submit" value="Создать" />
+                </div>
+            </form>
             }
 
-                
+
         </td>
     </tr>
 

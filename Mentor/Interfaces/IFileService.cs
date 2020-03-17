@@ -1,5 +1,6 @@
 ﻿using Mentor.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace Mentor.Interfaces
         System.Threading.Tasks.Task UploadTaskSolutionFile(N_To_N_TaskStudent model, IFormFile uploadFile);
 
         void DeleteFile(string path);
+        byte[] Download(string path);
+
     }
 }

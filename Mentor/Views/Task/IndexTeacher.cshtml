@@ -4,6 +4,13 @@
     ViewData["Title"] = "Студенты сдавшие задание " + Model.Task.Name;
 }
 
+
+<!-- Button trigger modal -->
+<p align="right">
+</p>
+
+<a href="#" onclick="history.back();return false;">Вернуться назад</a>
+
 <h3>Студенты</h3>
 <table>
     <tr>
@@ -20,30 +27,40 @@
         @foreach (N_To_N_TaskStudent taskStudent in Model.TaskStudents)
         {
 
-           
-         <tr>
-             <td>@taskStudent.Student.User.Name</td>
-             <td>@taskStudent.Student.User.Surname</td>
-             <td>@taskStudent.Student.User.Patronymic</td>
 
-             <td>@taskStudent.Student.Group.Name</td>
+            <tr>
+                <td>@taskStudent.Student.User.Name</td>
+                <td>@taskStudent.Student.User.Surname</td>
+                <td>@taskStudent.Student.User.Patronymic</td>
 
-             @if (taskStudent.MarkValue > 0)
-             {
-                <td>@taskStudent.MarkValue</td>
-             }
-             else
-             { 
-                <td>---</td>
-             }
+                <td>@taskStudent.Student.Group.Name</td>
 
-             <td><a asp-controller="" asp-action="" >Оценить</a> |</td>
+                @if (taskStudent.MarkValue > 0)
+                {
+                    <td>@taskStudent.MarkValue</td>
+                }
+                else
+                {
+                    <td>---</td>
+                }
 
-         </tr>
-            
+                @if (taskStudent.MarkValue < 0)
+                {
+                    <td><a asp-controller="Task" asp-action="MarkTask" asp-route-taskId="@taskStudent.TaskId" asp-route-studentId="@taskStudent.StudentId">Оценить</a> |</td>
+                }
+                else
+                { 
+                    <td><a asp-controller="Task" asp-action="DeleteTaskMark" asp-route-taskId="@taskStudent.TaskId" asp-route-studentId="@taskStudent.StudentId">Удалить оценку</a> |</td>
+                }
+
+
+
+
+            </tr>
+
 
         }
     }
 
-
 </table>
+

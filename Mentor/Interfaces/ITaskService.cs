@@ -10,8 +10,9 @@ namespace Mentor.Interfaces
 {
     public interface ITaskService
     {
-        void AddTaskToSubject(AddTaskViewModel model);
-        void DeleteTask();
+        System.Threading.Tasks.Task AddTaskToSubject(AddTaskViewModel model);
+        void DeleteTask(int taskId);
+        void DeleteTask(Models.Task task);
 
         IEnumerable<Models.Task> GetTasksRelatedToSubject(int subjectId);
         IEnumerable<Models.Task> GetTasksRelatedToSubject(Subject subject);
@@ -25,7 +26,9 @@ namespace Mentor.Interfaces
 
         void RemoveSolutionOnTask(N_To_N_TaskStudent model);
 
-        
+        void SaveMarkOnTaskOfStudent(N_To_N_TaskStudent model);
+
+        void DeleteTaskMark(int taskId, int studentId);
 
     }
 }

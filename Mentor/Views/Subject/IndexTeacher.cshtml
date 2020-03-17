@@ -6,13 +6,27 @@
 
 <table>
     <tr>
-        <td>
+        <td width="600px" id="lectureSize1">
             <div>
                 <h1>Лекции</h1>
 
                 @foreach (Mentor.Models.Task task in Model.Tasks)
                 {
-                    <a asp-controller="Task" asp-action="IndexTeacher" asp-route-taskId="@task.Id"><p>@task.Name</p></a>
+                    <div class="form-group row">
+                        <table>
+                            <tr>
+                                <td width="50%" id="sizetdIndexTeach">
+                                    <a asp-controller="Task" asp-action="IndexTeacher" asp-route-taskId="@task.Id">@task.Name</a>
+                                </td>
+                                <td width="50%" id="sizetdIndexTeach">
+                                    @*   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">Удалить</button>*@
+
+                                    <a  class="btn btn-danger" asp-controller="Task" asp-action="DeleteTask" asp-route-taskId="@task.Id" asp-route-subjectId="@Model.Subject.Id">Удалить!!</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
                 }
 
                 <a id="add-cart-style-list" class="btn btn-success" asp-controller="Task" asp-action="AddTask" asp-route-subjectId="@Model.Subject.Id">Добавить задание</a>
@@ -20,15 +34,38 @@
             </div>
 
         </td>
-        <td id="tdInfo">
-            <p><a asp-controller="Subject" asp-action="ListTeacher" asp-route-subjectId="@Model.Subject.Id"> Список преподавателей</a></p>
-            <p><a asp-controller="Subject" asp-action="ListStudent" asp-route-subjectId="@Model.Subject.Id"> Список студентов</a></p>
+        <td id="lectureSize2" width="200px">
+            <div>
+                <p><a asp-controller="Subject" asp-action="ListTeacher" asp-route-subjectId="@Model.Subject.Id"> Список преподавателей</a></p>
+                <p><a asp-controller="Subject" asp-action="ListStudent" asp-route-subjectId="@Model.Subject.Id"> Список студентов</a></p>
 
-            <a href=""><p>Журнал</p></a>
-            <a id="add-cart-style-list" class="btn btn-success" asp-controller="Subject" asp-action="AddStudentToSubject" asp-route-subjectId="@Model.Subject.Id">Добавить студента</a>
-            <a id="add-cart-style-list" class="btn btn-success" asp-controller="Subject" asp-action="AddTeacherToSubject" asp-route-subjectId="@Model.Subject.Id">Добавить преподавателя</a>
+                <a href=""><p>Журнал</p></a>
+                <p><a id="add-cart-style-list" class="btn btn-success" asp-controller="Subject" asp-action="AddStudentToSubject" asp-route-subjectId="@Model.Subject.Id">Добавить студента</a></p>
+                <p><a id="add-cart-style-list" class="btn btn-success" asp-controller="Subject" asp-action="AddTeacherToSubject" asp-route-subjectId="@Model.Subject.Id">Добавить преподавателя</a></p>
 
+                <p><a id="add-cart-style-list" class="btn btn-danger" asp-controller="Subject" asp-action="DeleteSubject" asp-route-subjectId="@Model.Subject.Id">Удалить данный предмет</a></p>
+            </div>
         </td>
     </tr>
 </table>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Вопрос</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Вы действительно хотите удалить задание?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
+                <button type="button" class="btn btn-primary">Да</button>
+            </div>
+        </div>
+    </div>
+</div>

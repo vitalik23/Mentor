@@ -28,6 +28,9 @@ namespace Mentor.Interfaces
         void DeleteTeacherFromSubject(int subjectId, int teacherId);
         void DeleteStudentFromSubject(int subjectId, int studentId);
 
+        void DeleteSubject(int subjectId);
+        void DeleteSubject(Subject subject);
+
         // this list will be continued
     }
 }

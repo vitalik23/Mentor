@@ -16,12 +16,14 @@ namespace Mentor.Controllers
         private ITaskService _taskService;
         private IDatabaseWorker _databaseWorker;
         private IAuthentication _authentication;
+        private IFileService _fileService;
 
-        public TaskController(ITaskService taskService, IDatabaseWorker databaseWorker, IAuthentication authentication) 
+        public TaskController(ITaskService taskService, IDatabaseWorker databaseWorker, IAuthentication authentication, IFileService fileService) 
         {
             _taskService = taskService;
             _databaseWorker = databaseWorker;
             _authentication = authentication;
+            _fileService = fileService;
         }
 
         [Authorize(Roles = RoleInitializer.ROLE_TEACHER)]
@@ -54,12 +56,12 @@ namespace Mentor.Controllers
             // create answer
             await _taskService.SendSolutionOnTask(student, task, model.UploadedFile);
 
-            return RedirectToAction("IndexStudent", new { taskId = model.TaskId });
+            return RedirectToAction("IndexStudent", "Subject", new { subjectId = model.SubjectId});
         }
 
         [Authorize(Roles = RoleInitializer.ROLE_STUDENT)]
         [HttpGet]
-        public async Task<IActionResult> IndexStudent(int taskId)
+        public async Task<IActionResult> IndexStudent(int taskId, int subjectId)
         {
 
             Student student = await _authentication.GetCurrentStudentAsync();
@@ -69,10 +71,12 @@ namespace Mentor.Controllers
 
             N_To_N_TaskStudent taskStudent = _taskService.GetTaskStudent(task, student);
             StatusTaskViewModel model = new StatusTaskViewModel
-            { 
+            {
                 Task = task,
                 TaskStudent = taskStudent,
                 PresentTime = DateTime.Now,
+                SubjectId = subjectId
+
             };
 
             return View(model);
@@ -82,16 +86,61 @@ namespace Mentor.Controllers
         [HttpGet]
         public IActionResult AddTask(int subjectId)
         {
-            AddTaskViewModel model = new AddTaskViewModel { SubjectId = subjectId };
+            AddTaskViewModel model = new AddTaskViewModel 
+            { 
+                SubjectId = subjectId, 
+                Deadline = DateTime.Now
+            };
             return View(model);
         }
 
         [Authorize(Roles = RoleInitializer.ROLE_TEACHER)]
         [HttpPost]
-        public IActionResult AddTask(AddTaskViewModel model)
+        public async Task<IActionResult> AddTask(AddTaskViewModel model)
         {
-            _taskService.AddTaskToSubject(model);
+            await _taskService.AddTaskToSubject(model);
+
             return RedirectToAction("IndexTeacher", "Subject", new { subjectId = model.SubjectId });
+        }
+
+
+        [Authorize(Roles = RoleInitializer.ROLE_TEACHER)]
+        [HttpPost]
+        public IActionResult MarkTask(N_To_N_TaskStudent model)
+        {
+            _taskService.SaveMarkOnTaskOfStudent(model);
+            return RedirectToAction("IndexTeacher", new { taskId = model.TaskId });
+        }
+
+        [Authorize(Roles = RoleInitializer.ROLE_TEACHER)]
+        [HttpGet]
+        public IActionResult MarkTask(int taskId, int studentId)
+        {
+            N_To_N_TaskStudent model = _taskService.GetTaskStudent(taskId, studentId);
+            return View(model);
+        }
+
+        [Authorize(Roles = RoleInitializer.ROLE_TEACHER)]
+        [HttpGet]
+        public IActionResult DeleteTaskMark(int taskId, int studentId)
+        {
+
+            _taskService.DeleteTaskMark(taskId, studentId);
+            return RedirectToAction("IndexTeacher", new { taskId = taskId});
+        }
+
+        public FileResult Download(string path)
+        {
+            byte[] file = _fileService.Download(path);
+            return File(file, "application/doc", "solution.doc");
+        }
+
+        [Authorize(Roles = RoleInitializer.ROLE_TEACHER)]
+        [HttpGet]
+        public IActionResult DeleteTask(int taskId, int subjectId) {
+
+            _taskService.DeleteTask(taskId);
+            return RedirectToAction("IndexTeacher", "Subject", new { subjectId = subjectId});
         }
 
     }

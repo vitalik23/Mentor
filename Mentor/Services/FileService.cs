@@ -3,6 +3,7 @@ using Mentor.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -103,15 +104,18 @@ namespace Mentor.Services
                 if (task.TheoryPath != "" && File.Exists(lastFileName))
                 {
                     File.Delete(lastFileName);
+                    
                 }
 
                 using (FileStream fileStream = new FileStream(path + uploadedFile.FileName, FileMode.Create))
                 {
+
                     await uploadedFile.CopyToAsync(fileStream);
                 }
 
-                task.TheoryPath = "/files/subject/" + task.Id + "/" + uploadedFile.FileName;
+                task.TheoryPath = "/files/tasks/" + task.Id + "/" + uploadedFile.FileName;
 
+                _dataBaseContext.Task.Update(task);
                 _dataBaseContext.SaveChanges();
 
             }
@@ -151,6 +155,13 @@ namespace Mentor.Services
             {
                 File.Delete(path);
             }
+        }
+
+        public byte[] Download(string path)
+        {
+            byte[] doc = new byte[0];
+            doc = System.IO.File.ReadAllBytes(_appEnvironment.WebRootPath + path);
+            return doc;
         }
     }
 }
