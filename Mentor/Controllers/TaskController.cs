@@ -91,6 +91,7 @@ namespace Mentor.Controllers
                 SubjectId = subjectId, 
                 Deadline = DateTime.Now
             };
+
             return View(model);
         }
 

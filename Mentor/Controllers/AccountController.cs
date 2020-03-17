@@ -74,8 +74,12 @@ namespace Mentor.Controllers
         [HttpGet]
         public IActionResult TeacherRegister() {
 
-            RegisterTeacherViewModel model = new RegisterTeacherViewModel { DeparmentItems = populateDepartments(),
-                                                                            PositionItems = populatePositions()};
+            RegisterTeacherViewModel model = new RegisterTeacherViewModel 
+            { 
+                DeparmentItems = populateDepartments(),
+                PositionItems = populatePositions(),
+                Birthday = DateTime.Now
+            };
 
             return View(model);
         } 

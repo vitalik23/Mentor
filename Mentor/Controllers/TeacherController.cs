@@ -56,11 +56,11 @@ namespace Mentor.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddSubject(Subject subject) 
+        public async Task<IActionResult> AddSubject(TeacherProfileViewModel model) 
         {
 
             Teacher teacher = await _authentication.GetCurrentTeacherAsync();
-            await _subjectService.AddSubject(subject, teacher.Id);
+            await _subjectService.AddSubject(model.Subject, teacher.Id);
 
             return RedirectToAction("Profile");
         }

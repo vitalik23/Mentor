@@ -23,14 +23,17 @@ namespace Mentor.ViewModels
 
         [Required]
         [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Required]
         [Display(Name = "Телефонный номер")]
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
         [Required]
         [Display(Name = "Дата рождения")]
+        [DataType(DataType.DateTime)]
         public DateTime Birthday { get; set; }
 
         [Required]
