@@ -88,6 +88,7 @@ namespace Mentor.Services
                 PhoneNumber = model.PhoneNumber,
                 Name = model.Name,
                 Surname = model.Surname,
+                Patronymic = model.Patronymic,
                 RegistrationDate = DateTime.Now,
                 IsAccepted = false,
                 AvatarPath = "",
@@ -148,7 +149,7 @@ namespace Mentor.Services
         public async Task<User> GetCurrentUserAsync()
         {
             string userId = _httpControllerAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            User user = await _userManager.FindByIdAsync(userId);
+            User user = await _userManager.FindByIdAsync(userId); 
 
             return user;
         }

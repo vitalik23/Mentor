@@ -2,15 +2,16 @@
 @{
     ViewData["Title"] = @Model.User.Name;
 }
-    <table>
-        <col width="30%" valign="top">
-        <col width="70%" valign="top">
-        <tr>
-            <td id="leftPast">
-                <table id="widthTableInfo">
-                    <tr>
-                        <td height="250px">
-                            <p align="center"><a asp-controller="UserSettings" asp-action="AvatarSettings">
+<table>
+    <col width="30%" valign="top">
+    <col width="70%" valign="top">
+    <tr>
+        <td id="leftPast">
+            <table id="widthTableInfo">
+                <tr>
+                    <td height="250px">
+                        <p align="center">
+                            <a asp-controller="UserSettings" asp-action="AvatarSettings">
 
                                 @if (Model.User.AvatarPath == "")
                                 {
@@ -20,71 +21,98 @@
                                 {
                                     <img src="@Url.Content(Model.User.AvatarPath)" id="noName" />
                                 }
-                                 
-                            </a></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height="350px" id="tdContentPol">
-                            <form method="get" asp-controller="Teacher" asp-action="AddSubject">
-                                <p><button type="submit" class="btn btn-primary" id="buttInfo">Добавить курс</button></a></p>
-                            </form>
-                          
 
-                        </td>
-                    </tr>
-                </table>
-            </td>
+                            </a>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="350px" id="tdContentPol">
 
-            <td id="rightPast">
-                <table class="table">
-                    <tr>
-                        <td height="200px" id="elmList" width="600px">
-                            <div id="location">
-                                <p>Имя: @Model.User.Name</p>
-                                <p>Фамилия: @Model.User.Surname</p>
-                                <p>Номер телефона: @Model.User.PhoneNumber</p>
-                                <p>Время регистрации: @Model.User.RegistrationDate</p>
-                                <p>Email: @Model.User.Email</p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter2">Добавить курс</button>
 
-                                <p>Department: @Model.Department.Name</p>
-                                <p>Position: @Model.Position.Name</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td id="rightPast">
+            <table class="table">
+                <tr>
+                    <td height="200px" id="elmList" width="600px">
+                        <div id="location">
+                            <p>Имя: @Model.User.Name</p>
+                            <p>Фамилия: @Model.User.Surname</p>
+                            <p>Отчество: @Model.User.Patronymic</p>
+                            <p>Номер телефона: @Model.User.PhoneNumber</p>
+                            <p>Время регистрации: @Model.User.RegistrationDate</p>
+                            <p>День рождения: @Model.User.Birthday</p>
+                            <p>Email: @Model.User.Email</p>
+
+                            <p>Department: @Model.Department.Name</p>
+                            <p>Position: @Model.Position.Name</p>
+                        </div>
+                    </td>
+                    <td rowspan="2">
+                        <div id="margintoTop">
+                            <p id="calendar" padding-top="0">Навигация</p>
+                            <div id="listCourse">
+                                <p><a href="">На главную</a></p>
+                                <p><a href="">Информационная страница</a></p>
                             </div>
-                        </td>
-                        <td rowspan="2">
-                            <div id="margintoTop">
-                                <p id="calendar" padding-top="0">Навигация</p>
-                                <div id="listCourse">
-                                    <p><a href="">На главную</a></p>
-                                    <p><a href="">Информационная страница</a></p>
-                                </div>
-                            </div>
-    
-                        </td>
-                    </tr>
-                    <tr >
-                        
-                        <td height="400px" id="elmList" width="600px">   
-                            <p id="calendar">Мои курсы</p>
-                            <ol class="rounded">
+                        </div>
 
-                                @{
-                                    if (Model.Subjects != null)
+                    </td>
+                </tr>
+                <tr>
+
+                    <td height="400px" id="elmList" width="600px">
+                        <p id="calendar">Мои курсы</p>
+                        <ol class="rounded">
+
+                            @{
+                                if (Model.Subjects != null)
+                                {
+                                    foreach (Subject subject in Model.Subjects)
                                     {
-                                        foreach (Subject subject in Model.Subjects)
-                                        {
-                                            
-                                            <li><a asp-controller="Subject" asp-action="IndexTeacher" asp-route-subjectId ="@subject.Id">@subject.Name</a></li>
-                                        }
+
+                                        <li><a asp-controller="Subject" asp-action="IndexTeacher" asp-route-subjectId="@subject.Id">@subject.Name</a></li>
                                     }
                                 }
+                            }
 
-                            </ol>
-                            
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+                        </ol>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content text-center">
+
+            <form method="post" asp-controller="Teacher" asp-action="AddSubject">
+                <div class="modal-header " asp-validation-summary="ModelOnly"></div>
+
+                <div class="modal-body">
+                    <label asp-for="@Model.Subject.Name"></label><br />
+                    <input id="inputEmail" class="form-control" placeholder="Предмет" required="" autofocus="" asp-for="@Model.Subject.Name" />
+                    <span asp-validation-for="@Model.Subject.Name"></span>
+                </div>
+
+                <div class="modal-footer text-center">
+                    <button id="add-cart-style-grid" class="btn btn-success" type="submit">Добавить предмет</button>
+                </div>
+
+               
+            </form>
+
+
+        </div>
+    </div>
+</div>
 

@@ -74,8 +74,12 @@ namespace Mentor.Controllers
         [HttpGet]
         public IActionResult TeacherRegister() {
 
-            RegisterTeacherViewModel model = new RegisterTeacherViewModel { DeparmentItems = populateDepartments(),
-                                                                            PositionItems = populatePositions()};
+            RegisterTeacherViewModel model = new RegisterTeacherViewModel 
+            { 
+                DeparmentItems = populateDepartments(),
+                PositionItems = populatePositions(),
+                Birthday = DateTime.Now
+            };
 
             return View(model);
         } 
@@ -104,11 +108,11 @@ namespace Mentor.Controllers
                     else
                     {
 
-                        User user = await _authentication.GetCurrentUserAsync();
+                        User user = await _authentication.FindUserByEmailAsync(model.Email);
 
                         if (await _authentication.IsInRole(user, RoleInitializer.ROLE_ADMIN))
-                        { 
-                        
+                        {
+                            return RedirectToAction("Index", "Admin");
                         }
 
                         return RedirectToAction("Index", "Home");
