@@ -60,11 +60,14 @@ namespace Mentor.Controllers
         }
     
         [HttpGet]
-        public IActionResult ChooseUserType() => View();
-        [HttpGet]
         public IActionResult StudentRegister() {
 
-            RegisterStudentViewModel model = new RegisterStudentViewModel { GroupItems = populateGroups()};
+            RegisterStudentViewModel model = new RegisterStudentViewModel 
+            { 
+                GroupItems = populateGroups(),
+                Birthday = DateTime.Now
+            };
+
             return View(model);
         }
 
@@ -100,6 +103,14 @@ namespace Mentor.Controllers
                     }
                     else
                     {
+
+                        User user = await _authentication.GetCurrentUserAsync();
+
+                        if (await _authentication.IsInRole(user, RoleInitializer.ROLE_ADMIN))
+                        { 
+                        
+                        }
+
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -116,8 +127,8 @@ namespace Mentor.Controllers
         public async Task<IActionResult> StudentRegister(RegisterStudentViewModel registerUserViewModel)
         {
 
-            Console.WriteLine("GroupId = " + registerUserViewModel.GroupId);
-            Console.WriteLine("Name = " + registerUserViewModel.Name);
+           /* Console.WriteLine("GroupId = " + registerUserViewModel.GroupId);
+            Console.WriteLine("Name = " + registerUserViewModel.Name);*/
 
             registerUserViewModel.GroupItems = populateGroups();
 
@@ -130,6 +141,7 @@ namespace Mentor.Controllers
                     if (result.Succeeded)
                     {
                         User user = await _authentication.FindUserByEmailAsync(registerUserViewModel.Email);
+
                         if (! await _authentication.CreateStudentUserAsync(user.Id, registerUserViewModel.GroupId))
                         {
                             await _authentication.DeleteUserAsync(user);

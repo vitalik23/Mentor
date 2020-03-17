@@ -6,17 +6,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/Header.css" />
-    <link rel="stylesheet" href="~/css/Index.css" />
-    <link rel="stylesheet" href="~/css/Calendar.css" />
-    <link rel="stylesheet" href="~/css/Footer.css" />
-    <link rel="stylesheet" href="~/css/TeacherProfile.css" />
-    <link rel="stylesheet" href="~/css/AddCourse.css" />
-    <link rel="stylesheet" href="~/css/Course.css" />
-    <link rel="stylesheet" href="~/css/CourseProfile.css" />
-    <link rel="stylesheet" href="~/css/StudentProfile.css" />
-    <link rel="stylesheet" href="~/css/DeleteTask.css" />
-    <link rel="stylesheet" href="~/css/IndexTeacher.css" />
+        <link rel="stylesheet" href="~/css/Header.css" />
+        <link rel="stylesheet" href="~/css/Index.css" />
+        <link rel="stylesheet" href="~/css/Calendar.css" />
+        <link rel="stylesheet" href="~/css/Footer.css" />
+        <link rel="stylesheet" href="~/css/TeacherProfile.css" />
+        <link rel="stylesheet" href="~/css/AddCourse.css" />
+        <link rel="stylesheet" href="~/css/Course.css" />
+        <link rel="stylesheet" href="~/css/CourseProfile.css" />
+        <link rel="stylesheet" href="~/css/StudentProfile.css" />
+        <link rel="stylesheet" href="~/css/DeleteTask.css" />
+        <link rel="stylesheet" href="~/css/IndexTeacher.css" />
+
+   
+
+    <!-- Bootstrap core CSS -->
+    @* <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
 
     <script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
     <script src="https://bootstraptema.ru/plugins/2015/b-v3-3-6/bootstrap.min.js"></script>
@@ -35,6 +40,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
+
+                        
 
                         @if (User.Identity.IsAuthenticated)
                         {
@@ -67,9 +74,7 @@
                             </li>
 
                             <li class="nav-item active">
-                                <form method="get" asp-controller="Account" asp-action="ChooseUserType">
-                                    <button type="submit" class="btn btn-danger">Регистрация</button>
-                                </form>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">Регистрация</button>
                             </li>
                         }
 
@@ -83,6 +88,20 @@
 
     @RenderBody()
 
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                
+                <div class="modal-body text-center">
+                    <a id="add-cart-style-grid" class="btn btn-success" asp-controller="Account" asp-action="TeacherRegister">Преподаватель</a>
+                    <a id="add-cart-style-grid" class="btn btn-success" asp-controller="Account" asp-action="StudentRegister">Студент</a>
+                </div>
+               
+            </div>
+        </div>
+    </div>
 
     @*<footer id="footer">
             <table>

@@ -28,5 +28,7 @@ namespace Mentor.Interfaces
         Department GetTeachersDepartment(Teacher teacher);
         Position GetTeachersPosition(Teacher teacher);
 
+        Task<bool> IsInRole(User user, string role);
+
     }
 }
