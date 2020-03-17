@@ -21,7 +21,6 @@
             <td>@Html.DisplayFor(modelItem => department.Name)</td>
             <td>@Html.DisplayFor(modelItem => department.Faculty.Name)</td>
             <td>
-                <a asp-controller="Admin" asp-action="Details" >Детали</a> |
                 <a asp-controller="Admin" asp-action="DeleteDepartment" asp-route-id="@department.Id">Удалить</a>
             </td>
         </tr>

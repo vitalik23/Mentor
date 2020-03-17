@@ -104,11 +104,11 @@ namespace Mentor.Controllers
                     else
                     {
 
-                        User user = await _authentication.GetCurrentUserAsync();
+                        User user = await _authentication.FindUserByEmailAsync(model.Email);
 
                         if (await _authentication.IsInRole(user, RoleInitializer.ROLE_ADMIN))
-                        { 
-                        
+                        {
+                            return RedirectToAction("Index", "Admin");
                         }
 
                         return RedirectToAction("Index", "Home");

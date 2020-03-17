@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Position>
+
+@{
+    Layout = "_LayoutForAdmin";
+}
+
+<div class="align-content-xl-center">
+    <a asp-controller="Admin" asp-action="CreatePosition">Добавить должность</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Должность</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Position position in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => position.Name)</td>
+
+                <td>
+                    <a asp-controller="Admin" asp-action="DeletePosition" asp-route-id="@position.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Mentor";
+}
+
+<!--Слайдер-->
+<div class="carousel slide" data-ride="carousel" id="slides">
+    <ul class="carousel-indicators">
+        <li data-target="#slides" data-slide-to="0" class="active"></li>
+        <li data-target="#slides" data-slide-to="1"></li>
+    </ul>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/img/slide1.jpg" />
+        </div>
+        <div class="carousel-item">
+            <img src="img/slide2.jpg" />
+        </div>
+    </div>
+</div>
+
+<!--Content-->
+
+<table>
+    <tr>
+        <td id="left">
+            <p id="newsSite">Новости сайта</p>
+
+        </td>
+
+        <td id="right">
+            <p id="calendar" name="calen">Календарь</p>
+            <table id="calendar2" class="calendarClass">
+                <thead>
+                    <tr><td>‹<td colspan="5"><td>›
+                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+                <tbody>
+            </table>
+            <hr />
+            <div id="news">
+                <p id="calendar">Новости</p>
+                <div class="calendarClass">
+                    Какие-то новости
+                </div>
+                <hr />
+            </div>
+
+            <div id="">
+                <p id="calendar">Ожидается</p>
+                <div class="calendarClass">
+                    В будущем событий не ожидается
+                    <p><a href="#calen">Вернуться к календарю</a></p>
+                </div>
+                <hr/>
+            </div>
+
+            <div id="">
+                <p id="calendar">Главное меню</p>
+                <div class="calendarClass">
+                    <p><a href="#">Просмотреть новости</a></p>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+

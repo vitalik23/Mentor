@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Mentor.Controllers
 {
-    //[Authorize(Roles = RoleInitializer.ROLE_ADMIN)]
+    [Authorize(Roles = RoleInitializer.ROLE_ADMIN)]
     public class AdminController : Controller
     {
 
@@ -43,6 +43,12 @@ namespace Mentor.Controllers
         {
             return View();
         }
+
+        public ViewResult Error()
+        {
+            return View();
+        }
+
         ///--------------------------------------------------------------------
         private List<SelectListItem> PopulateFaculties()
         {
@@ -93,6 +99,11 @@ namespace Mentor.Controllers
         [HttpPost, ActionName("CreateGroupConfirmed")]
         public ActionResult CreateGroup(GroupViewModel group)
         {
+            if(group.DepartmentId == 0)
+            {
+                return RedirectToAction("Error");
+            }
+
             Group newGroup = new Group
             {
                 Name = group.Name,
@@ -142,7 +153,7 @@ namespace Mentor.Controllers
         {
             if(department.FacultyId == 0)
             {
-                return RedirectToAction("Departments");
+                return RedirectToAction("Error");
             }
             Department newDepartment = new Department
             {
@@ -202,6 +213,40 @@ namespace Mentor.Controllers
             _baseContext.SaveChanges();
 
             return RedirectToAction("Faculties");
+        }
+        ///--------------------------------------------------------------------
+
+        //Methods for Positions
+        [HttpGet]
+        public ViewResult Positions()
+        {
+            IEnumerable<Position> positions = _databaseWorker.GetAllPositions();
+            return View(positions);
+        }
+
+        [HttpGet]
+        public ViewResult CreatePosition()
+        {
+            return View();
+        }
+
+        [HttpPost, ActionName("СreatePositionConfirmed")]
+        public ActionResult CreatePosition(Position position) 
+        {
+            _baseContext.Position.Add(position);
+            _baseContext.SaveChanges();
+
+            return RedirectToAction("Positions");
+        }
+
+        [HttpGet]
+        public IActionResult DeletePosition(int id)
+        {
+            Position position = _baseContext.Position.FirstOrDefault(i =>i.Id == id);
+            _baseContext.Position.Remove(position);
+            _baseContext.SaveChanges();
+
+            return RedirectToAction("Positions");
         }
         ///--------------------------------------------------------------------
 
