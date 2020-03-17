@@ -6,6 +6,7 @@ using Mentor.Interfaces;
 using Mentor.Models;
 using Mentor.ViewModels;
 using Mentor.ViewModels.AdminsRelated;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Mentor.Controllers
 {
+    //[Authorize(Roles = RoleInitializer.ROLE_ADMIN)]
     public class AdminController : Controller
     {
 
@@ -138,6 +140,10 @@ namespace Mentor.Controllers
         [HttpPost, ActionName("CreateDepartmentConfirmed")]
         public ActionResult CreateDepartment(DepartmentViewModel department)
         {
+            if(department.FacultyId == 0)
+            {
+                return RedirectToAction("Departments");
+            }
             Department newDepartment = new Department
             {
                 Name = department.Name,
