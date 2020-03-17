@@ -90,7 +90,8 @@ namespace Mentor.Services
                 Surname = model.Surname,
                 RegistrationDate = DateTime.Now,
                 IsAccepted = false,
-                AvatarPath = ""
+                AvatarPath = "",
+                Birthday = model.Birthday
                 
             };
 
@@ -177,6 +178,11 @@ namespace Mentor.Services
         public async System.Threading.Tasks.Task SignOutAsync()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        public async Task<bool> IsInRole(User user, string role)
+        {
+            return await _userManager.IsInRoleAsync(user, role);
         }
     }
 }

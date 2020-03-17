@@ -10,6 +10,8 @@ namespace Mentor.ViewModels
     public class RegisterStudentViewModel : RegisterUserViewModel
     {
         public int GroupId { get; set; }
+
+
         public List<SelectListItem> GroupItems { get; set; }
     }
 }

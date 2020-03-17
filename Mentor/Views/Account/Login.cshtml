@@ -1,24 +1,39 @@
 ﻿@model Mentor.ViewModels.LoginUserViewModel
 
-<h2>Вход в приложение</h2>
-<form method="post" asp-controller="Account" asp-action="Login"
-      asp-route-returnUrl="@Model.ReturnUrl">
-    <div asp-validation-summary="ModelOnly"></div>
-    <div>
-        <label asp-for="Email"></label><br />
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
+<div class="row">
+    <div class="col-md-2 col-centered">
+
+        <form class="form-signin" method="post" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl">
+
+            <div asp-validation-summary="ModelOnly"></div>
+
+            <div>
+                <label asp-for="Email" class="sr-only"></label><br />
+                <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" asp-for="Email" />
+                <span asp-validation-for="Email"></span>
+            </div>
+
+            <div>
+                <label asp-for="Password" class="sr-only"></label><br />
+                <input asp-for="Password" id="inputPassword" class="form-control" placeholder="Password" required="" />
+                <span asp-validation-for="Password"></span>
+            </div>
+
+
+            <div class="checkbox mb-3">
+
+                <label>
+                    <input asp-for="RememberMe" type="checkbox"> Remember me
+                </label>
+
+            </div>
+
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+            <p class="mt-5 mb-3 text-muted">© 2017-2019</p>
+        </form>
+
+
     </div>
-    <div>
-        <label asp-for="Password"></label><br />
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-    <div>
-        <label asp-for="RememberMe"></label><br />
-        <input asp-for="RememberMe" />
-    </div>
-    <div>
-        <input type="submit" value="Войти" />
-    </div>
-</form>
+</div>
+
