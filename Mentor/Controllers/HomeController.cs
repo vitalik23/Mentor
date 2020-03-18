@@ -21,7 +21,7 @@ namespace Mentor.Controllers
         //Home page
         public IActionResult Index()
         {
-            return View();
+            return View(db.New.ToList());
         }
 
     }

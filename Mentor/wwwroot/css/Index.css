@@ -17,8 +17,8 @@ body {
 }
 /*Content*/
 table {
-    
-    width: 100%;    
+    border-spacing: 2px 2px;
+    width: 100%;
 }
 
 .col-centered {
@@ -26,15 +26,14 @@ table {
     margin: 0 auto;
 }
 
-/*td, th {
+.showondisplay td, th {
 
-    padding: 3px;
-    border: 1px solid black; 
+    border: 1px solid silver;
 }
-th {
-    background: #b0e0e6; 
+.showondisplay th {
+    background: #b0e0e6;
 }
-*/
+
 #left {    
     width: 70%;
     vertical-align: top;
