@@ -4,7 +4,8 @@
     Layout = "_LayoutForAdmin";
 }
 
-
+<a asp-controller="Admin" asp-action="CreateStudent">Добавить студента </a>|
+<a asp-controller="Admin" asp-action="CreateTeacher">Добавить преподователя</a>
 <table class="table">
     <thead>
         <tr>
@@ -25,7 +26,6 @@
                 <td>@Html.DisplayFor(modelItem => user.IsAccepted)</td>
                 <td>
                     <a asp-controller="Admin" asp-action="EditUser" asp-route-id="@user.Id">Редактировать</a> |
-                    <a asp-action="Details" asp-route-id="@user.Id">Детали</a> |
                     <a asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@user.Id">Удалить</a>
                 </td>
             </tr>

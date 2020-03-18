@@ -48,6 +48,120 @@ namespace Mentor.Controllers
         {
             return View();
         }
+        ///------------------------Create_users_from_Admin---------------------
+        [HttpGet]
+        public IActionResult CreateStudent()
+        {
+
+            RegisterStudentViewModel model = new RegisterStudentViewModel
+            {
+                GroupItems = PopulateGroups(),
+                Birthday = DateTime.Now
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult CreateTeacher()
+        {
+
+            RegisterTeacherViewModel model = new RegisterTeacherViewModel
+            {
+                DeparmentItems = PopulateDepartments(),
+                PositionItems = PopulatePositions(),
+                Birthday = DateTime.Now
+            };
+
+            return View(model);
+        }
+
+        [HttpPost, ActionName("CreateStudentConfirmed")]
+        public async Task<ActionResult> CreateStudent(RegisterStudentViewModel registerUserViewModel)
+        {
+            registerUserViewModel.GroupItems = PopulateGroups();
+
+            if (_databaseWorker.GroupExists(registerUserViewModel.GroupId))
+            {
+                if (ModelState.IsValid)
+                {
+                    IdentityResult result = await _authentication.CreateUserAsync(registerUserViewModel);
+
+                    if (result.Succeeded)
+                    {
+                        User user = await _authentication.FindUserByEmailAsync(registerUserViewModel.Email);
+
+                        if (!await _authentication.CreateStudentUserAsync(user.Id, registerUserViewModel.GroupId))
+                        {
+                            await _authentication.DeleteUserAsync(user);
+                            return View("CreateStudent", registerUserViewModel);
+                        }
+
+                        return RedirectToAction("Users");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Выбирете группу для студента");
+            }
+
+            return View("CreateStudent", registerUserViewModel);
+        }
+
+        [HttpPost,ActionName("CreateTeacherConfirmed")]
+        public async Task<IActionResult> CreateTeacher(RegisterTeacherViewModel registerUserViewModel)
+        {
+
+            registerUserViewModel.DeparmentItems = PopulateDepartments();
+            registerUserViewModel.PositionItems = PopulatePositions();
+
+            if (_databaseWorker.DepartmentExists(registerUserViewModel.DepartmentId) && _databaseWorker.PositionExists(registerUserViewModel.PositionId))
+            {
+                if (ModelState.IsValid)
+                {
+                    IdentityResult result = await _authentication.CreateUserAsync(registerUserViewModel);
+
+
+                    if (result.Succeeded)
+                    {
+
+                        User user = await _authentication.FindUserByEmailAsync(registerUserViewModel.Email);
+
+                        if (!await _authentication.CreateTeacherUserAsync(user.Id, registerUserViewModel.DepartmentId, registerUserViewModel.PositionId))
+                        {
+                            await _authentication.DeleteUserAsync(user);
+                            return View("CreateTeacher", registerUserViewModel);
+                        }
+
+                        return RedirectToAction("Users");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Выбирете кафедру для преподователя");
+            }
+
+            return View("CreateTeacher", registerUserViewModel);
+        }
+        ///--------------------------------------------------------------------
+
 
         ///--------------------------------------------------------------------
         private List<SelectListItem> PopulateFaculties()
@@ -62,6 +176,7 @@ namespace Mentor.Controllers
 
             return items;
         }
+
         private List<SelectListItem> PopulateDepartments()
         {
             IEnumerable<Department> departments = _databaseWorker.GetAllDepartments();
@@ -70,6 +185,32 @@ namespace Mentor.Controllers
             foreach (Department department in departments)
             {
                 items.Add(new SelectListItem { Text = department.Name, Value = department.Id.ToString() });
+            }
+
+            return items;
+        }
+
+        private List<SelectListItem> PopulatePositions()
+        {
+            IEnumerable<Position> positions = _databaseWorker.GetAllPositions();
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            foreach (Position position in positions)
+            {
+                items.Add(new SelectListItem { Text = position.Name, Value = position.Id.ToString() });
+            }
+
+            return items;
+        }
+
+        private List<SelectListItem> PopulateGroups()
+        {
+            IEnumerable<Group> groups = _databaseWorker.GetAllGroups();
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            foreach (Group group in groups)
+            {
+                items.Add(new SelectListItem { Text = group.Name, Value = group.Id.ToString() });
             }
 
             return items;
@@ -317,6 +458,20 @@ namespace Mentor.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteUser(string id)
         {
+            Student student = _baseContext.Student.FirstOrDefault(i => i.UserId == id);
+            Teacher teacher = _baseContext.Teacher.FirstOrDefault(i => i.UserId == id);
+
+            if(student != null)
+            {
+                _baseContext.Student.Remove(student);
+                _baseContext.SaveChanges();
+            }
+            if(teacher != null)
+            {
+                _baseContext.Teacher.Remove(teacher);
+                _baseContext.SaveChanges();
+            }
+
             if (id != null)
             {
                 await _authentication.DeleteUserAsync(id);
