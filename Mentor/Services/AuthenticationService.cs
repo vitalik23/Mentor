@@ -28,6 +28,21 @@ namespace Mentor.Services
 
         }
 
+        public async Task<bool> CreateAdminUserAsync(string userId)
+        {
+            if(userId == null)
+            {
+                return false;
+            }
+            else
+            {
+                User user = await _userManager.FindByIdAsync(userId);
+                await _userManager.AddToRoleAsync(user, RoleInitializer.ROLE_ADMIN);
+                
+                return true;
+            }
+        }
+
         public async Task<bool> CreateStudentUserAsync(string userId, int groupId)
         {
 

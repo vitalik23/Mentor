@@ -13,6 +13,7 @@ namespace Mentor.Interfaces
     {
         Task<bool> CreateTeacherUserAsync(string userId, int departmentId, int positionId);
         Task<bool> CreateStudentUserAsync(string userId, int groupId);
+        Task<bool> CreateAdminUserAsync(string userId);
         Task<IdentityResult> CreateUserAsync(RegisterUserViewModel model);
         Task<User> FindUserByEmailAsync(string email);
         Task<User> FindUserByIdAsync(string userId);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mentor.ViewModels
 {
-    public abstract class RegisterUserViewModel
+    public class RegisterUserViewModel
     {
 
         [Required]

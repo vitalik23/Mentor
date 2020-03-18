@@ -7,23 +7,23 @@
 <div class="align-content-xl-center">
     <a asp-controller="Admin" asp-action="СreateFaculty">Добавить факультет</a>
 </div>
-    <table class="table">
-        <thead>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название факультета</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Faculty faculty in Model.AllFaculties)
+        {
             <tr>
-                <th>Название факультета</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Faculty faculty in Model.AllFaculties)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => faculty.Name)</td>
+                <td>@Html.DisplayFor(modelItem => faculty.Name)</td>
 
-                    <td>
-                        <a asp-controller="Admin" asp-action="DeleteFaculty" asp-route-id="@faculty.Id">Удалить</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                <td>
+                    <a asp-controller="Admin" asp-action="DeleteFaculty" asp-route-id="@faculty.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

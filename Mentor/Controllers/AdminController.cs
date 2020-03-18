@@ -85,6 +85,41 @@ namespace Mentor.Controllers
             ViewData["Title"] = "Добавление администратора";
             return View();
         }
+        
+        [HttpPost, ActionName("CreateAdminConfirmed")]
+        public async Task<ActionResult> CreateAdmin(RegisterUserViewModel registerUserViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                IdentityResult result = await _authentication.CreateUserAsync(registerUserViewModel);
+
+                if (result.Succeeded)
+                {
+                    User user = await _authentication.FindUserByEmailAsync(registerUserViewModel.Email);
+                    
+                    if(!await _authentication.CreateAdminUserAsync(user.Id))
+                    {
+                        await _authentication.DeleteUserAsync(user);
+                        return View("CreateAdmin", registerUserViewModel);
+                    }
+
+                    return RedirectToAction("Users");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Выбирете группу для студента");
+            }
+
+            return View("CreateAdmin", registerUserViewModel);
+        }
 
         [HttpPost, ActionName("CreateStudentConfirmed")]
         public async Task<ActionResult> CreateStudent(RegisterStudentViewModel registerUserViewModel)
