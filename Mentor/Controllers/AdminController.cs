@@ -41,6 +41,7 @@ namespace Mentor.Controllers
 
         public ViewResult FacultyOrDepartment()
         {
+            ViewData["Title"] = "Кафедры и факультеты";
             return View();
         }
 
@@ -58,6 +59,7 @@ namespace Mentor.Controllers
                 GroupItems = PopulateGroups(),
                 Birthday = DateTime.Now
             };
+            ViewData["Title"] = "Добавление студента";
 
             return View(model);
         }
@@ -72,8 +74,16 @@ namespace Mentor.Controllers
                 PositionItems = PopulatePositions(),
                 Birthday = DateTime.Now
             };
+            ViewData["Title"] = "Добавление преподавателя";
 
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult CreateAdmin()
+        {
+            ViewData["Title"] = "Добавление администратора";
+            return View();
         }
 
         [HttpPost, ActionName("CreateStudentConfirmed")]
@@ -226,6 +236,7 @@ namespace Mentor.Controllers
             {
                 group.Departament = _baseContext.Departament.FirstOrDefault(x => x.Id == group.DepartamentId);
             }
+            ViewData["Title"] = "Группы";
 
             return View(groups);
         }
@@ -233,6 +244,7 @@ namespace Mentor.Controllers
         [HttpGet]
         public ViewResult CreateGroup()
         {
+            ViewData["Title"] = "Добавление группы";
             GroupViewModel model = new GroupViewModel { DepartmentItems = PopulateDepartments() };
             return View(model);
         }
@@ -278,6 +290,7 @@ namespace Mentor.Controllers
             {
                 department.Faculty = _baseContext.Faculty.FirstOrDefault(x => x.Id == department.FacultyId);
             }
+            ViewData["Title"] = "Кафедры";
 
             return View(departments);
         }
@@ -285,6 +298,7 @@ namespace Mentor.Controllers
         [HttpGet]
         public ViewResult СreateDepartment()
         {
+            ViewData["Title"] = "Добавление кафедры";
             DepartmentViewModel model = new DepartmentViewModel { FacultyItems = PopulateFaculties() };
             return View(model);
         }
@@ -328,12 +342,14 @@ namespace Mentor.Controllers
             {
                 AllFaculties = faculties
             };
+            ViewData["Title"] = "Факультеты";
             return View(allFaculties);
         }
 
         [HttpGet]
         public ViewResult СreateFaculty()
         {
+            ViewData["Title"] = "Добавление факультета";
             return View();
         }
 
@@ -361,6 +377,7 @@ namespace Mentor.Controllers
         [HttpGet]
         public ViewResult Positions()
         {
+            ViewData["Title"] = "Должности";
             IEnumerable<Position> positions = _databaseWorker.GetAllPositions();
             return View(positions);
         }
@@ -368,6 +385,7 @@ namespace Mentor.Controllers
         [HttpGet]
         public ViewResult CreatePosition()
         {
+            ViewData["Title"] = "Добавление должности";
             return View();
         }
 
@@ -400,7 +418,7 @@ namespace Mentor.Controllers
             {
                 AllUsers = users
             };
-
+            ViewData["Title"] = "Все пользователи";
             return View(allUsers);
         }
 
@@ -422,6 +440,7 @@ namespace Mentor.Controllers
                 IsAccepted = user.IsAccepted
 
             };
+            ViewData["Title"] = "Редактирование информации о пользователе";
 
             return View(model);
         }

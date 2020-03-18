@@ -1,9 +1,10 @@
 ﻿@model UsersViewModel;
 
-@{ 
+@{
     Layout = "_LayoutForAdmin";
 }
 
+<a asp-controller="Admin" asp-action="CreateAdmin">Добавить администратора </a>|
 <a asp-controller="Admin" asp-action="CreateStudent">Добавить студента </a>|
 <a asp-controller="Admin" asp-action="CreateTeacher">Добавить преподователя</a>
 <table class="table">
