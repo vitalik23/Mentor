@@ -1,6 +1,8 @@
-﻿.modalButton ul li {
+﻿
+/*DeleteNew*/
+.modalButton ul li {
     display: inline-flex; /* Отображать как строчный элемент */
-    margin-left: 70px;
+    margin-left: 75px;
 }
 button{
     width:100px;
@@ -14,3 +16,9 @@ button{
     color:black;
     text-align:center;
 }
+
+#colorModal {
+    background-color: #D3D3D3;
+}
+
+/*AddNew*/
