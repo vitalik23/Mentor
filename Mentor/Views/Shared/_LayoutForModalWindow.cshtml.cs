@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Mentor.Views.News
+namespace Mentor.Views.Shared
 {
-    public class DeleteNewsModel : PageModel
+    public class _LayoutForModalWindowModel : PageModel
     {
         public void OnGet()
         {

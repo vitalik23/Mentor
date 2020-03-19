@@ -24,24 +24,30 @@
 <table>
     <tr>
         <td id="left">
-            <p id="newsSite">Новости сайта</p>
 
-            @foreach (var news in Model)
+            @if (Model != null)
             {
-                <div class="showondisplay">
-                    <table>
-                        <tr>
-
-                            <td>
-                                <p>@news.Heading</p>
-                                <p>@news.Contents</p>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                
-
+                <p id="newsSite">Новости сайта</p>
+                @foreach (var news in Model)
+                {
+                    @if (news != null)
+                    {
+                        <div class="showondisplay">
+                            <table cellspacing="4">
+                                <tr>
+                                    <td>
+                                        <p>@news.Heading</p>
+                                        <p>@news.Contents</p>
+                                        <p>@news.DateTime</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    }
+                    
+                }
             }
+
 
 
         </td>

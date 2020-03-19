@@ -17,7 +17,6 @@ body {
 }
 /*Content*/
 table {
-    border-spacing: 2px 2px;
     width: 100%;
 }
 
@@ -26,8 +25,12 @@ table {
     margin: 0 auto;
 }
 
-.showondisplay td, th {
+.showondisplay table {
+    border-collapse: separate;
+    border-spacing: 8px 5px;
+}
 
+.showondisplay td, th {
     border: 1px solid silver;
 }
 .showondisplay th {
@@ -66,3 +69,8 @@ table {
     font-size: 20px;
     color: white;
 }
+
+#otstup {
+    padding-bottom: 20px;
+}
+

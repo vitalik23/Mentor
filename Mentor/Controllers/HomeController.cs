@@ -24,5 +24,7 @@ namespace Mentor.Controllers
             return View(db.New.ToList());
         }
 
+
+
     }
 }

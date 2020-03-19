@@ -1,4 +1,36 @@
-﻿@page
-@model Mentor.Views.News.DeleteNewsModel
+﻿@model Mentor.Models.New
 @{
+    Layout = "_LayoutForModalWindow";
 }
+
+<div class="marg">
+    <dl class="dl-horizontal">
+        <dt>Заголовок</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Heading)
+        </dd>
+
+        <dt>Содержимое</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contents)
+        </dd>
+    </dl>
+
+</div>
+
+
+<div class="modalButton form-group row">
+    <ul>
+        <li>
+            <form asp-controller="New" asp-action="DeleteNew" method="post">
+                <button type="submit" class="btn btn-danger">Удалить</button>
+            </form>
+        </li>
+        <li>
+            <form>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </form>
+        </li>
+    </ul>
+
+</div>

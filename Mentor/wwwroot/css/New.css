@@ -1,0 +1,16 @@
+﻿.modalButton ul li {
+    display: inline-flex; /* Отображать как строчный элемент */
+    margin-left: 70px;
+}
+button{
+    width:100px;
+}
+.marg {
+    padding-left: 10px;
+}
+
+#Header{
+    font-size:20px;
+    color:black;
+    text-align:center;
+}
