@@ -31,6 +31,5 @@ namespace Mentor.Models
         public DbSet<Teacher> Teacher { get; set; }
         public DbSet<Position> Position { get; set; }
 
-
     }
 }

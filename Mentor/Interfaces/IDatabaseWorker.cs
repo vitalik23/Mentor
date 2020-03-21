@@ -14,6 +14,8 @@ namespace Mentor.Interfaces
         IEnumerable<Position> GetAllPositions();
         IEnumerable<User> GetUsers();
         IEnumerable<Faculty> GetFaculties();
+
+
         bool GroupExists(int groupId);
         bool DepartmentExists(int departmentId);
         bool PositionExists(int positionId);

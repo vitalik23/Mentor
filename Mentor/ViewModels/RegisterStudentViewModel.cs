@@ -11,7 +11,6 @@ namespace Mentor.ViewModels
     {
         public int GroupId { get; set; }
 
-
         public List<SelectListItem> GroupItems { get; set; }
     }
 }

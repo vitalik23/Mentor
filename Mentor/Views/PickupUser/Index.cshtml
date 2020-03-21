@@ -1,0 +1,46 @@
+﻿@model PickupUserViewModel
+
+@{
+    ViewData["Title"] = "Список пользователей";
+}
+
+    <div>
+        <label>Группа</label><br />
+        @*  @Html.DropDownListFor(m => m.GroupId, Model.GroupItems, "Выберите группу", new { @class = "form-control" })*@
+    </div>
+
+
+<h3>Пользователи</h3>
+<table>
+    <tr>
+        <td>Имя</td>
+        <td>Фамилия</td>
+  
+        <td></td>
+    </tr>
+
+    @if (Model != null)
+    {
+      @*  @foreach (Student student in Model.Students)
+        {
+
+            if (student != null)
+            {
+                <tr>
+
+
+                    <td>@student.User.Name</td>
+                    <td>@student.User.Surname</td>
+                    <td>@student.User.Patronymic</td>
+
+                    <td>@student.Group.Name</td>
+
+
+                </tr>
+            }
+
+        }*@
+    }
+
+
+</table>

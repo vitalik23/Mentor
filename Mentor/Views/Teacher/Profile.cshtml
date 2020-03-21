@@ -96,7 +96,9 @@
         <div class="modal-content text-center">
 
             <form method="post" asp-controller="Teacher" asp-action="AddSubject">
-                <div class="modal-header " asp-validation-summary="ModelOnly"></div>
+                <div class="modal-header " asp-validation-summary="ModelOnly">
+
+                </div>
 
                 <div class="modal-body">
                     <label asp-for="@Model.Subject.Name"></label><br />
