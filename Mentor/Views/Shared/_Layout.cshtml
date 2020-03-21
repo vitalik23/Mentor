@@ -1,24 +1,21 @@
-﻿
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-        <link rel="stylesheet" href="~/css/Header.css" />
-        <link rel="stylesheet" href="~/css/Index.css" />
-        <link rel="stylesheet" href="~/css/Calendar.css" />
-        <link rel="stylesheet" href="~/css/Footer.css" />
-        <link rel="stylesheet" href="~/css/TeacherProfile.css" />
-        <link rel="stylesheet" href="~/css/AddCourse.css" />
-        <link rel="stylesheet" href="~/css/Course.css" />
-        <link rel="stylesheet" href="~/css/CourseProfile.css" />
-        <link rel="stylesheet" href="~/css/StudentProfile.css" />
-        <link rel="stylesheet" href="~/css/DeleteTask.css" />
-        <link rel="stylesheet" href="~/css/IndexTeacher.css" />
+    <link rel="stylesheet" href="~/css/Header.css" />
+    <link rel="stylesheet" href="~/css/Index.css" />
+    <link rel="stylesheet" href="~/css/Calendar.css" />
+    <link rel="stylesheet" href="~/css/Footer.css" />
+    <link rel="stylesheet" href="~/css/TeacherProfile.css" />
+    <link rel="stylesheet" href="~/css/AddCourse.css" />
+    <link rel="stylesheet" href="~/css/Course.css" />
+    <link rel="stylesheet" href="~/css/CourseProfile.css" />
+    <link rel="stylesheet" href="~/css/StudentProfile.css" />
+    <link rel="stylesheet" href="~/css/DeleteTask.css" />
+    <link rel="stylesheet" href="~/css/IndexTeacher.css" />
 
-   
 
     <!-- Bootstrap core CSS -->
     @* <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
@@ -41,8 +38,6 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
 
-
-
                         @if (User.Identity.IsAuthenticated)
                         {
 
@@ -58,7 +53,7 @@
                             else if (User.IsInRole("admin"))
                             {
                                 <a class="btn btn-danger" asp-controller="Admin" asp-action="Index">Панель администрирования</a>
-                                <a>   </a>
+
                             }
 
                             <form method="post" asp-controller="Account" asp-action="Logout">
@@ -69,7 +64,9 @@
                         {
                             <li class="nav-item active">
                                 <form method="get" asp-controller="Account" asp-action="Login">
-                                    <button type="submit" class="btn btn-danger">Вход</button>
+                                    <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#Login">
+                                        Вход
+                                    </button>
                                 </form>
 
                             </li>
@@ -78,7 +75,6 @@
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">Регистрация</button>
                             </li>
                         }
-
 
                     </ul>
                 </div>
@@ -90,19 +86,35 @@
     @RenderBody()
 
 
-    <!-- Modal -->
+    <!-- Modal window choose who register-->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                
+
                 <div class="modal-body text-center">
                     <a id="add-cart-style-grid" class="btn btn-success" asp-controller="Account" asp-action="TeacherRegister">Преподаватель</a>
                     <a id="add-cart-style-grid" class="btn btn-success" asp-controller="Account" asp-action="StudentRegister">Студент</a>
                 </div>
-               
+
             </div>
         </div>
     </div>
+
+
+    <!-- Modal login-->
+
+    <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                d nvsldczkcmakscm
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     @*<footer id="footer">
             <table>

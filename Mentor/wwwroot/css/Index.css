@@ -17,8 +17,7 @@ body {
 }
 /*Content*/
 table {
-    
-    width: 100%;    
+    width: 100%;
 }
 
 .col-centered {
@@ -26,15 +25,18 @@ table {
     margin: 0 auto;
 }
 
-/*td, th {
+.showondisplay table {
+    border-collapse: separate;
+    border-spacing: 8px 5px;
+}
 
-    padding: 3px;
-    border: 1px solid black; 
+.showondisplay td, th {
+    border: 1px solid silver;
 }
-th {
-    background: #b0e0e6; 
+.showondisplay th {
+    background: #b0e0e6;
 }
-*/
+
 #left {    
     width: 70%;
     vertical-align: top;
@@ -67,3 +69,8 @@ th {
     font-size: 20px;
     color: white;
 }
+
+#otstup {
+    padding-bottom: 20px;
+}
+

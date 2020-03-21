@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Mentor.Models.New>
+@{
+    ViewData["Title"] = "Все новости";
+}
+
+<p id="newsSite">Все новости</p>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Заголовок</th>
+            <th scope="col">Удалить</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (New news in Model)
+        {
+            <tr>
+                <th scope="row">@news.Heading</th>
+                <th scope="row">
+                    <a class="btn btn-danger" asp-action="DeleteNew" asp-controller="New"
+                       method="post" asp-route-id="@news.Id" >Удалить</a>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-success" asp-action="AddNew" asp-controller="New">Добавить новость</a>
