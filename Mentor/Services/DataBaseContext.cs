@@ -30,6 +30,7 @@ namespace Mentor.Models
         public DbSet<Task> Task { get; set; }
         public DbSet<Teacher> Teacher { get; set; }
         public DbSet<Position> Position { get; set; }
+        public DbSet<New> New { get; set; }
 
     }
 }

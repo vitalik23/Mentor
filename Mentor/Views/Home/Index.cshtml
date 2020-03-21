@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Mentor.Models.New>
+@{
     ViewData["Title"] = "Mentor";
 }
 
@@ -23,44 +24,67 @@
 <table>
     <tr>
         <td id="left">
-            <p id="newsSite">Новости сайта</p>
+
+            @if (Model != null)
+            {
+                <p id="newsSite">Новости сайта</p>
+                @foreach (var news in Model)
+                {
+                    @if (news != null)
+                    {
+                        <div class="showondisplay">
+                            <table cellspacing="4">
+                                <tr>
+                                    <td>
+                                        <p>@news.Heading</p>
+                                        <p>@news.Contents</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    }
+                    
+                }
+            }
+
+
 
         </td>
 
-        <td id="right">
-            <p id="calendar" name="calen">Календарь</p>
-            <table id="calendar2" class="calendarClass">
-                <thead>
-                    <tr><td>‹<td colspan="5"><td>›
-                    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
-                <tbody>
-            </table>
-            <hr />
-            <div id="news">
-                <p id="calendar">Новости</p>
-                <div class="calendarClass">
-                    Какие-то новости
-                </div>
+            <td id="right">
+                <p id="calendar" name="calen">Календарь</p>
+                <table id="calendar2" class="calendarClass">
+                    <thead>
+                        <tr><td>‹<td colspan="5"><td>›
+                        <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+                    <tbody>
+                </table>
                 <hr />
-            </div>
-
-            <div id="">
-                <p id="calendar">Ожидается</p>
-                <div class="calendarClass">
-                    В будущем событий не ожидается
-                    <p><a href="#calen">Вернуться к календарю</a></p>
+                <div id="news">
+                    <p id="calendar">Новости</p>
+                    <div class="calendarClass">
+                        Какие-то новости
+                    </div>
+                    <hr />
                 </div>
-                <hr/>
-            </div>
 
-            <div id="">
-                <p id="calendar">Главное меню</p>
-                <div class="calendarClass">
-                    <p><a href="#">Просмотреть новости</a></p>
+                <div id="">
+                    <p id="calendar">Ожидается</p>
+                    <div class="calendarClass">
+                        В будущем событий не ожидается
+                        <p><a href="#calen">Вернуться к календарю</a></p>
+                    </div>
+                    <hr />
                 </div>
-            </div>
-        </td>
-    </tr>
-</table>
+
+                <div id="">
+                    <p id="calendar">Главное меню</p>
+                    <div class="calendarClass">
+                        <p><a href="#">Просмотреть новости</a></p>
+                    </div>
+                </div>
+            </td>
+            </tr>
+        </table>
 
 
