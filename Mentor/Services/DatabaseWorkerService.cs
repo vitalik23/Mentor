@@ -35,6 +35,7 @@ namespace Mentor.Services
         public IEnumerable<Position> GetAllPositions() => _dataBaseContext.Position;
         public IEnumerable<User> GetUsers() => _dataBaseContext.Users;
         public IEnumerable<Faculty> GetFaculties() => _dataBaseContext.Faculty;
+        public IEnumerable<New> GetNews() => _dataBaseContext.New;
 
         public Subject GetSubjectById(int id)
         {

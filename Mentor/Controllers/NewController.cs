@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mentor.Interfaces;
 using Mentor.Models;
+using Mentor.Services;
+using Mentor.ViewModels; // пространство имен моделей представлений
+using Mentor.ViewModels.NewViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,61 +14,38 @@ namespace Mentor.Controllers
 {
     public class NewController : Controller
     {
-        private DataBaseContext db;
-
-        public NewController(DataBaseContext _db)
+        private DataBaseContext _db;
+        private IDatabaseWorker _databaseWorker;
+        private INewService _newService;
+        public NewController(DataBaseContext db, IDatabaseWorker databaseWorker, INewService newService)
         {
-            db = _db;
+            _db = db;
+            _databaseWorker = databaseWorker;
+            _newService = newService;
         }
 
         [HttpGet]
         public IActionResult AddNew()
         {
-
             return View();
         }
 
-        [HttpPost]
-        public IActionResult AddNew(New model)
+        public async Task<IActionResult> AddNew(New nw)
         {
-            db.New.Add(model);
-            db.SaveChanges();
-
-            return RedirectToAction("AllNew","New");
+            await _newService.AddNew(nw);
+            return RedirectToAction("AllNew", "New");
         }
-
-        [HttpGet]
-        [ActionName("DeleteNew")]
-        public async Task<IActionResult> ConfirmDeleteNew(int? id)
+        
+        public IActionResult DeleteNew(int id)
         {
-            if (id != null)
-            {
-                New nw = await db.New.FirstOrDefaultAsync(p => p.Id == id);
-                if (nw != null)
-                    return View(nw);
-            }
-            return NotFound();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteNew(int? id)
-        {
-            if (id != null)
-            {
-                New nw = await db.New.FirstOrDefaultAsync(p => p.Id == id);
-                if (nw != null)
-                {
-                    db.New.Remove(nw);
-                    await db.SaveChangesAsync();
-                    return RedirectToAction("AllNew","New");
-                }
-            }
-            return NotFound();
+            _newService.DeleteNew(id);
+            return RedirectToAction("AllNew", "New");
         }
 
         public IActionResult AllNew()
         {
-            return View(db.New.ToList());
+      
+            return View(_db.New.ToList());
         }
 
     }

@@ -8,32 +8,20 @@
     <thead class="thead-dark">
         <tr>
             <th scope="col">Заголовок</th>
-            <th scope="col">Время</th>
             <th scope="col">Удалить</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var news in Model)
+        @foreach (New news in Model)
         {
             <tr>
                 <th scope="row">@news.Heading</th>
-                <th scope="row">@news.DateTime</th>
                 <th scope="row">
-                    <a class="btn btn-danger" asp-action="DeleteNew" asp-controller="New" method="post" asp-route-id="@news.Id" data-toggle="modal" data-target="#exampleModalCenter">Удалить</a>
+                    <a class="btn btn-danger" asp-action="DeleteNew" asp-controller="New"
+                       method="post" asp-route-id="@news.Id" >Удалить</a>
                 </th>
             </tr>
         }
-
     </tbody>
 </table>
 <a class="btn btn-success" asp-action="AddNew" asp-controller="New">Добавить новость</a>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content" id="colorModal">
-            
-        </div>
-    </div>
-</div>
-
