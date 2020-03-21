@@ -25,6 +25,9 @@ namespace Mentor.Controllers
         private readonly DataBaseContext _baseContext;
         private readonly UserManager<User> _userManager;
 
+        private static StudentEditViewModel _student;
+        private static TeacherEditViewModel _teacher;
+
         public AdminController(IAuthentication authentication, IDatabaseWorker databaseWorker, UserManager<User> userManager, DataBaseContext baseContext)
         {
             _authentication = authentication;
@@ -458,32 +461,68 @@ namespace Mentor.Controllers
         }
 
         [HttpGet]
-        public async Task<ViewResult> EditUser(string id)
+        public async Task<RedirectToActionResult> EditUser(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
-            if (user == null)
+
+            Teacher teacher = _baseContext.Teacher.FirstOrDefault(i => i.UserId == user.Id);
+            Student student = _baseContext.Student.FirstOrDefault(i => i.UserId == user.Id);
+
+            if (teacher != null)
             {
-                return View();
+                var model = new TeacherEditViewModel
+                {
+                    Email  = user.Email,
+                    Surname = user.Surname,
+                    Name = user.Name,
+                    Patronymic = user.Patronymic,
+                    PhoneNumber = user.PhoneNumber,
+                    IsAccepted = user.IsAccepted
+                };
+
+                _teacher = model;
+
+                return RedirectToAction("EditTeacher", model);
             }
-            var model = new EditUserViewModel
+            if (student != null)
             {
-                Id = user.Id,
-                Surname = user.Surname,
-                Name = user.Name,
-                Patronymic = user.Patronymic,
-                PhoneNumber = user.PhoneNumber,
-                IsAccepted = user.IsAccepted
+                var model = new StudentEditViewModel
+                {
+                    Email = user.Email,
+                    Surname = user.Surname,
+                    Name = user.Name,
+                    Patronymic = user.Patronymic,
+                    PhoneNumber = user.PhoneNumber,
+                    IsAccepted = user.IsAccepted
+                };
 
-            };
-            ViewData["Title"] = "Редактирование информации о пользователе";
+                _student = model;
 
+                return RedirectToAction("EditStudent", model);
+            }
+
+            return RedirectToAction("Users");
+        }
+
+        [HttpGet]
+        public ViewResult EditTeacher(TeacherEditViewModel model)
+        {
+            model.DeparmentItems = PopulateDepartments();
+            model.PositionItems = PopulatePositions();
+            return View(model);
+        }
+
+        [HttpGet]
+        public ViewResult EditStudent(StudentEditViewModel model)
+        {
+            model.GroupItems = PopulateGroups();
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUser(EditUserViewModel model)
+        public async Task<IActionResult> EditStudentConfirmed(StudentEditViewModel model)
         {
-            var user = await _userManager.FindByIdAsync(model.Id);
+            var user = await _userManager.FindByEmailAsync(_student.Email);
 
             if (user == null)
             {
@@ -502,6 +541,44 @@ namespace Mentor.Controllers
 
                 if (result.Succeeded)
                 {
+                    Student student = _baseContext.Student.FirstOrDefault(i => i.UserId == user.Id);
+                    student.GroupId = model.GroupId;
+                    _baseContext.SaveChanges();
+
+                    return RedirectToAction("Users");
+                }
+
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditTeacherConfirmed(TeacherEditViewModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(_teacher.Email);
+
+            if (user == null)
+            {
+                return View("Error");
+            }
+            else
+            {
+
+                user.Surname = model.Surname;
+                user.Name = model.Name;
+                user.Patronymic = model.Patronymic;
+                user.PhoneNumber = model.PhoneNumber;
+                user.IsAccepted = model.IsAccepted;
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    Teacher teacher = _baseContext.Teacher.FirstOrDefault(i => i.UserId == user.Id);
+                    teacher.DepartamentId = model.DepartmentId;
+                    teacher.PositionId = model.PositionId;
+                    _baseContext.SaveChanges();
+
                     return RedirectToAction("Users");
                 }
 
