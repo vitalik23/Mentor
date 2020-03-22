@@ -30,7 +30,8 @@ namespace Mentor.Services
 
         public async Task<bool> CreateAdminUserAsync(string userId)
         {
-            if(userId == null)
+
+            if (userId == null)
             {
                 return false;
             }

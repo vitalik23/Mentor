@@ -24,6 +24,8 @@
     <script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
     <script src="https://bootstraptema.ru/plugins/2015/b-v3-3-6/bootstrap.min.js"></script>
 
+    <script type="text/javascript" src="~/js/loadscript.js"></script>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
 </head>
@@ -41,6 +43,8 @@
 
                         @if (User.Identity.IsAuthenticated)
                         {
+
+                            <a id="findUsers" asp-controller="PickupUser" asp-action="Index">Поиск пользователей</a>
 
                             if (User.IsInRole("teacher"))
                             {
@@ -65,7 +69,7 @@
                         {
                             <li class="nav-item active">
                                 <form method="get" asp-controller="Account" asp-action="Login">
-                                    <button type="submit" class="btn btn-danger" >
+                                    <button type="submit" class="btn btn-danger">
                                         Вход
                                     </button>
                                 </form>

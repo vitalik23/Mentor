@@ -6,7 +6,6 @@ using Mentor.Interfaces;
 using Mentor.Models;
 using Mentor.Services;
 using Mentor.ViewModels; // пространство имен моделей представлений
-using Mentor.ViewModels.NewViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

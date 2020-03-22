@@ -12,15 +12,13 @@ namespace Mentor.ViewModels.PickupUserRelated
         // get ->
         public IEnumerable<User> Users { get; set; }
 
-        public IEnumerable<SelectListItem> FacultiesSelectItems { get; set; }
-        public IEnumerable<SelectListItem> DepartmentSelectItems { get; set; }
-        public IEnumerable<SelectListItem> GroupSelectItems { get; set; }
+        public User User;
 
+        public SelectList Faculties { get; set; }
+        public SelectList Departments { get; set; }
+        public SelectList Groups { get; set; }
 
-        // post <-
-        public int ChoosenFacultyId { get; set; }
-        public int ChoosenDepartmentId { get; set; }
-        public int ChoosenGroupId { get; set; }
+        
 
     }
 }
