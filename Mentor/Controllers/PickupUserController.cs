@@ -40,7 +40,7 @@ namespace Mentor.Controllers
                     departmentId = 0;
                     groupId = 0;
                     break;
-                case 2:
+                case 2: 
                     groupSelected = 0;
 
                     groupId = 0;
