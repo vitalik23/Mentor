@@ -2,7 +2,98 @@
 @{
     ViewData["Title"] = @Model.User.Name;
 }
-<table>
+
+<div class="container  "  >
+    <div class="row" >
+        <div class="col-lg-3 col-md-3" id="leftSide" style="border-radius: 10px 0 0 10px;">
+            <a asp-controller="UserSettings" asp-action="AvatarSettings">
+
+                 @if (Model.User.AvatarPath == "")
+                  {
+                      <img src="~/img/noName.png" id="sizePht" />
+                  }
+                  else
+                  {
+                      <img src="@Url.Content(Model.User.AvatarPath)" id="sizePht" />
+                  }
+
+            </a>
+            <div  >
+                <div class="form-group row">
+                    <p style="padding-left:40px;"><h3 id="otstupOtCray" >@Model.User.Name @Model.User.Surname</h3></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-5" id="centerSide">
+            <h2 style=" color:#696969;">Информация</h2>
+            <hr />
+
+            <div class="row">
+                <div class="form-group" id="Raspolog">
+                    <h6>Email</h6>
+                    @Model.User.Email
+                </div>
+                <div class="form-group" id="Raspolog1">
+                    <h6>Номер телефона</h6>
+                    @Model.User.PhoneNumber
+                </div>
+            </div>
+
+            <div class="row" id="razriv">
+                <div class="form-group" id="Raspolog">
+                    <h6>Время регистрации</h6>
+                    @Model.User.RegistrationDate
+                </div>
+                <div class="form-group" id="Raspolog2">
+                    <h6>День рождения</h6>
+                    @Model.User.Birthday
+                </div>
+            </div>
+
+
+            <div class="row" id="razriv">
+                <div class="form-group" id="Raspolog">
+                    <h6>Department</h6>
+                    @Model.Department.Name
+                </div>
+                <div class="form-group" id="Raspolog3">
+                    <h6>Position</h6>
+                    @Model.Position.Name
+                </div>
+            </div>
+
+            <h2 style=" color:#696969;">Возможности</h2>
+            <hr />
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter2">Добавить курс</button>
+
+
+
+        </div>
+        <div class="col-lg-4 col-md-4" id="rightSide" style="border-radius: 0 10px 10px 0;">
+            <h2 style=" color:#696969;">Мои курсы</h2>
+            <hr />
+            <div id="elmList">
+                <ol class="rounded">
+                    @{
+                        if (Model.Subjects != null)
+                        {
+                            foreach (Subject subject in Model.Subjects)
+                            {
+                                <li><a asp-controller="Subject" asp-action="IndexTeacher" asp-route-subjectId="@subject.Id">@subject.Name</a></li>
+                            }
+                        }
+                    }
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@*<table>
     <col width="30%" valign="top">
     <col width="70%" valign="top">
     <tr>
@@ -88,7 +179,7 @@
             </table>
         </td>
     </tr>
-</table>
+</table>*@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -96,7 +187,9 @@
         <div class="modal-content text-center">
 
             <form method="post" asp-controller="Teacher" asp-action="AddSubject">
-                <div class="modal-header " asp-validation-summary="ModelOnly"></div>
+                <div class="modal-header " asp-validation-summary="ModelOnly">
+
+                </div>
 
                 <div class="modal-body">
                     <label asp-for="@Model.Subject.Name"></label><br />

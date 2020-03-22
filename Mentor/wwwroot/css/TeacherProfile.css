@@ -1,63 +1,52 @@
-﻿body {
+﻿
+#leftSide {
+    background: #00b6b9;
+    height: 600px;
+    top: 20px;
 }
 
-table {
-    width: 100%;
-}
-
-/*td, th {
-    padding: 3px;
-    border: 1px solid black; 
-}
-th {
-    background: #b0e0e6; 
-}*/
-
-#leftPast{
-    height: 100px;
-}
-#rightPast {
-    height: 100px;
-}
-#widthTableInfo {
-    margin-left:80px;
-    width: 60%;
-}
-#noName{
-    width:150px;
-    height:150px;
-}
-#tdContentPol {
-   padding-top:0;
-   padding-left:30px;
-}
-
-
-#buttInfo {
+#sizePht {
+    padding-left: 50px;
+    padding-top: 30px;
     width: 200px;
-}
-#location{
-    padding-top:20px;
-    float:left;
-}
-
-#sizePhoto{
-    width:50px;
-    height:50px;
-}
-
-.sliderCourse .item:nth-child(2n) {
-    background: #666;
-}
-
-.sliderCourse .item:nth-child(2n+1) {
-    background: #444;
-}
-
-.sliderCourse .item {
     height: 200px;
-    color: #fff;
-    text-align: center;
+}
+
+
+#centerSide {
+    background: white;
+    height: 600px;
+    top: 20px;
+}
+
+#rightSide {
+    background: white;
+    height: 600px;
+    top: 20px;
+}
+
+
+#otstupOtCray {
+    padding-top:20px;
+    color: white;
+}
+#Raspolog{
+    padding-left:16px;
+}
+
+#Raspolog1 {
+    padding-left: 170px;
+}
+
+#Raspolog2 {
+    padding-left: 100px;
+}
+#Raspolog3 {
+    padding-left: 160px;
+}
+
+#razriv {
+    padding-top: 40px;
 }
 
 /*Список курсов*/
@@ -109,21 +98,7 @@ th {
 }
 
 #elmList{
-    padding-left:100px;
+    padding-left:18px;
 }
 /*Список курсов*/
 
-#listCourse{
-    padding-left:15px;
-}
-
-
-#listCourse p a {
-    color:black;
-    font-size:16px;
-}
-
-.table tr td #margintoTop {
-    padding-top:0px;
-    vertical-align: top; /* Выравнивание по верхнему краю ячеек */
-}

@@ -1,0 +1,55 @@
+﻿@model PickupUserViewModel
+
+@{
+    ViewBag.Title = "Каталог пользователей";
+}
+
+<h2>Каталог пользователей</h2>
+
+<form method="get">
+    <div class="form-inline form-group">
+        <label class="control-label">Имя: </label>
+        <input asp-for ="@Model.User.Name" id="nameId" name="name" class="form-control" />
+
+        <label class="control-label">Фамилия: </label>
+        <input asp-for ="@Model.User.Surname" id="surnameId" name="surname" class="form-control" />
+
+        <label class="control-label">Факультет: </label>
+        <select id="facultyId" name="facultyId" asp-items="Model.Faculties" class="form-control" onchange="doIt(1, '@Url.Action("Index", "PickupUser")')"></select>
+
+        <label class="control-label">Кафедра: </label>
+        <select id="departmentId" name="departmentId" asp-items="Model.Departments" class="form-control" onchange="doIt(2, '@Url.Action("Index", "PickupUser")')"></select>
+
+        <label class="control-label">Группа: </label>
+        <select id="groupId" name="groupId"  asp-items="Model.Groups" class="form-control" onchange="doIt(3, '@Url.Action("Index", "PickupUser")')"></select>
+
+        <input type="submit" value="Поиск" class="btn btn-default" />
+    </div>
+</form>
+
+<table class="table table-striped">
+    <tr>
+        <th>Фото</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+    </tr>
+
+    @foreach (User user in Model.Users)
+    {
+        <tr>
+            <td height="50px" width="50px">
+                @if (user.AvatarPath == "")
+                {
+                    <img src="~/img/noName.png" id="noName" />
+                }
+                else
+                {
+                    <img src="@Url.Content(user.AvatarPath)" id="noName" />
+                }
+            </td>
+
+            <td>@user.Name</td>
+            <td>@user.Surname</td>
+        </tr>
+    }
+</table>

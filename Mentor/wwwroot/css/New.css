@@ -1,24 +1,11 @@
 ﻿
-/*DeleteNew*/
-.modalButton ul li {
-    display: inline-flex; /* Отображать как строчный элемент */
-    margin-left: 75px;
-}
-button{
-    width:100px;
-}
-.marg {
-    padding-left: 10px;
-}
-
-#Header{
-    font-size:20px;
-    color:black;
-    text-align:center;
-}
-
 #colorModal {
-    background-color: #D3D3D3;
+
+    background-color: white;
 }
 
+
+#colorModal a {
+    width:150px;
+}
 /*AddNew*/

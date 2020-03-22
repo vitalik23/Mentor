@@ -35,6 +35,7 @@ namespace Mentor.Controllers
         {
             
             User currentUser = await _authentication.GetCurrentUserAsync();
+
             Teacher currentTeacher = await _authentication.GetCurrentTeacherAsync();
             Department department = _authentication.GetTeachersDepartment(currentTeacher);
             Position position = _authentication.GetTeachersPosition(currentTeacher);

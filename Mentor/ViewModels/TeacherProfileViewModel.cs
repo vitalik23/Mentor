@@ -14,7 +14,6 @@ namespace Mentor.ViewModels
         public Position Position { get; set; }
         public IEnumerable<Subject> Subjects { get; set; }
 
-
        
         public Subject Subject { get; set; }
     }

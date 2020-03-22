@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="~/css/StudentProfile.css" />
     <link rel="stylesheet" href="~/css/DeleteTask.css" />
     <link rel="stylesheet" href="~/css/IndexTeacher.css" />
+    <link rel="stylesheet" href="~/css/New.css" />
+    <link rel="stylesheet" href="~/css/StyleSheet.css" />
 
 
     <!-- Bootstrap core CSS -->
@@ -22,6 +24,8 @@
 
     <script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
     <script src="https://bootstraptema.ru/plugins/2015/b-v3-3-6/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="~/js/loadscript.js"></script>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
@@ -40,6 +44,8 @@
 
                         @if (User.Identity.IsAuthenticated)
                         {
+
+                            <a id="findUsers" asp-controller="PickupUser" asp-action="Index">Поиск пользователей</a>
 
                             if (User.IsInRole("teacher"))
                             {
@@ -65,7 +71,7 @@
                         {
                             <li class="nav-item active">
                                 <form method="get" asp-controller="Account" asp-action="Login">
-                                    <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#Login">
+                                    <button type="submit" class="btn btn-danger">
                                         Вход
                                     </button>
                                 </form>
@@ -90,28 +96,13 @@
     <!-- Modal window choose who register-->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content" id="colorModal">
 
                 <div class="modal-body text-center">
                     <a id="add-cart-style-grid" class="btn btn-success" asp-controller="Account" asp-action="TeacherRegister">Преподаватель</a>
                     <a id="add-cart-style-grid" class="btn btn-success" asp-controller="Account" asp-action="StudentRegister">Студент</a>
                 </div>
 
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Modal login-->
-
-    <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                d nvsldczkcmakscm
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
             </div>
         </div>
     </div>
