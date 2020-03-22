@@ -25,8 +25,8 @@ namespace Mentor.Controllers
         private readonly DataBaseContext _baseContext;
         private readonly UserManager<User> _userManager;
 
-        private static StudentEditViewModel _student;
-        private static TeacherEditViewModel _teacher;
+        private static StudentViewModel _student;
+        private static TeacherViewModel _teacher;
 
         public AdminController(IAuthentication authentication, IDatabaseWorker databaseWorker, UserManager<User> userManager, DataBaseContext baseContext)
         {
@@ -461,6 +461,63 @@ namespace Mentor.Controllers
         }
 
         [HttpGet]
+        public async Task<RedirectToActionResult> Info(string id)
+        {
+            User user = await _userManager.FindByIdAsync(id);
+
+            Teacher teacher = _baseContext.Teacher.FirstOrDefault(i => i.UserId == user.Id);
+            Student student = _baseContext.Student.FirstOrDefault(i => i.UserId == user.Id);
+
+            if(teacher != null)
+            {
+                Department department = _baseContext.Departament.FirstOrDefault(i => i.Id == teacher.DepartamentId);
+                Position position = _baseContext.Position.FirstOrDefault(i => i.Id == teacher.PositionId);
+
+                var model = new TeacherViewModel
+                {
+                    Name = user.Name,
+                    Surname = user.Surname,
+                    Patronymic = user.Patronymic,
+                    PhoneNumber = user.UserName,
+                    Department = department.Name,
+                    Position = position.Name
+                };
+
+                return RedirectToAction("TeacherInfo", model);
+
+            }
+            if(student != null)
+            {
+                Group group = _baseContext.Group.FirstOrDefault(i => i.Id == student.GroupId);
+
+                var model = new StudentViewModel
+                {
+                    Email = user.Email,
+                    Name = user.Name,
+                    Surname = user.Surname,
+                    Patronymic = user.Patronymic,
+                    PhoneNumber = user.PhoneNumber,
+                    GroupName = group.Name
+                };
+
+                return RedirectToAction("StudentInfo",model);
+            }
+            return RedirectToAction("Users");
+        }
+
+        [HttpGet]
+        public ViewResult StudentInfo(StudentViewModel model)
+        {
+            return View(model);
+        }
+
+        [HttpGet]
+        public ViewResult TeacherInfo(TeacherViewModel model)
+        {
+            return View(model);
+        }
+
+        [HttpGet]
         public async Task<RedirectToActionResult> EditUser(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
@@ -470,7 +527,7 @@ namespace Mentor.Controllers
 
             if (teacher != null)
             {
-                var model = new TeacherEditViewModel
+                var model = new TeacherViewModel
                 {
                     Email  = user.Email,
                     Surname = user.Surname,
@@ -486,7 +543,7 @@ namespace Mentor.Controllers
             }
             if (student != null)
             {
-                var model = new StudentEditViewModel
+                var model = new StudentViewModel
                 {
                     Email = user.Email,
                     Surname = user.Surname,
@@ -505,7 +562,7 @@ namespace Mentor.Controllers
         }
 
         [HttpGet]
-        public ViewResult EditTeacher(TeacherEditViewModel model)
+        public ViewResult EditTeacher(TeacherViewModel model)
         {
             model.DeparmentItems = PopulateDepartments();
             model.PositionItems = PopulatePositions();
@@ -513,14 +570,14 @@ namespace Mentor.Controllers
         }
 
         [HttpGet]
-        public ViewResult EditStudent(StudentEditViewModel model)
+        public ViewResult EditStudent(StudentViewModel model)
         {
             model.GroupItems = PopulateGroups();
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditStudentConfirmed(StudentEditViewModel model)
+        public async Task<IActionResult> EditStudentConfirmed(StudentViewModel model)
         {
             var user = await _userManager.FindByEmailAsync(_student.Email);
 
@@ -553,7 +610,7 @@ namespace Mentor.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditTeacherConfirmed(TeacherEditViewModel model)
+        public async Task<IActionResult> EditTeacherConfirmed(TeacherViewModel model)
         {
             var user = await _userManager.FindByEmailAsync(_teacher.Email);
 

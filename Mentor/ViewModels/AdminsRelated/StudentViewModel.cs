@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mentor.ViewModels.AdminsRelated
 {
-    public class TeacherEditViewModel
+    public class StudentViewModel
     {
         public string Email { get; set; }
 
@@ -28,12 +28,14 @@ namespace Mentor.ViewModels.AdminsRelated
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
-        public List<SelectListItem> DeparmentItems { get; set; }
-        public List<SelectListItem> PositionItems { get; set; }
+        public string AvatarPath { get; set; }
+
+        public string GroupName { get; set; }
+
+        public int GroupId { get; set; }
+
+        public List<SelectListItem> GroupItems { get; set; }
 
         public bool IsAccepted { get; set; }
-
-        public int DepartmentId { get; set; }
-        public int PositionId { get; set; }
     }
 }

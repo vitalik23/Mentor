@@ -4,9 +4,19 @@
     Layout = "_LayoutForAdmin";
 }
 
+
+<div>
+    <h6>Поиск пользователя</h6>
+    <form>
+        <input type="text" aria-label="Search"/>
+        <input type="submit" value="Найти">
+    </form>
+</div>
+
 <a asp-controller="Admin" asp-action="CreateAdmin">Добавить администратора </a>|
 <a asp-controller="Admin" asp-action="CreateStudent">Добавить студента </a>|
 <a asp-controller="Admin" asp-action="CreateTeacher">Добавить преподователя</a>
+
 <table class="table">
     <thead>
         <tr>
@@ -26,6 +36,7 @@
                 <td>@Html.DisplayFor(modelItem => user.Patronymic)</td>
                 <td>@Html.DisplayFor(modelItem => user.IsAccepted)</td>
                 <td>
+                    <a asp-controller="Admin" asp-action="Info" asp-route-id="@user.Id">Детальная информация</a> |
                     <a asp-controller="Admin" asp-action="EditUser" asp-route-id="@user.Id">Редактировать</a> |
                     <a asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@user.Id">Удалить</a>
                 </td>
