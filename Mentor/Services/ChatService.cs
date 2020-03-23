@@ -9,12 +9,12 @@ namespace Mentor.Services
 {
     public class ChatService : IChatService
     {
-        public void CreateChat(User user1, User user2)
+        public Chat CreateChat(User user1, User user2)
         {
             throw new NotImplementedException();
         }
 
-        public void CreateChat(string userId1, string userId2)
+        public Chat CreateChat(string userId1, string userId2)
         {
             throw new NotImplementedException();
         }
@@ -41,7 +41,7 @@ namespace Mentor.Services
 
         public Chat GetOrCreateChat(User user1, User user2)
         {
-            throw new NotImplementedException();
+            return GetOrCreateChat(user1.Id, user2.Id);
         }
 
         public Chat GetOrCreateChat(string userId1, string userId2)
@@ -54,14 +54,6 @@ namespace Mentor.Services
             throw new NotImplementedException();
         }
 
-        Chat IChatService.CreateChat(User user1, User user2)
-        {
-            throw new NotImplementedException();
-        }
-
-        Chat IChatService.CreateChat(string userId1, string userId2)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
