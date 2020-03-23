@@ -35,19 +35,9 @@ namespace Mentor.Services
             await _dataBaseContext.Chat.AddAsync(chat);
             await _dataBaseContext.SaveChangesAsync();
 
-            _fileService.CreateChatFile(chat);
+         //   _fileService.CreateChatFile(chat);
 
             return chat;
-        }
-
-        public void DeleteChat(User user1, User user2)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteChat(string userId1, string userId2)
-        {
-            throw new NotImplementedException();
         }
 
         public void DeleteChat(Chat chat)
@@ -60,6 +50,7 @@ namespace Mentor.Services
             throw new NotImplementedException();
         }
 
+
         public async Task<Chat> GetOrCreateChat(User user1, User user2)
         {
             return await GetOrCreateChat(user1.Id, user2.Id);
@@ -69,25 +60,45 @@ namespace Mentor.Services
         {
 
             // check if chat exists
-            Chat chat = _dataBaseContext.Chat
-                .FirstOrDefault(x => (x.User1Id == userId1 && x.User2Id == userId2) 
-                                   || x.User1Id == userId2 && x.User2Id == userId1);
+            Chat chat = GetChat(userId1, userId2);
 
             if (chat == null) 
             {
                 chat = await CreateChat(userId1, userId2);
             }
 
-            // create folder
-
             return chat;
         }
 
-        public void SendMessage(Chat chat, string message)
+
+        public List<Message> GetMessagesByChat(Chat chat)
         {
-            throw new NotImplementedException();
+            List<Message> messages = new List<Message>(_dataBaseContext.Message.Where(x => x.ChatId == chat.Id).ToList());
+            return messages;
         }
 
-        
+        public Chat GetChat(User user1, User user2) => GetChat(user1.Id, user2.Id);
+
+        public Chat GetChat(string userId1, string userId2)
+        {
+            return _dataBaseContext.Chat
+                .FirstOrDefault(x => (x.User1Id == userId1 && x.User2Id == userId2)
+                                   || x.User1Id == userId2 && x.User2Id == userId1);
+        }
+
+        public async Task<Message> AddMessage(Chat chat, string text)
+        {
+            Message message = new Message
+            {
+                Text = text,
+                CreationTime = DateTime.Now,
+                ChatId = chat.Id
+            };
+
+            await _dataBaseContext.AddAsync(message);
+            await _dataBaseContext.SaveChangesAsync();
+
+            return message;
+        }
     }
 }

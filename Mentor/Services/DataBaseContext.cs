@@ -32,6 +32,7 @@ namespace Mentor.Models
         public DbSet<Position> Position { get; set; }
         public DbSet<New> New { get; set; }
         public DbSet<Chat> Chat { get; set; }
+        public DbSet<Message> Message { get; set; }
 
     }
 }

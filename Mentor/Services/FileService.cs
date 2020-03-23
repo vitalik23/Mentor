@@ -146,10 +146,10 @@ namespace Mentor.Services
             }
         }
 
-
+        // DEPRECATED
         public void CreateChatFile(Chat chat) 
         {
-            chat.HistoryPath = _appEnvironment.WebRootPath + "/files/chats/" + chat.Id + "/";
+          /*  chat.HistoryPath = _appEnvironment.WebRootPath + "/files/chats/" + chat.Id + "/";
 
             if (!Directory.Exists(chat.HistoryPath))
             {
@@ -162,6 +162,10 @@ namespace Mentor.Services
             {
                 File.Create(chat.HistoryPath);
             }
+
+
+            _dataBaseContext.Chat.Update(chat);
+            _dataBaseContext.SaveChanges();*/
 
         }
 

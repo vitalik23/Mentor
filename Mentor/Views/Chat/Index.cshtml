@@ -1,1 +1,76 @@
 ﻿@model ChatHistoryViewModel
+
+@Model.CurrentUser.Id
+<br />
+@Model.OpositeUser.Id
+
+<div>
+    <div id="opositeUserInfo">
+        <label>@Model.CurrentUser.Name @Model.OpositeUser.Name</label>
+    </div>
+
+    <div id="inputForm">
+        <input type="text" id="message" />
+        <input type="button" id="sendBtn" value="Отправить" />
+    </div>
+
+    <div id="chatroom">
+
+        @{ 
+            Message message;
+            for (int i = 0; i < Model.Messages.Count; i++)
+            {
+                message = Model.Messages[Model.Messages.Count - i - 1];
+                <p>@message.Text</p>
+            }
+
+        }
+
+    </div>
+    <script src="js/signalr/dist/browser/signalr.min.js"></script>
+
+    <script>
+        const hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatpool")
+            .build();
+
+
+        hubConnection.on("Send", function (model) {
+
+            if (model.currentUserId === "@Model.OpositeUser.Id" && model.opositeUserId === "@Model.CurrentUser.Id") {
+
+                let elem = document.createElement("p");
+                elem.appendChild(document.createTextNode(model.message));
+
+                let firstElem = document.getElementById("chatroom").firstChild;
+                document.getElementById("chatroom").insertBefore(elem, firstElem);
+            }
+
+        });
+
+        document.getElementById("sendBtn").addEventListener("click", function (e) {
+            let message = document.getElementById("message").value;
+
+            
+            let elem = document.createElement("p");
+            elem.appendChild(document.createTextNode(message));
+
+            let firstElem = document.getElementById("chatroom").firstChild;
+            document.getElementById("chatroom").insertBefore(elem, firstElem);
+            
+
+            hubConnection.invoke("Send",
+                {
+                    "CurrentUserId": "@Model.CurrentUser.Id",
+                    "OpositeUserId": "@Model.OpositeUser.Id",
+                    "Message" : message
+                });
+        });
+
+        hubConnection.start();
+    </script>
+
+
+
+</div>
+

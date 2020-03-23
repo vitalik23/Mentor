@@ -11,8 +11,6 @@ namespace Mentor.Models
         public string User1Id { get; set; }
         public string User2Id { get; set; }
 
-        public string HistoryPath { get; set; }
-
         public virtual User User1 { get; set; }
         public virtual User User2 { get; set; }
 

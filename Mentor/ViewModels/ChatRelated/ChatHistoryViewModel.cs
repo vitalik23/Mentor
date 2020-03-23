@@ -10,6 +10,7 @@ namespace Mentor.ViewModels.ChatRelated
     {
         public User CurrentUser { get; set; }
         public User OpositeUser { get; set; }
+        
         public List<Message> Messages { get; set; }
 
     }

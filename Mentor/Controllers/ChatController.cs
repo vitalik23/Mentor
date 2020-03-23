@@ -26,17 +26,21 @@ namespace Mentor.Controllers
             User opositeUser = await _authentication.FindUserByIdAsync(oppositeUserId);
             User currentUser  = await _authentication.GetCurrentUserAsync();
 
-            Chat chat = await _chatService.GetOrCreateChat(currentUser, opositeUser);
+            Chat chat = await _chatService.GetOrCreateChat(currentUser, opositeUser); // 93
 
             // get messages
+            List<Message> messages = _chatService.GetMessagesByChat(chat);
 
             ChatHistoryViewModel model = new ChatHistoryViewModel 
             { 
                 CurrentUser = currentUser,
-                OpositeUser = opositeUser
+                OpositeUser = opositeUser,
+                Messages = messages
             };
 
             return View(model);
         }
+
+  
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Mentor.Interfaces;
 using Mentor.Models;
 using Mentor.Services;
+using Mentor.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,6 +30,8 @@ namespace Mentor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
+
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(connection));
 
@@ -64,6 +67,7 @@ namespace Mentor
         {
             app.UseDeveloperExceptionPage();
 
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -76,6 +80,8 @@ namespace Mentor
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<ChatHub>("/chatpool");
             });
         }
     }
