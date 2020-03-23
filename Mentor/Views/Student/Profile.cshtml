@@ -2,7 +2,88 @@
 @{
     ViewData["Title"] = @Model.Student.User.Name;
 }
-<table>
+
+
+<div class="container  ">
+    <div class="row">
+        <div class="col-lg-3 col-md-3" id="leftSide" style="border-radius: 10px 0 0 10px;">
+            <a asp-controller="UserSettings" asp-action="AvatarSettings">
+
+                @if (Model.Student.User.AvatarPath == "")
+                {
+                    <img src="~/img/noName.png" id="sizePht" />
+                }
+                else
+                {
+                    <img src="@Url.Content(Model.Student.User.AvatarPath)" id="sizePht" />
+                }
+            </a>
+            <div>
+                <div class="form-group row">
+                    <p style="padding-left:40px;"><h3 id="otstupOtCray">@Model.Student.User.Name @Model.Student.User.Surname</h3></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-5" id="centerSide">
+            <h2 style=" color:#696969;">Информация</h2>
+            <hr />
+
+            <div class="row">
+                <div class="form-group" id="Raspolog">
+                    <h6>Email</h6>
+                    @Model.Student.User.Email
+                </div>
+                <div class="form-group" id="Raspolog1">
+                    <h6>Номер телефона</h6>
+                    @Model.Student.User.PhoneNumber
+                </div>
+            </div>
+
+            <div class="row" id="razriv">
+                <div class="form-group" id="Raspolog">
+                    <h6>Время регистрации</h6>
+                    @Model.Student.User.RegistrationDate
+                </div>
+                <div class="form-group" id="Raspolog2">
+                    <h6>День рождения</h6>
+                    @Model.Student.User.Birthday
+                </div>
+            </div>
+
+            <h2 style=" color:#696969;">Возможности</h2>
+            <hr />
+            <form method="get" asp-controller="Teacher" asp-action="AddCourse">
+                <p><button type="button" class="btn btn-success" id="buttInfo">Написать сообщение</button></p>
+            </form>
+
+
+        </div>
+        <div class="col-lg-4 col-md-4" id="rightSide" style="border-radius: 0 10px 10px 0;">
+            <h2 style=" color:#696969;">Мои курсы</h2>
+            <hr />
+            <div id="elmList">
+                <ol class="rounded">
+                    @{
+                        if (Model.Subjects != null)
+                        {
+                            foreach (Subject subject in Model.Subjects)
+                            {
+                                 <li><a asp-controller="Subject" asp-action="IndexStudent" asp-route-subjectId="@subject.Id">@subject.Name</a></li>
+                            }
+                        }
+                    }
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@*<table>
     <col width="30%" valign="top">
     <col width="70%" valign="top">
     <tr>
@@ -10,9 +91,10 @@
             <table id="widthTableInfo">
                 <tr>
                     <td height="250px">
-                        <p align="center"><a  asp-controller="UserSettings" asp-action="AvatarSettings" >
-                            
-                             @if (Model.Student.User.AvatarPath == "")
+                        <p align="center">
+                            <a asp-controller="UserSettings" asp-action="AvatarSettings">
+
+                                @if (Model.Student.User.AvatarPath == "")
                                 {
                                     <img src="~/img/noName.png" id="noName" />
                                 }
@@ -20,14 +102,15 @@
                                 {
                                     <img src="@Url.Content(Model.Student.User.AvatarPath)" id="noName" />
                                 }
-                             
-                             
-                             </a></p>
+
+
+                            </a>
+                        </p>
                     </td>
                 </tr>
                 <tr>
                     <td height="350px" id="tdContentPol">
-                 
+
                         <form method="get" asp-controller="Teacher" asp-action="AddCourse">
                             <p><button type="button" class="btn btn-success" id="buttInfo">Написать сообщение</button></p>
                         </form>
@@ -49,7 +132,7 @@
                             <p>Email: @Model.Student.User.Email</p>
 
                             <p>Группа: @Model.Student.Group.Name</p>
-                      
+
                         </div>
                     </td>
                     <td rowspan="2">
@@ -57,7 +140,7 @@
                             <p id="calendar" padding-top="0">Навигация</p>
                             <div id="listCourse">
                                 <p><a href="">На главную</a></p>
-                         
+
                                 <p><a href="">Информационная страница</a></p>
                             </div>
                         </div>
@@ -88,5 +171,5 @@
             </table>
         </td>
     </tr>
-</table>
+</table>*@
 
