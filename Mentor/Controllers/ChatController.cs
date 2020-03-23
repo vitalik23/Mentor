@@ -11,6 +11,12 @@ namespace Mentor.Controllers
 
         public ChatController() 
         { 
+
+        }
+
+        public IActionResult Index()
+        {
+            return View();
         }
     }
 }
