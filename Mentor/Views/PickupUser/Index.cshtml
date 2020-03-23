@@ -30,7 +30,7 @@
 
 <table class="table table-striped">
     <tr>
-        <th>Фото</th>
+      
         <th>Имя</th>
         <th>Фамилия</th>
     </tr>
@@ -38,9 +38,7 @@
 
     @foreach (User user in Model.Users)
     {
-
-        <tr onclick="location.href = 'Home/Index';return false" >
-
+        <tr>
             <td height="50px" width="50px">
                 @if (user.AvatarPath == "")
                 {
@@ -50,7 +48,7 @@
                 {
                     <img src="@Url.Content(user.AvatarPath)" id="sizePht" />
                 }
-            </td>
+            </td>*@ 
 
             <td>@user.Name</td>
             <td>@user.Surname</td>
