@@ -39,15 +39,15 @@
 
     @foreach (User user in Model.Users)
     {
-        <tr onclick="window.location.href = 'User/Index'; return false;asp-route-userId='@user.Id'">
+        <tr onclick="window.location.href = 'User/Index?userId=@user.Id'; return true;">
            <td height="50px" width="50px">
                 @if (user.AvatarPath == "")
                 {
-                    <img src="~/img/noName.png" id="noName" />
+                    <img src="~/img/noName.png" id="sizePht" />
                 }
                 else
                 {
-                    <img src="@Url.Content(user.AvatarPath)" id="noName" />
+                    <img src="@Url.Content(user.AvatarPath)" id="sizePht" />
                 }
             </td> 
 
