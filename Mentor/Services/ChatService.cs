@@ -53,5 +53,15 @@ namespace Mentor.Services
         {
             throw new NotImplementedException();
         }
+
+        Chat IChatService.CreateChat(User user1, User user2)
+        {
+            throw new NotImplementedException();
+        }
+
+        Chat IChatService.CreateChat(string userId1, string userId2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
