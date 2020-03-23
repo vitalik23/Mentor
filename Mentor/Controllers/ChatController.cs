@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Mentor.Interfaces;
+using Mentor.Models;
+using Mentor.ViewModels.ChatRelated;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +12,20 @@ namespace Mentor.Controllers
     public class ChatController : Controller
     {
 
-        public ChatController() 
-        { 
+        private IAuthentication _authentication;
 
+        public ChatController(IAuthentication authentication)
+        {
+            _authentication = authentication;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string oppositeUserId)
         {
+            User oppositeUser = await _authentication.FindUserByIdAsync(oppositeUserId);
+            User currentUser  = await _authentication.GetCurrentUserAsync();
+
+            ChatHistoryViewModel model;
+
             return View();
         }
     }

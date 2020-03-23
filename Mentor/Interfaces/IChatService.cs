@@ -9,8 +9,8 @@ namespace Mentor.Interfaces
     public interface IChatService
     {
 
-        void CreateChat(User user1, User user2);
-        void CreateChat(string userId1, string userId2);
+        Chat CreateChat(User user1, User user2);
+        Chat CreateChat(string userId1, string userId2);
 
         void DeleteChat(User user1, User user2);
         void DeleteChat(string userId1, string userId2);

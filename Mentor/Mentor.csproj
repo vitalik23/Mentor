@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="ViewModels\TeacherRelated\" />
-    <Folder Include="Views\Chat\" />
     <Folder Include="wwwroot\files\tasks\" />
     <Folder Include="wwwroot\files\users\" />
     <Folder Include="wwwroot\files\task_answers\" />
