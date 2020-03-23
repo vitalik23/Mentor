@@ -27,6 +27,7 @@
     </div>
 </form>
 
+
 <table class="table table-striped">
     <tr>
         <th>Фото</th>
@@ -34,22 +35,27 @@
         <th>Фамилия</th>
     </tr>
 
+
     @foreach (User user in Model.Users)
     {
-        <tr>
+
+        <tr onclick="location.href = 'Home/Index';return false" >
+
             <td height="50px" width="50px">
                 @if (user.AvatarPath == "")
                 {
-                    <img src="~/img/noName.png" id="noName" />
+                    <img src="~/img/noName.png" id="sizePht" />
                 }
                 else
                 {
-                    <img src="@Url.Content(user.AvatarPath)" id="noName" />
+                    <img src="@Url.Content(user.AvatarPath)" id="sizePht" />
                 }
             </td>
 
             <td>@user.Name</td>
             <td>@user.Surname</td>
+
         </tr>
+
     }
 </table>
