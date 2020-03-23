@@ -13,20 +13,30 @@ namespace Mentor.Controllers
     {
 
         private IAuthentication _authentication;
+        private IChatService _chatService;
 
-        public ChatController(IAuthentication authentication)
+        public ChatController(IAuthentication authentication, IChatService chatService)
         {
             _authentication = authentication;
+            _chatService = chatService;
         }
 
         public async Task<IActionResult> Index(string oppositeUserId)
         {
-            User oppositeUser = await _authentication.FindUserByIdAsync(oppositeUserId);
+            User opositeUser = await _authentication.FindUserByIdAsync(oppositeUserId);
             User currentUser  = await _authentication.GetCurrentUserAsync();
 
-            ChatHistoryViewModel model;
+            Chat chat = await _chatService.GetOrCreateChat(currentUser, opositeUser);
 
-            return View();
+            // get messages
+
+            ChatHistoryViewModel model = new ChatHistoryViewModel 
+            { 
+                CurrentUser = currentUser,
+                OpositeUser = opositeUser
+            };
+
+            return View(model);
         }
     }
 }

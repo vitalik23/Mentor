@@ -40,6 +40,7 @@ namespace Mentor
             services.AddTransient<IFileService, FileService>();
             services.AddTransient<ITaskService, TaskService>();
             services.AddTransient<INewService, NewService>();
+            services.AddTransient<IChatService, ChatService>();
 
 
             services.AddIdentity<User, IdentityRole>(opts => {

@@ -17,7 +17,6 @@ namespace Mentor.Controllers
             _authentication = authentication;
         }
 
-
         public async Task<IActionResult> Index(string userId) 
         {
             User givenUser = await _authentication.FindUserByIdAsync(userId);

@@ -21,6 +21,7 @@
     <Folder Include="wwwroot\files\tasks\" />
     <Folder Include="wwwroot\files\users\" />
     <Folder Include="wwwroot\files\task_answers\" />
+    <Folder Include="wwwroot\files\chats\" />
     <Folder Include="wwwroot\img\forFacAndDep\" />
   </ItemGroup>
 

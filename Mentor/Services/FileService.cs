@@ -147,6 +147,24 @@ namespace Mentor.Services
         }
 
 
+        public void CreateChatFile(Chat chat) 
+        {
+            chat.HistoryPath = _appEnvironment.WebRootPath + "/files/chats/" + chat.Id + "/";
+
+            if (!Directory.Exists(chat.HistoryPath))
+            {
+                Directory.CreateDirectory(chat.HistoryPath);
+            }
+
+            chat.HistoryPath += "messages.txt";
+
+            if (!File.Exists(chat.HistoryPath)) 
+            {
+                File.Create(chat.HistoryPath);
+            }
+
+        }
+
         public void DeleteFile(string __path)
         {
             string path = _appEnvironment.WebRootPath + __path;

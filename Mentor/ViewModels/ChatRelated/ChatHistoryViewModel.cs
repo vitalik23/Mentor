@@ -8,6 +8,7 @@ namespace Mentor.ViewModels.ChatRelated
 {
     public class ChatHistoryViewModel
     {
+        public User CurrentUser { get; set; }
         public User OpositeUser { get; set; }
         public List<Message> Messages { get; set; }
 
