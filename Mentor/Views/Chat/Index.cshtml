@@ -35,11 +35,12 @@
             .build();
 
 
-        hubConnection.on("Send", function (model) {
+        hubConnection.on("Send", function (model) { //приходит сообщение
 
             if (model.currentUserId === "@Model.OpositeUser.Id" && model.opositeUserId === "@Model.CurrentUser.Id") {
 
-                let elem = document.createElement("p");
+                let elem = document.createElement("h1");
+                elem.textAlign = 'right';
                 elem.appendChild(document.createTextNode(model.message));
 
                 let firstElem = document.getElementById("chatroom").firstChild;
@@ -48,7 +49,7 @@
 
         });
 
-        document.getElementById("sendBtn").addEventListener("click", function (e) {
+        document.getElementById("sendBtn").addEventListener("click", function (e) {//я отправляю
             let message = document.getElementById("message").value;
 
             
