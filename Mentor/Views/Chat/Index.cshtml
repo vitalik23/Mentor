@@ -1,19 +1,19 @@
 ﻿@model ChatHistoryViewModel
 
-@Model.CurrentUser.Id
-<br />
-@Model.OpositeUser.Id
 
-<div>
+<div class="container col-lg-6 ">
     <div id="opositeUserInfo">
-        <label>@Model.CurrentUser.Name @Model.OpositeUser.Name</label>
+        <p align="right"><label>@Model.CurrentUser.Name @Model.OpositeUser.Name</label></p>
     </div>
 
-    <div id="inputForm">
-        <input type="text" id="message" />
-        <input type="button" id="sendBtn" value="Отправить" />
+    <div id="inputForm" class="row">
+        <label class="col-lg-7"></label>
+        <input type="text" class="form-control col-lg-3" id="message" placeholder="Введите сообщение">
+        <input type="button" class="btn btn-primary" value="Отправить" id="sendBtn"/>
     </div>
 
+
+    
     <div id="chatroom">
         @{
             Message message;
@@ -23,17 +23,19 @@
 
                 if (message.Direction)
                 {
-                    <p align="left">@message.Text</p> // left
+                    <p align="right">@message.Text</p> //right
                 }
                 else
                 {
-                    <p align="right">@message.Text</p> // right
+                    <p align="left">@message.Text</p> // left
                 }
-
-
             }
         }
     </div>
+
+
+
+
     <script src="js/signalr/dist/browser/signalr.min.js"></script>
 
     <script>
@@ -46,12 +48,12 @@
 
             if (model.currentUserId === "@Model.OpositeUser.Id" && model.opositeUserId === "@Model.CurrentUser.Id") {
 
-                let elem = document.createElement("p");               
-                elem.appendChild(document.createTextNode(model.message));               
+                let elem = document.createElement("p");
+                elem.appendChild(document.createTextNode(model.message));
 
                 let firstElem = document.getElementById("chatroom").firstChild;
 
-                document.getElementById("chatroom").insertBefore(elem, firstElem).style.textAlign = "right";
+                document.getElementById("chatroom").insertBefore(elem, firstElem).style.cssText = "background:linear-gradient(90deg, rgba(101,224,131,1) 0%, rgba(18,242,0,1) 0%); border: 1px solid black; text-align: left; color:white; border-radius:10px 10px 10px 10px; padding-left:8px; font-size:20px;";
             }
 
         });
@@ -59,13 +61,12 @@
         document.getElementById("sendBtn").addEventListener("click", function (e) {//я отправляю
             let message = document.getElementById("message").value;
             
-            
-            let elem = document.createElement("p");
+            let elem = document.createElement("p");            
             elem.appendChild(document.createTextNode(message));
 
             let firstElem = document.getElementById("chatroom").firstChild;
-            document.getElementById("chatroom").insertBefore(elem, firstElem);
-            
+            document.getElementById("chatroom").insertBefore(elem, firstElem).style.cssText = "background:linear-gradient(90deg, rgba(101,224,220,1) 0%, rgba(0,181,242,1) 0%); border: 1px solid black; text-align: right; color:white; border-radius:10px 10px 10px 10px; padding-right:8px; font-size:20px;";
+
 
             hubConnection.invoke("Send",
                 {
@@ -73,11 +74,11 @@
                     "OpositeUserId": "@Model.OpositeUser.Id",
                     "Message" : message
                 });
-            
+
         });
 
         document.getElementById("sendBtn").onclick = function(e) {
-  
+
              document.getElementById("message").value = "";
         }
 
