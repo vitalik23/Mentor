@@ -1,5 +1,6 @@
 ﻿using Mentor.Interfaces;
 using Mentor.Models;
+using Mentor.ViewModels.ChatRelated;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,13 +87,15 @@ namespace Mentor.Services
                                    || x.User1Id == userId2 && x.User2Id == userId1);
         }
 
-        public async Task<Message> AddMessage(Chat chat, string text)
+        public async Task<Message> AddMessage(Chat chat, MessageViewModel model)
         {
             Message message = new Message
             {
-                Text = text,
+                Text = model.Message,
                 CreationTime = DateTime.Now,
-                ChatId = chat.Id
+                ChatId = chat.Id,
+                Direction = chat.User1Id == model.CurrentUserId
+                
             };
 
             await _dataBaseContext.AddAsync(message);

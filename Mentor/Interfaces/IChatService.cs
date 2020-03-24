@@ -1,4 +1,5 @@
 ﻿using Mentor.Models;
+using Mentor.ViewModels.ChatRelated;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace Mentor.Interfaces
         Chat GetChat(string userId1, string userId2);
         List<Message> GetMessagesByChat(Chat chat);
 
-        Task<Message> AddMessage(Chat chat, string text);
+        Task<Message> AddMessage(Chat chat, MessageViewModel model);
 
     }
 }

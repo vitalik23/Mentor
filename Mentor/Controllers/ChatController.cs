@@ -29,7 +29,16 @@ namespace Mentor.Controllers
             Chat chat = await _chatService.GetOrCreateChat(currentUser, opositeUser); // 93
 
             // get messages
-            List<Message> messages = _chatService.GetMessagesByChat(chat);
+            List<Message> messages = new List<Message>(_chatService.GetMessagesByChat(chat));
+
+            if (currentUser.Id != chat.User1Id)
+            {
+                foreach (Message message in messages)
+                {
+                    message.Direction = !message.Direction;
+                }
+            }
+            
 
             ChatHistoryViewModel model = new ChatHistoryViewModel 
             { 

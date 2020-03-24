@@ -25,7 +25,7 @@ namespace Mentor.SignalR
             Chat chat = _chatService.GetChat(model.CurrentUserId, model.OpositeUserId);
 
             // create message and save it to db
-            await _chatService.AddMessage(chat, model.Message);
+            await _chatService.AddMessage(chat, model);
 
             // resend to oposite (receivering) user
             await this.Clients.User(model.OpositeUserId).SendAsync("Send", model);
