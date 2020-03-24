@@ -23,11 +23,11 @@
 
                 if (message.Direction)
                 {
-                    <p>@message.Text</p> // left
+                    <p align="left">@message.Text</p> // left
                 }
                 else
                 {
-                    <p>@message.Text</p> // right
+                    <p align="right">@message.Text</p> // right
                 }
 
 
@@ -58,7 +58,7 @@
 
         document.getElementById("sendBtn").addEventListener("click", function (e) {//я отправляю
             let message = document.getElementById("message").value;
-
+            
             
             let elem = document.createElement("p");
             elem.appendChild(document.createTextNode(message));
@@ -73,7 +73,13 @@
                     "OpositeUserId": "@Model.OpositeUser.Id",
                     "Message" : message
                 });
+            
         });
+
+        document.getElementById("sendBtn").onclick = function(e) {
+  
+             document.getElementById("message").value = "";
+        }
 
         hubConnection.start();
     </script>
