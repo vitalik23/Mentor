@@ -8,3 +8,23 @@
 #sendBtn {
     margin-bottom: 10px;
 }
+
+#leftChat {
+    background: linear-gradient(90deg, rgba(101,224,131,1) 0%, rgba(18,242,0,1) 0%);
+    border: 1px solid black;
+    text-align: left;
+    color: white;
+    border-radius: 10px 10px 10px 10px;
+    padding-left: 8px;
+    font-size: 20px;
+}
+
+#rightChat {
+    background: linear-gradient(90deg, rgba(101,224,220,1) 0%, rgba(0,181,242,1) 0%);
+    border: 1px solid black;
+    text-align: right;
+    color: white;
+    border-radius: 10px 10px 10px 10px;
+    padding-right: 8px;
+    font-size: 20px;
+}
