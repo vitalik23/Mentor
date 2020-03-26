@@ -33,9 +33,9 @@
                 <div class="panel">
                     <div class="panel-body">
                         <ul id="myTab" class="nav nav-pills">
-                            <li class="active"><a href="#detail" data-toggle="tab">О пользователе </a></li>
-                            <li class=""><a href="#contact" data-toggle="tab">Отправить сообщение на почту</a></li>
-                            <li class=""><a asp-controller="Chat" asp-action="Index" asp-route-oppositeUserId ="@Model.Id">Отправить личное сообщение</a></li>
+                            <li class="active"><a href="#detail" data-toggle="tab"><button type="button" class="btn btn-outline-primary">О пользователе</button></a></li>
+                            <li class=""><a href="#contact" data-toggle="tab"><button type="button" class="btn btn-outline-primary">Отправить сообщение на почту</button></a></li>
+                            <li class=""><a asp-controller="Chat" asp-action="Index" asp-route-oppositeUserId ="@Model.Id"><button type="button" class="btn btn-outline-primary" >Отправить личное сообщение</button></a></li>
                         </ul>
                         <div id="myTabContent" class="tab-content">
                             <hr>
