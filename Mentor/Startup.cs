@@ -75,11 +75,17 @@ namespace Mentor
             app.UseAuthentication();    // подключение аутентификации
             app.UseAuthorization();
 
+            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "admin",
+                    pattern: "{controller=Admin}/{action=Users}/{id?}");
 
                 endpoints.MapHub<ChatHub>("/chatpool");
             });

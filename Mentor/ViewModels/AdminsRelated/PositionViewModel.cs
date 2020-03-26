@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mentor.ViewModels
+namespace Mentor.ViewModels.AdminsRelated
 {
-    public class FacultyViewModel
+    public class PositionViewModel
     {
-        public IEnumerable<Faculty> AllFaculties { get; set; }
-
         public string Name { get; set; }
+
+        public IEnumerable<Position> AllPosition { get; set; }
     }
 }

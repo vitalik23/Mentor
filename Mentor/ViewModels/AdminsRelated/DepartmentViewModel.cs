@@ -11,8 +11,12 @@ namespace Mentor.ViewModels.AdminsRelated
     {
         public string Name { get; set; }
 
+        public int FacultyId { get; set; }
+
         public List<SelectListItem> FacultyItems { get; set; }
 
-        public int FacultyId { get; set; }
+        public IEnumerable<Department> AllDepartments { get; set; }
+
+        
     }
 }

@@ -1,11 +1,11 @@
-﻿@model IEnumerable<Department>
+﻿@model DepartmentViewModel
 @{
     Layout = "_LayoutForAdmin";
 }
 
-    <div class="align-content-xl-center">
-        <a asp-controller="Admin" asp-action="СreateDepartment">Добавить кафедру</a>
-    </div>
+<div class="align-content-xl-center">
+    <input type="submit" value="Добавить факультет" data-toggle="modal" data-target="#createDepartment" />
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -15,15 +15,52 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Department department in Model)
+        @foreach (Department department in Model.AllDepartments)
         {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => department.Name)</td>
-            <td>@Html.DisplayFor(modelItem => department.Faculty.Name)</td>
-            <td>
-                <a asp-controller="Admin" asp-action="DeleteDepartment" asp-route-id="@department.Id">Удалить</a>
-            </td>
-        </tr>
+            <tr>
+                <td>@Html.DisplayFor(modelItem => department.Name)</td>
+                <td>@Html.DisplayFor(modelItem => department.Faculty.Name)</td>
+                <td>
+                    <a asp-controller="Admin" asp-action="DeleteDepartment" asp-route-id="@department.Id">Удалить</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="createDepartment" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content text-center">
+
+            <form method="post" asp-controller="Admin" asp-action="CreateDepartmentConfirmed">
+                <div class="modal-header " asp-validation-summary="ModelOnly">
+
+                </div>
+
+                <div class="modal-body">
+                    <div>
+                        <label asp-for="@Model.Name">Введите название кафедры</label><br />
+                        <input id="inputEmail" class="form-control" placeholder="Название кафедры" required="" autofocus="" asp-for="@Model.Name" />
+                        <span asp-validation-for="@Model.Name"></span>
+                        <p> </p>
+                        <label asp-for="FacultyId"><strong>Выбирете факультет</strong></label>
+                        @Html.DropDownListFor(m => m.FacultyId, Model.FacultyItems, "Пожалуйста, выбирете факультет", new { @class = "form-control" });
+                    </div>
+
+                   
+
+                </div>
+
+                <div class="modal-footer text-center">
+                    <button id="add-cart-style-grid" class="btn btn-dark" type="submit">Добавить кафедру</button>
+                </div>
+
+
+            </form>
+
+
+        </div>
+    </div>
+</div>
