@@ -25,7 +25,7 @@
                 {
                     <p align="right" id="rightChat">@message.Text</p> //right
                 }
-                else 
+                else
                 {
                     <p align="left" id="leftChat">@message.Text</p> // left
                 }
@@ -48,7 +48,7 @@
 
             if (model.currentUserId === "@Model.OpositeUser.Id" && model.opositeUserId === "@Model.CurrentUser.Id") {
 
-                let elem = document.createElement("span");
+                let elem = document.createElement("p");
                 elem.appendChild(document.createTextNode(model.message));
 
                 let firstElem = document.getElementById("chatroom").firstChild;
@@ -61,11 +61,11 @@
         document.getElementById("sendBtn").addEventListener("click", function (e) {//я отправляю
             let message = document.getElementById("message").value;
             
-            let elem = document.createElement("span");            
+            let elem = document.createElement("p");            
             elem.appendChild(document.createTextNode(message));
 
             let firstElem = document.getElementById("chatroom").firstChild;
-            document.getElementById("chatroom").insertBefore(elem, firstElem).style.cssText = "background:linear-gradient(90deg, rgba(101,224,220,1) 0%, rgba(0,181,242,1) 0%); border: 1px solid black; float: right; color:white; border-radius:10px 10px 10px 10px; padding-right:8px; font-size:20px;display: block;  ";
+            document.getElementById("chatroom").insertBefore(elem, firstElem).style.cssText = "background:linear-gradient(90deg, rgba(101,224,220,1) 0%, rgba(0,181,242,1) 0%); border: 1px solid black; text-align: right; color:white; border-radius:10px 10px 10px 10px; padding-right:8px; font-size:20px; display: flex;";
 
 
             hubConnection.invoke("Send",
