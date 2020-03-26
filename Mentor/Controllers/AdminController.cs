@@ -514,6 +514,11 @@ namespace Mentor.Controllers
 
                 return RedirectToAction("StudentInfo", model);
             }
+            if(student == null && teacher == null)
+            {
+                return RedirectToAction("AdminInfo", user);
+            }
+
             return RedirectToAction("Users");
         }
 
@@ -525,6 +530,11 @@ namespace Mentor.Controllers
 
         [HttpGet]
         public ViewResult TeacherInfo(TeacherViewModel model)
+        {
+            return View(model);
+        }
+        [HttpGet]
+        public ViewResult AdminInfo(User model)
         {
             return View(model);
         }
@@ -565,6 +575,20 @@ namespace Mentor.Controllers
 
                 return RedirectToAction("EditStudent", model);
             }
+            if (teacher == null && student == null)
+            {
+                var model = new User
+                {
+                    Email = user.Email,
+                    Surname = user.Surname,
+                    Name = user.Name,
+                    Patronymic = user.Patronymic,
+                    PhoneNumber = user.PhoneNumber,
+                    IsAccepted = user.IsAccepted
+                };
+
+                return RedirectToAction("EditAdmin", model);
+            }
 
             return RedirectToAction("Users");
         }
@@ -582,6 +606,45 @@ namespace Mentor.Controllers
         {
             model.GroupItems = PopulateGroups();
             return View(model);
+        }
+
+        [HttpGet]
+        public ViewResult EditAdmin(User model)
+        {
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAdminConfirmed(User model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (ModelState.IsValid)
+            {
+                if(user == null)
+                {
+                    return View("Error");
+                }
+                else
+                {
+                    user.Surname = model.Surname;
+                    user.Name = model.Name;
+                    user.Patronymic = model.Patronymic;
+                    user.PhoneNumber = model.PhoneNumber;
+                    user.IsAccepted = model.IsAccepted;
+
+                    var result = await _userManager.UpdateAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Users");
+                    }
+
+                    return View(model);
+                }
+            }
+
+            return View("EditAdmin", model);
         }
 
         [HttpPost]
@@ -680,10 +743,12 @@ namespace Mentor.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteUser(string id)
+        public async Task<IActionResult> DeleteUser(string email)
         {
-            Student student = _baseContext.Student.FirstOrDefault(i => i.UserId == id);
-            Teacher teacher = _baseContext.Teacher.FirstOrDefault(i => i.UserId == id);
+            User user = await _userManager.FindByEmailAsync(email);
+
+            Student student = _baseContext.Student.FirstOrDefault(i => i.UserId == user.Id);
+            Teacher teacher = _baseContext.Teacher.FirstOrDefault(i => i.UserId == user.Id);
 
             if (student != null)
             {
@@ -696,9 +761,9 @@ namespace Mentor.Controllers
                 _baseContext.SaveChanges();
             }
 
-            if (id != null)
+            if (user.Id != null)
             {
-                await _authentication.DeleteUserAsync(id);
+                await _authentication.DeleteUserAsync(user.Id);
             }
 
             return RedirectToAction("Users");

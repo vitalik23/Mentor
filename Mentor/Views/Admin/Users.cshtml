@@ -39,8 +39,7 @@
             <td>@Html.DisplayFor(modelItem => user.IsAccepted)</td>
             <td>
                 <a asp-controller="Admin" asp-action="Info" asp-route-id="@user.Id">Детальная информация</a> |
-                <a asp-controller="Admin" asp-action="EditUser" asp-route-id="@user.Id">Редактировать</a> |
-                <a asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@user.Id">Удалить</a>
+                <a asp-controller="Admin" asp-action="EditUser" asp-route-id="@user.Id">Редактировать</a> 
             </td>
         </tr>
         }
