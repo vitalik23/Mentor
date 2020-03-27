@@ -23,7 +23,9 @@
 
                 if (message.Direction)
                 {
-                    <p align="right" id="rightChat">@message.Text</p> //right
+                <p>
+                    <span id="rightChat">@message.Text</span> @*//right*@
+                </p>
                 }
                 else
                 {
@@ -53,19 +55,22 @@
 
                 let firstElem = document.getElementById("chatroom").firstChild;
 
-                document.getElementById("chatroom").insertBefore(elem, firstElem).style.cssText = "background:linear-gradient(90deg, rgba(101,224,131,1) 0%, rgba(18,242,0,1) 0%); border: 1px solid black; text-align: left; color:white; border-radius:10px 10px 10px 10px; padding-left:8px; font-size:20px;";
+                document.getElementById("chatroom").insertBefore(elem, firstElem).style.cssText = "background:linear-gradient(90deg, rgba(85,255,221,1) 11%, rgba(26,226,104,1) 62%, rgba(21,178,214,1) 99%);  border: 1px solid black; text-align: left; color:white; border-radius:10px 10px 10px 10px; padding-left:8px; font-size:20px;";
             }
 
         });
 
         document.getElementById("sendBtn").addEventListener("click", function (e) {//я отправляю
             let message = document.getElementById("message").value;
-            
-            let elem = document.createElement("p");            
+
+            let elem = document.createElement("p").appendChild(document.createElement('span'));
+
+
+
             elem.appendChild(document.createTextNode(message));
 
             let firstElem = document.getElementById("chatroom").firstChild;
-            document.getElementById("chatroom").insertBefore(elem, firstElem).style.cssText = "background:linear-gradient(90deg, rgba(101,224,220,1) 0%, rgba(0,181,242,1) 0%); border: 1px solid black; text-align: right; color:white; border-radius:10px 10px 10px 10px; padding-right:8px; font-size:20px; display: flex;";
+            document.getElementById("chatroom").insertBefore(elem, firstElem).style.cssText = "background:linear-gradient(90deg, rgba(180,58,178,1) 5%, rgba(161,52,176,1) 23%, rgba(255,85,192,1) 57%, rgba(210,21,224,1) 81%, rgba(120,69,252,1) 100%); border: 1px solid black; float: right; color:white; border-radius:10px 10px 10px 10px; padding-right:8px; font-size:20px; "; 
 
 
             hubConnection.invoke("Send",
