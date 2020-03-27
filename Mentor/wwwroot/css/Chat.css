@@ -1,12 +1,69 @@
-﻿.container {
-    margin-top:20px;
+﻿
+
+.left {
+    margin-top: 20px;
+    float: left;
+}
+
+.infoUser {
     border-radius: 10px 10px 10px 10px;
+    height: 690px;
+    float: right;
     background: white;
-    max-height: 620px;
+}
+
+#locationPht{
+    padding-left:50px;
+}
+
+#locationName{
+    padding-top:30px;
+    padding-left:60px;
+}
+
+.right {
+    margin-left: 0;
+    /*width:60%;*/
+    float: right;
+}
+
+
+
+.containersss {
+    float: left;
+    margin-top: 0;
+    border-radius: 0px 0px 0px 0px;
+    background: white;
+    max-height: 550px;
     overflow-y: scroll;
 }
+
+.nameWithChat {
+    float: left;
+    max-height: 30px;
+    margin-top: 20px;
+    border-radius: 10px 10px 0px 0px;
+    background: white;
+    margin-bottom: 0;
+}
+
+.inputMessage {
+    float: left;
+    background: white;
+}
+
+.endChat {
+    float: left;
+    max-height: 40px;
+    background: white;
+    color: white;
+    border-radius: 0px 0px 10px 10px;
+}
+
 #sendBtn {
     margin-bottom: 10px;
+    height:50px;
+    width:50px;
 }
 
 #leftChat {
@@ -22,7 +79,7 @@
 #rightChat {
     background: linear-gradient(90deg, rgba(180,58,178,1) 5%, rgba(161,52,176,1) 23%, rgba(255,85,192,1) 57%, rgba(210,21,224,1) 81%, rgba(120,69,252,1) 100%);
     border: 1px solid black;
-    float: right;
+    text-align: right;
     color: white;
     border-radius: 10px 10px 10px 10px;
     padding-right: 8px;

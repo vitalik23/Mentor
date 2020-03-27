@@ -1,46 +1,73 @@
 ﻿@model ChatHistoryViewModel
 
 
-<div class="container col-lg-6 ">
-    <div id="opositeUserInfo">
-        <p align="right"><label>@Model.CurrentUser.Name @Model.OpositeUser.Name</label></p>
-    </div>
-
-    <div id="inputForm" class="row">
-        <label class="col-lg-7"></label>
-        <input type="text" class="form-control col-lg-3" id="message" placeholder="Введите сообщение">
-        <input type="button" class="btn btn-primary" value="Отправить" id="sendBtn"/>
-    </div>
-
-
-    
-    <div id="chatroom">
-        @{
-            Message message;
-            for (int i = 0; i < Model.Messages.Count; i++)
-            {
-                message = Model.Messages[Model.Messages.Count - i - 1];
-
-                if (message.Direction)
+<div class="left col-lg-6">
+    <div class=" col-lg-6 infoUser">
+        <div>           
+            <div id="locationPht">
+                @if (Model.OpositeUser.AvatarPath == "")
                 {
-                <p>
-                    <span id="rightChat">@message.Text</span> @*//right*@
-                </p>
+                    <img src="~/img/noName.png" id="sizePht" />
                 }
                 else
                 {
-                    <p align="left" id="leftChat">@message.Text</p> // left
+                    <img src="@Url.Content(Model.OpositeUser.AvatarPath)" id="sizePht" />
                 }
-            }
-        }
+            </div>
+
+            <div id="locationName">
+                <h2>@Model.OpositeUser.Name    @Model.OpositeUser.Surname</h2>
+            </div>
+            <div>
+                <h6 id="locationName">@Model.OpositeUser.Email</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="right col-lg-6">
+
+    <div class="nameWithChat container col-lg-8">
+        <div id="opositeUserInfo">
+            <p align="right"><label>@Model.CurrentUser.Name @Model.OpositeUser.Name</label></p>
+        </div>
+
+
+
+
     </div>
 
+    <div class="inputMessage container col-lg-8">
+        <div id="inputForm" class="form-group row ">
+            <input type="text" class="form-control" id="message" placeholder="Введите сообщение">
+            <button type="submit" class="btn btn-link" id="sendBtn"><img src="https://img.icons8.com/color/48/000000/send-letter--v1.png" /></button>
+        </div>
+    </div>
 
+    <div class="container containersss col-lg-8 ">
 
+        <div id="chatroom">
+            @{
+                Message message;
+                for (int i = 0; i < Model.Messages.Count; i++)
+                {
+                    message = Model.Messages[Model.Messages.Count - i - 1];
 
-    <script src="js/signalr/dist/browser/signalr.min.js"></script>
+                    if (message.Direction)
+                    {
+                        <p align="right" id="rightChat">@message.Text</p> @*//right*@
+                    }
+                    else
+                    {
+                        <p align="left" id="leftChat">@message.Text</p> // left
+                    }
+                }
+            }
+        </div>
 
-    <script>
+        <script src="js/signalr/dist/browser/signalr.min.js"></script>
+
+        <script>
         const hubConnection = new signalR.HubConnectionBuilder()
             .withUrl("/chatpool")
             .build();
@@ -63,14 +90,12 @@
         document.getElementById("sendBtn").addEventListener("click", function (e) {//я отправляю
             let message = document.getElementById("message").value;
 
-            let elem = document.createElement("p").appendChild(document.createElement('span'));
-
-
+            let elem = document.createElement("p");
 
             elem.appendChild(document.createTextNode(message));
 
             let firstElem = document.getElementById("chatroom").firstChild;
-            document.getElementById("chatroom").insertBefore(elem, firstElem).style.cssText = "background:linear-gradient(90deg, rgba(180,58,178,1) 5%, rgba(161,52,176,1) 23%, rgba(255,85,192,1) 57%, rgba(210,21,224,1) 81%, rgba(120,69,252,1) 100%); border: 1px solid black; float: right; color:white; border-radius:10px 10px 10px 10px; padding-right:8px; font-size:20px; "; 
+            document.getElementById("chatroom").insertBefore(elem, firstElem).style.cssText = "background:linear-gradient(90deg, rgba(180,58,178,1) 5%, rgba(161,52,176,1) 23%, rgba(255,85,192,1) 57%, rgba(210,21,224,1) 81%, rgba(120,69,252,1) 100%); border: 1px solid black; text-align: right; color:white; border-radius:10px 10px 10px 10px; padding-right:8px; font-size:20px; ";
 
 
             hubConnection.invoke("Send",
@@ -88,9 +113,13 @@
         }
 
         hubConnection.start();
-    </script>
+        </script>
 
+
+    </div>
+    <div class="endChat container col-lg-8">
+        ss
+    </div>
 
 
 </div>
-
