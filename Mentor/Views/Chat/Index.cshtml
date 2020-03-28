@@ -3,7 +3,7 @@
 
 <div class="left col-lg-6">
     <div class=" col-lg-6 infoUser">
-        <div>           
+        <div>
             <div id="locationPht">
                 @if (Model.OpositeUser.AvatarPath == "")
                 {
@@ -18,8 +18,14 @@
             <div id="locationName">
                 <h2>@Model.OpositeUser.Name    @Model.OpositeUser.Surname</h2>
             </div>
-            <div>
+            <hr />
+            <div class="row">
+                <p id="otsInfo">Email: </p>
                 <h6 id="locationName">@Model.OpositeUser.Email</h6>
+            </div>
+            <div class="row">
+                <p id="otsInfo">Телефон: </p>
+                <h6 id="locationPhone">@Model.OpositeUser.PhoneNumber</h6>
             </div>
         </div>
     </div>
@@ -39,7 +45,7 @@
 
     <div class="inputMessage container col-lg-8">
         <div id="inputForm" class="form-group row ">
-            <input type="text" class="form-control" id="message" placeholder="Введите сообщение">
+            <input type="text" class="form-control col-lg-10" id="message" placeholder="Введите сообщение">
             <button type="submit" class="btn btn-link" id="sendBtn"><img src="https://img.icons8.com/color/48/000000/send-letter--v1.png" /></button>
         </div>
     </div>
