@@ -7,32 +7,35 @@
 
 <a href="@Url.Action("Download", new {path = Model.Task.TheoryPath})" class="not-filled recent">Загрузить теоретический материал</a>*@
 
-<h2>Статус работы</h2>
+<h2>Информация о работе</h2>
 
 <table>
     <tr>
         <td>
             <div>
-                <p>Статус</p>
+                <p>
+                    Статус:
 
-                @if (Model.TaskStudent == null)
-                {
-                    <strong> Не сдано </strong>
-                }
-                else
-                {
-                    <strong> Сдано на оценивание </strong>
-
-                    @if (Model.TaskStudent.MarkValue < 0)
+                    @if (Model.TaskStudent == null)
                     {
-                        <strong> Не оценено </strong>
+                        <strong> Не сдано </strong>
                     }
                     else
                     {
-                        <strong> Оценено </strong>
-                    }
+                        <strong> Сдано на оценивание </strong>
 
-                }
+                        @if (Model.TaskStudent.MarkValue < 0)
+                        {
+                            <strong> Не оценено </strong>
+                        }
+                        else
+                        {
+                            <strong> Оценено </strong>
+                        }
+
+
+                    }
+                </p>
             </div>
 
         </td>
@@ -41,30 +44,30 @@
     <tr>
         <td>
             <div>
-                <p>Сдать до:</p>
-                <strong> @Model.Task.DeadlineTime </strong>
+                <p>Сдать до: <strong> @Model.Task.DeadlineTime </strong></p>
+                
             </div>
 
         </td>
     </tr>
 
-    <tr>
+    @*<tr>
         <td>
             <div>
                 <p>Оставшееся время</p>
                 <strong> to be added </strong>
             </div>
 
-        </td>
-    </tr>
+        </td>   
+    </tr>*@
 
     @if (Model.TaskStudent != null && Model.TaskStudent.MarkValue >= 0)
     {
         <tr>
             <td>
                 <div>
-                    <p>Оценка</p>
-                    <strong> @Model.TaskStudent.MarkValue </strong>
+                    <p>Оценка <strong> @Model.TaskStudent.MarkValue </strong></p>
+                    
                 </div>
 
             </td>
@@ -73,8 +76,8 @@
         <tr>
             <td>
                 <div>
-                    <p>Описание</p>
-                    <strong> @Model.TaskStudent.MarkDescription </strong>
+                    <p>Описание <strong> @Model.TaskStudent.MarkDescription </strong></p>
+                    
                 </div>
 
             </td>
