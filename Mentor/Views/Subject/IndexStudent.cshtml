@@ -12,7 +12,7 @@
                 @foreach (Mentor.Models.Task task in Model.Tasks)
                 {
                      <a id="kindAA" asp-controller="Task" asp-action="IndexStudent" asp-route-taskId="@task.Id" asp-route-subjectId="@Model.Subject.Id">
-                         @task.Name
+                         <p>@task.Name</p>
                      </a>
                     
                 }
