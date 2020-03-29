@@ -8,22 +8,19 @@
     <tr>
         <td>
             <div>
-                <h1>Лекции</h1>
+                <h1>Задание</h1>
                 @foreach (Mentor.Models.Task task in Model.Tasks)
                 {
-                    <a asp-controller="Task" asp-action="IndexStudent" asp-route-taskId="@task.Id" asp-route-subjectId="@Model.Subject.Id">
-                        <p>@task.Name</p>
-                        
-
-                    </a>
+                     <a id="kindAA" asp-controller="Task" asp-action="IndexStudent" asp-route-taskId="@task.Id" asp-route-subjectId="@Model.Subject.Id">
+                         @task.Name
+                     </a>
+                    
                 }
             </div>
 
             
         </td>
         <td id="tdInfo">
-
-            <a href=""><p>Журнал</p></a>
 
         </td>
     </tr>
