@@ -59,7 +59,7 @@
                             }
                             else if (User.IsInRole("admin"))
                             {
-                                <a class="btn btn-danger" asp-controller="Admin" asp-action="Index">Панель администрирования</a>
+                                <a id="userName" asp-controller="Admin" asp-action="Index">@User.Identity.Name</a>
 
                             }
 

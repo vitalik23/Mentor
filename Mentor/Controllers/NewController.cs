@@ -33,6 +33,7 @@ namespace Mentor.Controllers
 
         public async Task<IActionResult> AddNew(New nw)
         {
+            DateTime date = DateTime.Now;
             await _newService.AddNew(nw);
             return RedirectToAction("AllNew", "New");
         }
