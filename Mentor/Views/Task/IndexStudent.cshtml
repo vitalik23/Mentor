@@ -5,11 +5,47 @@
 }
 @*<a href="#" onclick="history.back();return false;">Вернуться назад</a>
 
-<a href="@Url.Action("Download", new {path = Model.Task.TheoryPath})" class="not-filled recent">Загрузить теоретический материал</a>*@
+    <a href="@Url.Action("Download", new {path = Model.Task.TheoryPath})" class="not-filled recent">Загрузить теоретический материал</a>*@
 
 <h2>Информация о работе</h2>
+<table class="generaltable">
+    <tbody>
+        <tr class="">
+            <th class="cell c0" style="" scope="row">Статус</th>
+            @if (Model.TaskStudent == null)
+             {
+                <th class="nesdano" style="">Не сдано</th>
+             }
+             else
+             {
+                  <th class="sdano" style="">Сдано на оценивание</th>
+             }
+        </tr>
 
-<table>
+            <tr class="">
+                <th class="cell c0" style="" scope="row">Статус оценки</th>
+                @if (Model.TaskStudent != null && Model.TaskStudent.MarkValue > 0)
+                {
+                    <th class="sdano" style="">Оценено</th>
+                }
+                else
+                {
+                    <th class="nesdano" style="">Не оценено</th>
+                }
+            </tr>
+            <tr class="">
+                <th class="cell c0" style="" scope="row">Сдать до</th> 
+                <th>@Model.Task.DeadlineTime</th>
+            </tr>
+            @if (Model.TaskStudent != null && Model.TaskStudent.MarkValue >= 0)
+            {
+                <tr class="">
+                    <th class="sdano" style="">Оценка @Model.TaskStudent.MarkValue</th>
+                </tr>
+            }
+        </tbody>
+</table>
+@*<table>
     <tr>
         <td>
             <div>
@@ -45,70 +81,67 @@
         <td>
             <div>
                 <p>Сдать до: <strong> @Model.Task.DeadlineTime </strong></p>
-                
+
             </div>
 
         </td>
     </tr>
 
-    @*<tr>
+<tr>
         <td>
             <div>
                 <p>Оставшееся время</p>
                 <strong> to be added </strong>
             </div>
 
-        </td>   
-    </tr>*@
+        </td>
+    </tr>
 
-    @if (Model.TaskStudent != null && Model.TaskStudent.MarkValue >= 0)
+@if (Model.TaskStudent != null && Model.TaskStudent.MarkValue >= 0)
     {
-        <tr>
-            <td>
-                <div>
-                    <p>Оценка <strong> @Model.TaskStudent.MarkValue </strong></p>
-                    
-                </div>
+<tr>
+        <td>
+            <div>
+                <p>Оценка <strong> @Model.TaskStudent.MarkValue </strong></p>
 
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                <div>
-                    <p>Описание <strong> @Model.TaskStudent.MarkDescription </strong></p>
-                    
-                </div>
-
-            </td>
-        </tr>
-
-    }
-
-    <tr>
-        <td >
-
-            @if (Model.TaskStudent == null || Model.TaskStudent.MarkValue < 0)
-            {
-                 <form method="post" asp-controller="Task" asp-action="SendSolutionOnTask" enctype="multipart/form-data">
-                     <div asp-validation-summary="ModelOnly"></div>
-                     <input type="hidden" name="TaskId" value="@Model.Task.Id" />
-                     <input type="hidden" name="SubjectId" value="@Model.SubjectId" />
-
-                     <div>
-                         <label asp-for="UploadedFile">Выберите файл</label><br />
-                         <input asp-for="UploadedFile" type="file" name="uploadedFile" />
-
-                     </div>
-                     <div style="padding-top:20px;">
-                         <input type="submit" class="btn btn-success" value="Сдать задание" />
-                     </div>
-                 </form>
-            }
-
+            </div>
 
         </td>
     </tr>
 
+    <tr>
+        <td>
+            <div>
+                <p>Описание <strong> @Model.TaskStudent.MarkDescription </strong></p>
 
-</table>
+            </div>
+
+        </td>
+    </tr>
+
+}*@
+
+<tr>
+    <td>
+
+        @if (Model.TaskStudent == null || Model.TaskStudent.MarkValue < 0)
+        {
+            <form method="post" asp-controller="Task" asp-action="SendSolutionOnTask" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly"></div>
+                <input type="hidden" name="TaskId" value="@Model.Task.Id" />
+                <input type="hidden" name="SubjectId" value="@Model.SubjectId" />
+
+                <div>
+                    <label asp-for="UploadedFile">Выберите файл</label><br />
+                    <input asp-for="UploadedFile" type="file" name="uploadedFile" />
+
+                </div>
+                <div style="padding-top:20px;">
+                    <input type="submit" class="btn btn-success" value="Сдать задание" />
+                </div>
+            </form>
+        }
+
+
+    </td>
+</tr>

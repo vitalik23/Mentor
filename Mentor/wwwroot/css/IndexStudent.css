@@ -1,0 +1,36 @@
+﻿body {
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+
+table {
+    border-collapse: collapse;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+}
+
+#region-main .generaltable {
+    overflow-x: auto;
+    overflow-y: visible;
+}
+
+.nesdano {
+    background:#ff0000;
+}
+
+.sdano {
+    background:#00ff21;
+}
