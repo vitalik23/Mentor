@@ -54,7 +54,7 @@ namespace Mentor
                 opts.Password.RequireDigit = false; // требуются ли цифры
 
                 opts.User.RequireUniqueEmail = true;    // уникальный email
-                opts.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz"; // допустимые символы
+                opts.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz1234567890"; // допустимые символы
             })
                 .AddEntityFrameworkStores<DataBaseContext>();
 

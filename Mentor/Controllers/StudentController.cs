@@ -28,7 +28,7 @@ namespace Mentor.Controllers
             Student currentStudent = await _authentication.GetCurrentStudentAsync();
             IEnumerable<Subject> subjects = _subjectService.GetSubjectsByStudent(currentStudent);
 
-            StudentProfileViewModel model = new StudentProfileViewModel { Student = currentStudent, Subjects = subjects };
+            StudentProfileViewModel model = new StudentProfileViewModel { Student = currentStudent, Subjects = subjects};
             return View(model);
         }
 
