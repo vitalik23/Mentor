@@ -6,11 +6,13 @@ using Mentor.Interfaces;
 using Mentor.Models;
 using Mentor.Services;
 using Mentor.ViewModels; // пространство имен моделей представлений
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mentor.Controllers
 {
+    [Authorize(Roles = RoleInitializer.ROLE_ADMIN)]
     public class NewController : Controller
     {
         private DataBaseContext _db;
@@ -31,6 +33,7 @@ namespace Mentor.Controllers
 
         public async Task<IActionResult> AddNew(New nw)
         {
+            DateTime date = DateTime.Now;
             await _newService.AddNew(nw);
             return RedirectToAction("AllNew", "New");
         }

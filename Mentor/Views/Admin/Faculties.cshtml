@@ -5,7 +5,7 @@
 }
 
 <div class="align-content-xl-center">
-    <a asp-controller="Admin" asp-action="СreateFaculty">Добавить факультет</a>
+    <input type="submit" value="Добавить факультет" data-toggle="modal" data-target="#createFaculty" />
 </div>
 <table class="table">
     <thead>
@@ -27,3 +27,32 @@
         }
     </tbody>
 </table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="createFaculty" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content text-center">
+
+            <form method="post" asp-controller="Admin" asp-action="СreateFacultyConfirmed">
+                <div class="modal-header " asp-validation-summary="ModelOnly">
+
+                </div>
+
+                <div class="modal-body">
+                    <label asp-for="@Model.Name">Введите название факультета</label><br />
+                    <input id="inputEmail" class="form-control" placeholder="Название факультета" required="" autofocus="" asp-for="@Model.Name" />
+                    <span asp-validation-for="@Model.Name"></span>
+                </div>
+
+                <div class="modal-footer text-center">
+                    <button id="add-cart-style-grid" class="btn btn-dark" type="submit">Добавить факультет</button>
+                </div>
+
+
+            </form>
+
+
+        </div>
+    </div>
+</div>

@@ -1,12 +1,10 @@
 ﻿@model User
-
 @{
     ViewData["Title"] = Model.Id;
 }
 
 <div class="container">
     <div id="main">
-
 
         <div class="row" id="real-estates-detail">
             <div class="col-lg-4 col-md-4 col-xs-12">
@@ -21,10 +19,7 @@
                     <div class="panel-body">
                         <div class="text-center" id="author">
                             <img src="~/img/noName.png">
-                            <h3>Василий Понторезов</h3>
-                            <small class="label label-warning">Харьков</small>
-                            <p>Я простой Сельский пацан и мне всё по барабану.</p>
-
+                            <h3>@User.Identity.Name</h3>
                         </div>
                     </div>
                 </div>
@@ -33,9 +28,9 @@
                 <div class="panel">
                     <div class="panel-body">
                         <ul id="myTab" class="nav nav-pills">
-                            <li class="active"><a href="#detail" data-toggle="tab">О пользователе </a></li>
-                            <li class=""><a href="#contact" data-toggle="tab">Отправить сообщение на почту</a></li>
-                            <li class=""><a asp-controller="Chat" asp-action="Index" asp-route-oppositeUserId ="@Model.Id">Отправить личное сообщение</a></li>
+                            <li class="active"><a href="#detail" data-toggle="tab"><button type="button" class="btn btn-outline-primary">О пользователе</button></a></li>
+                            <li class=""><a href="#contact" data-toggle="tab"><button type="button" class="btn btn-outline-primary">Отправить сообщение на почту</button></a></li>
+                            <li class=""><a asp-controller="Chat" asp-action="Index" asp-route-oppositeUserId ="@Model.Id"><button type="button" class="btn btn-outline-primary" >Отправить личное сообщение</button></a></li>
                         </ul>
                         <div id="myTabContent" class="tab-content">
                             <hr>
@@ -44,7 +39,6 @@
                                 <table class="table table-th-block">
                                     <tbody>
                                         <tr><td class="active">Зарегистрирован:</td><td>12-06-2016</td></tr>
-                                        <tr><td class="active">Полных лет:</td><td>43</td></tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -56,7 +50,7 @@
                                         <input type="text" class="form-control rounded" placeholder="Укажите Ваше Имя">
                                     </div>
                                     <div class="form-group">
-                                        <label>Ваш телефон</label>
+                                        <label>Тема сообщения</label>
                                         <input type="text" class="form-control rounded" placeholder="(+38)(095)123456">
                                     </div>
                                     <div class="form-group">

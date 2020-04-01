@@ -54,7 +54,7 @@ namespace Mentor
                 opts.Password.RequireDigit = false; // требуются ли цифры
 
                 opts.User.RequireUniqueEmail = true;    // уникальный email
-                opts.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz"; // допустимые символы
+                opts.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz1234567890"; // допустимые символы
             })
                 .AddEntityFrameworkStores<DataBaseContext>();
 
@@ -75,11 +75,17 @@ namespace Mentor
             app.UseAuthentication();    // подключение аутентификации
             app.UseAuthorization();
 
+            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "admin",
+                    pattern: "{controller=Admin}/{action=Users}/{id?}");
 
                 endpoints.MapHub<ChatHub>("/chatpool");
             });

@@ -8,26 +8,26 @@
 
 <form method="get">
     <div class="form-inline form-group">
-        <label class="control-label">Имя: </label>
+        <label class="control-label" id="paddRight">Имя: </label>
         <input asp-for ="@Model.User.Name" id="nameId" name="name" class="form-control" />
 
-        <label class="control-label">Фамилия: </label>
+        <label class="control-label" id="paddRight">Фамилия: </label>
         <input asp-for ="@Model.User.Surname" id="surnameId" name="surname" class="form-control" />
 
-        <label class="control-label">Факультет: </label>
+        <label class="control-label" id="paddRight">Факультет: </label>
         <select id="facultyId" name="facultyId" asp-items="Model.Faculties" class="form-control" onchange="doIt(1, '@Url.Action("Index", "PickupUser")')"></select>
 
-        <label class="control-label">Кафедра: </label>
+        <label class="control-label" id="paddRight">Кафедра: </label>
         <select id="departmentId" name="departmentId" asp-items="Model.Departments" class="form-control" onchange="doIt(2, '@Url.Action("Index", "PickupUser")')"></select>
 
-        <label class="control-label">Группа: </label>
+        <label class="control-label" id="paddRight">Группа: </label>
         <select id="groupId" name="groupId"  asp-items="Model.Groups" class="form-control" onchange="doIt(3, '@Url.Action("Index", "PickupUser")')"></select>
 
-        <input type="submit" value="Поиск" class="btn btn-default" />
+        <button type="submit" class="btn btn-link" ><img src="https://img.icons8.com/pastel-glyph/64/000000/search--v1.png" id="sizeSearch"/></button>
     </div>
 </form>
 
-<table class="table table-striped">
+<table class="table table-striped referenS" >
     <tr>
         <th>Фото</th>
         <th>Имя</th>
@@ -35,24 +35,23 @@
 
     </tr>
 
-    ТЫ ЛОШАРА
 
     @foreach (User user in Model.Users)
     {
         <tr onclick="window.location.href = 'User/Index?userId=@user.Id'; return true;">
-           <td height="50px" width="50px">
+           <td height="50px" width="50px"  id="referensOnProfile">
                 @if (user.AvatarPath == "")
                 {
-                    <img src="~/img/noName.png" id="sizePht" />
+                    <img src="~/img/noName.png" id="sizePhttt" />
                 }
                 else
                 {
-                    <img src="@Url.Content(user.AvatarPath)" id="sizePht" />
+                    <img src="@Url.Content(user.AvatarPath)" id="sizePhttt" />
                 }
-            </td> 
+           </td> 
 
-            <td>@user.Name</td>
-            <td>@user.Surname</td>
+            <td  id="referensOnProfile">@user.Name</td>
+            <td  id="referensOnProfile">@user.Surname</td>
 
             @*<td><a asp-controller="User" asp-action="Index" asp-route-userId="@user.Id">Перейти к профилю</a></td>*@
         </tr>

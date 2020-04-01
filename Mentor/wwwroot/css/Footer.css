@@ -1,8 +1,13 @@
 ﻿body {
 }
 #footer {
-    background: #2E64FE;
-    height: auto;
+    position: fixed;
+    background: #0346b0;
+    position: absolute;
+    width: 100%;
+    flex: 0 0 auto;
+    border-top: 0;
+    word-wrap: break-word; /*нужно еще что-то добавить*/
 }
 
 #sizeTd{
@@ -11,7 +16,7 @@
 }
 
 #who {
-    padding-top:0;
+    padding-top:0px;
     font-size: 23px;
     color: white;
     font-family: Times, Times New Roman, serif;

@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="~/css/New.css" />
     <link rel="stylesheet" href="~/css/StyleSheet.css" />
     <link rel="stylesheet" href="~/css/Chat.css" />
+    <link rel="stylesheet" href="~/css/PickUpUser.css" />
+    <link rel="stylesheet" href="~/css/IndexStudent.css">
 
     <!-- Bootstrap core CSS -->
     @* <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
@@ -34,7 +36,7 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-light" id="header">
             <div class="container-fluid">
-                <a href="~/Home/Index" class="navbar-brand"><img src="~/img/загружено.png" id="logo" /></a>
+                <a href="~/Home/Index" class="navbar-brand"><img src="~/img/LogoMentor.jpg" id="logo" /></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarResponsive">
                     <span class="navbar-toggler-icon"></span>
@@ -58,8 +60,7 @@
                             }
                             else if (User.IsInRole("admin"))
                             {
-                                <a class="btn btn-danger" asp-controller="Admin" asp-action="Index">Панель администрирования</a>
-                                <a> </a>
+                                <a id="userName" asp-controller="Admin" asp-action="Index">@User.Identity.Name</a>
 
                             }
 
@@ -112,11 +113,12 @@
             <table>
                 <tr>
                     <td id="sizeTd">
-                        <p id="who">Учителям</p>
+                        <p id="who">Преподавателям</p>
                         <div id="infoFoot">
-                            <a href=""><p id="kindText">Добавить курс</p></a>
-                            <a href=""><p id="kindText">Повышение квалификации</p></a>
-                            <a href=""><p id="kindText">Мероприятия</p></a>
+                            <a href=""> <p id="kindText"> Добавить курс</p> </a>
+                            <a href=""> <p id="kindText"> Повышение квалификации</p> </a>
+                            <a href=""> <p id="kindText"> Мероприятия</p> </a>
+                            
                         </div>
                     </td>
                     <td id="sizeTd">
@@ -125,8 +127,7 @@
                             <a href=""><p id="kindText">Курсы</p></a>
                             <a href=""><p id="kindText">Журнал оценнок</p></a>
                             <a href=""><p id="kindText">Новости</p></a>
-                            <a href=""><p id="kindText">Тесты</p></a>
-                            <a href=""><p id="kindText">Трудоустройство</p></a>
+                            
                         </div>
                     </td>
                     <td id="sizeTd">

@@ -1,0 +1,39 @@
+﻿body {
+}
+
+#paddRight{
+    padding-right:10px;
+}
+
+#nameId {
+    margin-right: 10px;
+    width:200px;
+}
+#surnameId {
+    margin-right: 10px;
+    width: 200px;
+}
+#facultyId {
+    margin-right: 10px;
+    width: 200px;
+}
+#departmentId {
+    margin-right: 10px;
+    width: 200px;
+}
+#groupId {
+    margin-right: 10px;
+    width: 200px;
+}
+#sizeSearch{
+    width:40px;
+    height:40px;
+}
+#referensOnProfile {
+    background: white;
+}
+
+#sizePhttt {
+    width: 70px;
+    height: 70px;
+}

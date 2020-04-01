@@ -1,5 +1,7 @@
 ﻿using Mentor.Interfaces;
 using Mentor.Models;
+using Mentor.ViewModels.UserRelated;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,5 +24,6 @@ namespace Mentor.Controllers
             User givenUser = await _authentication.FindUserByIdAsync(userId);
             return View(givenUser);
         }
+
     }
 }

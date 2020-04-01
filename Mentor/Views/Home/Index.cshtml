@@ -36,7 +36,8 @@
                             <table cellspacing="4">
                                 <tr>
                                     <td>
-                                        <p>@news.Heading</p>
+                                        <h5>@news.Heading</h5>
+                                        <p>@news.TimeNew.Date</p>
                                         <p>@news.Contents</p>
                                     </td>
                                 </tr>
@@ -63,7 +64,10 @@
                 <div id="news">
                     <p id="calendar">Новости</p>
                     <div class="calendarClass">
-                        Какие-то новости
+                        @foreach(var news in Model)
+                        {
+                            <p>@news.Heading</p>
+                        }
                     </div>
                     <hr />
                 </div>
@@ -80,7 +84,7 @@
                 <div id="">
                     <p id="calendar">Главное меню</p>
                     <div class="calendarClass">
-                        <p><a href="#">Просмотреть новости</a></p>
+                        <p><a href="#calendar">Просмотреть новости</a></p>
                     </div>
                 </div>
             </td>

@@ -7,8 +7,10 @@
 
 <div>
     <h6>Поиск пользователя</h6>
-    <form>
-        <input type="text" aria-label="Search"/>
+    <form asp-controller="Admin" asp-action="Users" method="get">
+        Фамилия : <input type="text" asp-for="Surname" placeholder="Фамилия ..." />
+        Имя : <input type="text" asp-for="Name" placeholder="Имя ..." />
+        Отчество : <input type="text" asp-for="Patronymic" placeholder="Отчество ..." />
         <input type="submit" value="Найти">
     </form>
 </div>
@@ -30,17 +32,16 @@
     <tbody>
         @foreach (User user in Model.AllUsers)
         {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => user.Surname)</td>
-                <td>@Html.DisplayFor(modelItem => user.Name)</td>
-                <td>@Html.DisplayFor(modelItem => user.Patronymic)</td>
-                <td>@Html.DisplayFor(modelItem => user.IsAccepted)</td>
-                <td>
-                    <a asp-controller="Admin" asp-action="Info" asp-route-id="@user.Id">Детальная информация</a> |
-                    <a asp-controller="Admin" asp-action="EditUser" asp-route-id="@user.Id">Редактировать</a> |
-                    <a asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@user.Id">Удалить</a>
-                </td>
-            </tr>
+        <tr>
+            <td>@Html.DisplayFor(modelItem => user.Surname)</td>
+            <td>@Html.DisplayFor(modelItem => user.Name)</td>
+            <td>@Html.DisplayFor(modelItem => user.Patronymic)</td>
+            <td>@Html.DisplayFor(modelItem => user.IsAccepted)</td>
+            <td>
+                <a asp-controller="Admin" asp-action="Info" asp-route-id="@user.Id">Детальная информация</a> |
+                <a asp-controller="Admin" asp-action="EditUser" asp-route-id="@user.Id">Редактировать</a> 
+            </td>
+        </tr>
         }
     </tbody>
 </table>

@@ -6,25 +6,33 @@
 
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+
+<input type="hidden" name="Email" value="@Model.Email" />
 
 <div class="container">
     <div class="col-lg-12">
         <div class="row">
             <div class="col-xs-12 col-sm-4">
                 <figure>
-                    <img class="img-circle img-responsive" src = @Model.AvatarPath alt="@Model.Name" width="248" height="248">
+                    @if (Model.AvatarPath == null)
+                    {
+                        <img src="/img/noName.png" width="248" height="248" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Content(Model.AvatarPath)" width="248" height="248"/>
+                    }
                 </figure>
             </div>
             <div class="col-xs-12 col-sm-8">
                 <ul class="list-group">
                     <li class="list-group-item">Ф.И.О : @Model.Surname @Model.Name @Model.Patronymic</li>
                     <li class="list-group-item">Группа : @Model.GroupName</li>
-                    <li class="list-group-item">Google Inc. </li>
-                    <li class="list-group-item"><i class="fa fa-phone"></i>@Model.PhoneNumber</li>
                     <li class="list-group-item"><i class="fa fa-envelope"></i> @Model.Email</li>
+                    <li class="list-group-item"><i class="fa fa-phone"></i>@Model.PhoneNumber</li>
+                    <a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteUser" asp-route-email="@Model.Email">Удалить пользователя</a>
                 </ul>
             </div>
-        </div>
+        </div>                
     </div>
 </div>

@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Group>
+﻿@model GroupViewModel
 @{
     Layout = "_LayoutForAdmin";
 }
 
 <div class="align-content-xl-center">
-    <a asp-controller="Admin" asp-action="CreateGroup">Добавить группу</a>
+    <input type="submit" value="Добавить факультет" data-toggle="modal" data-target="#createGroup" />
 </div>
 <table class="table">
     <thead>
@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Group group in Model)
+        @foreach (Group group in Model.AllGroups)
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => group.Name)</td>
@@ -27,3 +27,38 @@
         }
     </tbody>
 </table>
+
+<div class="modal fade" id="createGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content text-center">
+
+            <form method="post" asp-controller="Admin" asp-action="CreateGroupConfirmed">
+                <div class="modal-header " asp-validation-summary="ModelOnly">
+
+                </div>
+
+                <div class="modal-body">
+                    <div>
+                        <label asp-for="@Model.Name">Введите название группы</label><br />
+                        <input id="inputEmail" class="form-control" placeholder="Название группы" required="" autofocus="" asp-for="@Model.Name" />
+                        <span asp-validation-for="@Model.Name"></span>
+                        <p> </p>
+                        <label asp-for="DepartmentId"><strong>Выбирете кафедру</strong></label>
+                        @Html.DropDownListFor(m => m.DepartmentId, Model.DepartmentItems, "Пожалуйста, выбирете кафедру", new { @class = "form-control" });
+                    </div>
+
+
+
+                </div>
+
+                <div class="modal-footer text-center">
+                    <button id="add-cart-style-grid" class="btn btn-dark" type="submit">Добавить кафедру</button>
+                </div>
+
+
+            </form>
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+﻿@model TeacherViewModel
+
+@{
+    Layout = "_LayoutForAdmin";
+}
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<input type="hidden" name="Email" value="@Model.Email" />
+
+<div class="container">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                <figure>
+                    @if (Model.AvatarPath == "")
+                    {
+                        <img src="~/img/noName.png" width="248" height="248" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Content(Model.AvatarPath)" width="248" height="248" />
+                    }
+                </figure>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <ul class="list-group">
+                    <li class="list-group-item">Ф.И.О : @Model.Surname @Model.Name @Model.Patronymic</li>
+                    <li class="list-group-item">Кафедра : @Model.Department</li>
+                    <li class="list-group-item">Должность : @Model.Position</li>
+                    <li class="list-group-item"><i class="fa fa-envelope"></i> @Model.Email</li>
+                    <li class="list-group-item"><i class="fa fa-phone"></i>@Model.PhoneNumber</li>
+                    <a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteUser" asp-route-email="@Model.Email">Удалить пользователя</a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

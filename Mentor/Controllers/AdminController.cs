@@ -25,9 +25,6 @@ namespace Mentor.Controllers
         private readonly DataBaseContext _baseContext;
         private readonly UserManager<User> _userManager;
 
-        private static StudentViewModel _student;
-        private static TeacherViewModel _teacher;
-
         public AdminController(IAuthentication authentication, IDatabaseWorker databaseWorker, UserManager<User> userManager, DataBaseContext baseContext)
         {
             _authentication = authentication;
@@ -88,7 +85,7 @@ namespace Mentor.Controllers
             ViewData["Title"] = "Добавление администратора";
             return View();
         }
-        
+
         [HttpPost, ActionName("CreateAdminConfirmed")]
         public async Task<ActionResult> CreateAdmin(RegisterUserViewModel registerUserViewModel)
         {
@@ -99,8 +96,8 @@ namespace Mentor.Controllers
                 if (result.Succeeded)
                 {
                     User user = await _authentication.FindUserByEmailAsync(registerUserViewModel.Email);
-                    
-                    if(!await _authentication.CreateAdminUserAsync(user.Id))
+
+                    if (!await _authentication.CreateAdminUserAsync(user.Id))
                     {
                         await _authentication.DeleteUserAsync(user);
                         return View("CreateAdmin", registerUserViewModel);
@@ -164,7 +161,7 @@ namespace Mentor.Controllers
             return View("CreateStudent", registerUserViewModel);
         }
 
-        [HttpPost,ActionName("CreateTeacherConfirmed")]
+        [HttpPost, ActionName("CreateTeacherConfirmed")]
         public async Task<IActionResult> CreateTeacher(RegisterTeacherViewModel registerUserViewModel)
         {
 
@@ -266,7 +263,7 @@ namespace Mentor.Controllers
         ///--------------------------------------------------------------------
 
         ///Methods for Groups
-        public ViewResult Groups()
+        public ViewResult Groups(GroupViewModel model)
         {
             IEnumerable<Group> groups = new List<Group>(_databaseWorker.GetAllGroups());
 
@@ -274,37 +271,37 @@ namespace Mentor.Controllers
             {
                 group.Departament = _baseContext.Departament.FirstOrDefault(x => x.Id == group.DepartamentId);
             }
+
+            model.AllGroups = groups;
+            model.DepartmentItems = PopulateDepartments();
+
             ViewData["Title"] = "Группы";
 
-            return View(groups);
-        }
-
-        [HttpGet]
-        public ViewResult CreateGroup()
-        {
-            ViewData["Title"] = "Добавление группы";
-            GroupViewModel model = new GroupViewModel { DepartmentItems = PopulateDepartments() };
             return View(model);
         }
 
         [HttpPost, ActionName("CreateGroupConfirmed")]
         public ActionResult CreateGroup(GroupViewModel group)
         {
-            if(group.DepartmentId == 0)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Error");
+                Group newGroup = new Group
+                {
+                    Name = group.Name,
+                    DepartamentId = group.DepartmentId
+                };
+
+                _baseContext.Group.Add(newGroup);
+                _baseContext.SaveChanges();
+
+                return RedirectToAction("Groups");
             }
 
-            Group newGroup = new Group
-            {
-                Name = group.Name,
-                DepartamentId = group.DepartmentId
-            };
+            group.AllGroups = _databaseWorker.GetAllGroups();
+            group.DepartmentItems = PopulateDepartments();
 
-            _baseContext.Group.Add(newGroup);
-            _baseContext.SaveChanges();
-
-            return RedirectToAction("Groups");
+            return View("Groups", group);
+            
         }
 
         [HttpGet]
@@ -320,7 +317,7 @@ namespace Mentor.Controllers
 
         //Methods for Departments
         [HttpGet]
-        public ViewResult Departments()
+        public ViewResult Departments(DepartmentViewModel model)
         {
             IEnumerable<Department> departments = new List<Department>(_databaseWorker.GetAllDepartments());
 
@@ -330,33 +327,32 @@ namespace Mentor.Controllers
             }
             ViewData["Title"] = "Кафедры";
 
-            return View(departments);
-        }
+            model.AllDepartments = departments;
+            model.FacultyItems = PopulateFaculties();
 
-        [HttpGet]
-        public ViewResult СreateDepartment()
-        {
-            ViewData["Title"] = "Добавление кафедры";
-            DepartmentViewModel model = new DepartmentViewModel { FacultyItems = PopulateFaculties() };
             return View(model);
         }
 
         [HttpPost, ActionName("CreateDepartmentConfirmed")]
         public ActionResult CreateDepartment(DepartmentViewModel department)
         {
-            if(department.FacultyId == 0)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Error");
-            }
-            Department newDepartment = new Department
-            {
-                Name = department.Name,
-                FacultyId = department.FacultyId
-            };
-            _baseContext.Departament.Add(newDepartment);
-            _baseContext.SaveChanges();
+                Department newDepartment = new Department
+                {
+                    Name = department.Name,
+                    FacultyId = department.FacultyId
+                };
+                _baseContext.Departament.Add(newDepartment);
+                _baseContext.SaveChanges();
 
-            return RedirectToAction("Departments");
+                return RedirectToAction("Departments");
+            }
+
+            department.AllDepartments = _databaseWorker.GetAllDepartments();
+            department.FacultyItems = PopulateFaculties();
+
+            return View("Departments", department);
         }
 
         [HttpGet]
@@ -384,16 +380,10 @@ namespace Mentor.Controllers
             return View(allFaculties);
         }
 
-        [HttpGet]
-        public ViewResult СreateFaculty()
-        {
-            ViewData["Title"] = "Добавление факультета";
-            return View();
-        }
-
         [HttpPost, ActionName("СreateFacultyConfirmed")]
-        public ActionResult СreateFaculty(Faculty faculty)
+        public ActionResult СreateFaculty(FacultyViewModel model)
         {
+            Faculty faculty = new Faculty { Name = model.Name };
             _baseContext.Faculty.Add(faculty);
             _baseContext.SaveChanges();
 
@@ -413,23 +403,17 @@ namespace Mentor.Controllers
 
         //Methods for Positions
         [HttpGet]
-        public ViewResult Positions()
+        public ViewResult Positions(PositionViewModel model)
         {
             ViewData["Title"] = "Должности";
-            IEnumerable<Position> positions = _databaseWorker.GetAllPositions();
-            return View(positions);
-        }
-
-        [HttpGet]
-        public ViewResult CreatePosition()
-        {
-            ViewData["Title"] = "Добавление должности";
-            return View();
+            model.AllPosition = _databaseWorker.GetAllPositions();
+            return View(model);
         }
 
         [HttpPost, ActionName("СreatePositionConfirmed")]
-        public ActionResult CreatePosition(Position position) 
+        public ActionResult CreatePosition(PositionViewModel model)
         {
+            Position position = new Position { Name = model.Name };
             _baseContext.Position.Add(position);
             _baseContext.SaveChanges();
 
@@ -439,7 +423,7 @@ namespace Mentor.Controllers
         [HttpGet]
         public IActionResult DeletePosition(int id)
         {
-            Position position = _baseContext.Position.FirstOrDefault(i =>i.Id == id);
+            Position position = _baseContext.Position.FirstOrDefault(i => i.Id == id);
             _baseContext.Position.Remove(position);
             _baseContext.SaveChanges();
 
@@ -449,15 +433,39 @@ namespace Mentor.Controllers
 
         //Methods for Users
         [HttpGet]
-        public ViewResult Users()
+        public ViewResult Users(string surname, string name, string patronymic)
         {
+            ViewData["Title"] = "Все пользователи";
             IEnumerable<User> users = _databaseWorker.GetUsers();
+
+            if (surname != null)
+            {
+                users = users.Where(u => u.Surname.Contains(surname));
+
+                ViewData["Title"] = "Найденые пользователи";
+            }
+
+            if (name != null)
+            {
+                users = users.Where(u => u.Name.Contains(name));
+
+                ViewData["Title"] = "Найденые пользователи";
+            }
+
+            if (patronymic != null)
+            {
+                users = users.Where(u => u.Patronymic.Contains(patronymic));
+
+                ViewData["Title"] = "Найденые пользователи";
+            }
+
             var allUsers = new UsersViewModel
             {
-                AllUsers = users
+                AllUsers = users.ToList()
             };
-            ViewData["Title"] = "Все пользователи";
+
             return View(allUsers);
+
         }
 
         [HttpGet]
@@ -468,7 +476,7 @@ namespace Mentor.Controllers
             Teacher teacher = _baseContext.Teacher.FirstOrDefault(i => i.UserId == user.Id);
             Student student = _baseContext.Student.FirstOrDefault(i => i.UserId == user.Id);
 
-            if(teacher != null)
+            if (teacher != null)
             {
                 Department department = _baseContext.Departament.FirstOrDefault(i => i.Id == teacher.DepartamentId);
                 Position position = _baseContext.Position.FirstOrDefault(i => i.Id == teacher.PositionId);
@@ -478,7 +486,9 @@ namespace Mentor.Controllers
                     Name = user.Name,
                     Surname = user.Surname,
                     Patronymic = user.Patronymic,
-                    PhoneNumber = user.UserName,
+                    AvatarPath = user.AvatarPath,
+                    PhoneNumber = user.PhoneNumber,
+                    Email = user.Email,
                     Department = department.Name,
                     Position = position.Name
                 };
@@ -486,22 +496,29 @@ namespace Mentor.Controllers
                 return RedirectToAction("TeacherInfo", model);
 
             }
-            if(student != null)
+            if (student != null)
             {
                 Group group = _baseContext.Group.FirstOrDefault(i => i.Id == student.GroupId);
 
                 var model = new StudentViewModel
                 {
-                    Email = user.Email,
+
                     Name = user.Name,
                     Surname = user.Surname,
                     Patronymic = user.Patronymic,
+                    AvatarPath = user.AvatarPath,
+                    Email = user.Email,
                     PhoneNumber = user.PhoneNumber,
                     GroupName = group.Name
                 };
 
-                return RedirectToAction("StudentInfo",model);
+                return RedirectToAction("StudentInfo", model);
             }
+            if(student == null && teacher == null)
+            {
+                return RedirectToAction("AdminInfo", user);
+            }
+
             return RedirectToAction("Users");
         }
 
@@ -513,6 +530,11 @@ namespace Mentor.Controllers
 
         [HttpGet]
         public ViewResult TeacherInfo(TeacherViewModel model)
+        {
+            return View(model);
+        }
+        [HttpGet]
+        public ViewResult AdminInfo(User model)
         {
             return View(model);
         }
@@ -529,15 +551,13 @@ namespace Mentor.Controllers
             {
                 var model = new TeacherViewModel
                 {
-                    Email  = user.Email,
+                    Email = user.Email,
                     Surname = user.Surname,
                     Name = user.Name,
                     Patronymic = user.Patronymic,
                     PhoneNumber = user.PhoneNumber,
                     IsAccepted = user.IsAccepted
                 };
-
-                _teacher = model;
 
                 return RedirectToAction("EditTeacher", model);
             }
@@ -553,9 +573,21 @@ namespace Mentor.Controllers
                     IsAccepted = user.IsAccepted
                 };
 
-                _student = model;
-
                 return RedirectToAction("EditStudent", model);
+            }
+            if (teacher == null && student == null)
+            {
+                var model = new User
+                {
+                    Email = user.Email,
+                    Surname = user.Surname,
+                    Name = user.Name,
+                    Patronymic = user.Patronymic,
+                    PhoneNumber = user.PhoneNumber,
+                    IsAccepted = user.IsAccepted
+                };
+
+                return RedirectToAction("EditAdmin", model);
             }
 
             return RedirectToAction("Users");
@@ -576,93 +608,162 @@ namespace Mentor.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public ViewResult EditAdmin(User model)
+        {
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAdminConfirmed(User model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (ModelState.IsValid)
+            {
+                if(user == null)
+                {
+                    return View("Error");
+                }
+                else
+                {
+                    user.Surname = model.Surname;
+                    user.Name = model.Name;
+                    user.Patronymic = model.Patronymic;
+                    user.PhoneNumber = model.PhoneNumber;
+                    user.IsAccepted = model.IsAccepted;
+
+                    var result = await _userManager.UpdateAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Users");
+                    }
+
+                    return View(model);
+                }
+            }
+
+            return View("EditAdmin", model);
+        }
+
         [HttpPost]
         public async Task<IActionResult> EditStudentConfirmed(StudentViewModel model)
         {
-            var user = await _userManager.FindByEmailAsync(_student.Email);
+            model.GroupItems = PopulateGroups();
 
-            if (user == null)
+            if (model.GroupId == 0)
             {
-                return View("Error");
+                ModelState.AddModelError(string.Empty, "Выбирете группу для студента");
             }
-            else
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (ModelState.IsValid)
             {
-
-                user.Surname = model.Surname;
-                user.Name = model.Name;
-                user.Patronymic = model.Patronymic;
-                user.PhoneNumber = model.PhoneNumber;
-                user.IsAccepted = model.IsAccepted;
-
-                var result = await _userManager.UpdateAsync(user);
-
-                if (result.Succeeded)
+                if (user == null)
                 {
-                    Student student = _baseContext.Student.FirstOrDefault(i => i.UserId == user.Id);
-                    student.GroupId = model.GroupId;
-                    _baseContext.SaveChanges();
-
-                    return RedirectToAction("Users");
+                    return View("Error");
                 }
+                else
+                {
 
-                return View(model);
+                    user.Surname = model.Surname;
+                    user.Name = model.Name;
+                    user.Patronymic = model.Patronymic;
+                    user.PhoneNumber = model.PhoneNumber;
+                    user.IsAccepted = model.IsAccepted;
+
+                    var result = await _userManager.UpdateAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        Student student = _baseContext.Student.FirstOrDefault(i => i.UserId == user.Id);
+                        student.GroupId = model.GroupId;
+                        _baseContext.SaveChanges();
+
+                        return RedirectToAction("Users");
+                    }
+
+                    return View(model);
+                }
             }
+            return View("EditStudent", model);
         }
 
         [HttpPost]
         public async Task<IActionResult> EditTeacherConfirmed(TeacherViewModel model)
         {
-            var user = await _userManager.FindByEmailAsync(_teacher.Email);
+            model.DeparmentItems = PopulateDepartments();
+            model.PositionItems = PopulatePositions();
 
-            if (user == null)
+            if (model.DepartmentId == 0)
             {
-                return View("Error");
+                ModelState.AddModelError(string.Empty, "Выбирете кафедру для преподавателя");
             }
-            else
+
+            if (model.PositionId == 0)
             {
+                ModelState.AddModelError(string.Empty, "Выбирете должность для преподавателя");
+            }
 
-                user.Surname = model.Surname;
-                user.Name = model.Name;
-                user.Patronymic = model.Patronymic;
-                user.PhoneNumber = model.PhoneNumber;
-                user.IsAccepted = model.IsAccepted;
+            var user = await _userManager.FindByEmailAsync(model.Email);
 
-                var result = await _userManager.UpdateAsync(user);
-
-                if (result.Succeeded)
+            if (ModelState.IsValid)
+            {
+                if (user == null)
                 {
-                    Teacher teacher = _baseContext.Teacher.FirstOrDefault(i => i.UserId == user.Id);
-                    teacher.DepartamentId = model.DepartmentId;
-                    teacher.PositionId = model.PositionId;
-                    _baseContext.SaveChanges();
-
-                    return RedirectToAction("Users");
+                    return View("Error");
                 }
+                else
+                {
+                    user.Surname = model.Surname;
+                    user.Name = model.Name;
+                    user.Patronymic = model.Patronymic;
+                    user.PhoneNumber = model.PhoneNumber;
+                    user.IsAccepted = model.IsAccepted;
 
-                return View(model);
+                    var result = await _userManager.UpdateAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        Teacher teacher = _baseContext.Teacher.FirstOrDefault(i => i.UserId == user.Id);
+                        teacher.DepartamentId = model.DepartmentId;
+                        teacher.PositionId = model.PositionId;
+                        _baseContext.SaveChanges();
+
+                        return RedirectToAction("Users");
+                    }
+
+                    return View(model);
+                }
             }
+            return View("EditTeacher", model);
+
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteUser(string id)
+        public async Task<IActionResult> DeleteUser(string email)
         {
-            Student student = _baseContext.Student.FirstOrDefault(i => i.UserId == id);
-            Teacher teacher = _baseContext.Teacher.FirstOrDefault(i => i.UserId == id);
+            User user = await _userManager.FindByEmailAsync(email);
 
-            if(student != null)
+            Student student = _baseContext.Student.FirstOrDefault(i => i.UserId == user.Id);
+            Teacher teacher = _baseContext.Teacher.FirstOrDefault(i => i.UserId == user.Id);
+
+            if (student != null)
             {
                 _baseContext.Student.Remove(student);
                 _baseContext.SaveChanges();
             }
-            if(teacher != null)
+            if (teacher != null)
             {
                 _baseContext.Teacher.Remove(teacher);
                 _baseContext.SaveChanges();
             }
 
-            if (id != null)
+            if (user.Id != null)
             {
-                await _authentication.DeleteUserAsync(id);
+                await _authentication.DeleteUserAsync(user.Id);
             }
 
             return RedirectToAction("Users");

@@ -8,59 +8,63 @@
 <!-- Button trigger modal -->
 <p align="right">
 </p>
+<a href="#" onclick="history.back();return false;"><button type="button" class="btn btn-outline-warning">Назад</button></a>
 
-<a href="#" onclick="history.back();return false;">Вернуться назад</a>
 
 <h3>Студенты</h3>
-<table>
-    <tr>
-        <td>Имя</td>
-        <td>Фамилия</td>
-        <td>Отчество</td>
-        <td>Группа</td>
-        <td>Оценка</td>
-        <td></td>
-    </tr>
+<table class="generaltable">
+    <tbody>
+        <tr class="">
+            <th class="cell c0" style="" scope="row">Имя</th>
+            <th class="cell c0" style="" scope="row">Фамилия</th>
+            <th class="cell c0" style="" scope="row">Отчество</th>
+            <th class="cell c0" style="" scope="row">Группа</th>
+            <th class="cell c0" style="" scope="row">Оценка</th>
+            <th class="cell c0" style="" scope="row">Действие</th>
 
-    @if (Model != null)
-    {
-        @foreach (N_To_N_TaskStudent taskStudent in Model.TaskStudents)
-        {
-
-
+        </tr>
+        @*<table>
             <tr>
-                <td>@taskStudent.Student.User.Name</td>
-                <td>@taskStudent.Student.User.Surname</td>
-                <td>@taskStudent.Student.User.Patronymic</td>
+                <td>Имя</td>
+                <td>Фамилия</td>
+                <td>Отчество</td>
+                <td>Группа</td>
+                <td>Оценка</td>
+                <td></td>
+            </tr>*@
+        @if (Model != null)
+        {
+            @foreach (N_To_N_TaskStudent taskStudent in Model.TaskStudents)
+            {
 
-                <td>@taskStudent.Student.Group.Name</td>
+                <tr class="">
+                    <td class="cell c0" style="" scope="row">@taskStudent.Student.User.Name</td>
+                    <td class="cell c0" style="" scope="row">@taskStudent.Student.User.Surname</td>
+                    <td class="cell c0" style="" scope="row">@taskStudent.Student.User.Patronymic</td>
+                    <td class="cell c0" style="" scope="row">@taskStudent.Student.Group.Name</td>
 
-                @if (taskStudent.MarkValue > 0)
-                {
-                    <td>@taskStudent.MarkValue</td>
-                }
-                else
-                {
-                    <td>---</td>
-                }
+                    @if (taskStudent.MarkValue > 0)
+                    {
+                        <td class="sdano" style="" scope="row">@taskStudent.MarkValue</td>
+                    }
+                    else
+                    {
+                        <td class="nesdano" style="" scope="row">---</td>
+                    }
 
-                @if (taskStudent.MarkValue < 0)
-                {
-                    <td><a asp-controller="Task" asp-action="MarkTask" asp-route-taskId="@taskStudent.TaskId" asp-route-studentId="@taskStudent.StudentId">Оценить</a> |</td>
-                }
-                else
-                { 
-                    <td><a asp-controller="Task" asp-action="DeleteTaskMark" asp-route-taskId="@taskStudent.TaskId" asp-route-studentId="@taskStudent.StudentId">Удалить оценку</a> |</td>
-                }
+                    @if (taskStudent.MarkValue < 0)
+                    {
+                        <td class="cell c0" style="" scope="row"><a asp-controller="Task" asp-action="MarkTask" asp-route-taskId="@taskStudent.TaskId" asp-route-studentId="@taskStudent.StudentId"><button type="button" class="btn-sm btn btn-outline-success">Оценить</button></a></td>
+                    }
+                    else
+                    {
+                        <td class="cell c0" style="" scope="row"><a asp-controller="Task" asp-action="DeleteTaskMark" asp-route-taskId="@taskStudent.TaskId" asp-route-studentId="@taskStudent.StudentId"><button type="button" class="btn-sm btn btn-outline-danger ">Удалить оценку</button></a></td>
+                    }
+                </tr>
 
-
-
-
-            </tr>
-
-
+            }
         }
-    }
+    </tbody>
 
 </table>
 

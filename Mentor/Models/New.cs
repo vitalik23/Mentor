@@ -10,5 +10,6 @@ namespace Mentor.Models
         public int Id { get; set; }
         public string Heading { get; set; }
         public string Contents { get; set; }
+        public DateTime TimeNew { get; set; } 
     }
 }

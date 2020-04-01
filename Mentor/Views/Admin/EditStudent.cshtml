@@ -10,6 +10,8 @@
     <form class="form-signin" asp-controller="Admin" asp-action="EditStudentConfirmed" method="post">
         <div asp-validation-summary="ModelOnly"></div>
 
+        <input type="hidden" name="Email" value="@Model.Email" />
+
         <div>
             <label asp-for="Surname">Фамилия</label><br />
             <input asp-for="Surname" class="form-control" placeholder="Иванов" />

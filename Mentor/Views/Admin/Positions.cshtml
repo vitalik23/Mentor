@@ -1,11 +1,11 @@
-﻿@model IEnumerable<Position>
+﻿@model PositionViewModel
 
 @{
     Layout = "_LayoutForAdmin";
 }
 
 <div class="align-content-xl-center">
-    <a asp-controller="Admin" asp-action="CreatePosition">Добавить должность</a>
+    <input type="submit" value="Добавить должность" data-toggle="modal" data-target="#createPosition" />
 </div>
 <table class="table">
     <thead>
@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Position position in Model)
+        @foreach (Position position in Model.AllPosition)
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => position.Name)</td>
@@ -27,3 +27,31 @@
         }
     </tbody>
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="createPosition" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content text-center">
+
+            <form method="post" asp-controller="Admin" asp-action="СreatePositionConfirmed">
+                <div class="modal-header " asp-validation-summary="ModelOnly">
+
+                </div>
+
+                <div class="modal-body">
+                    <label asp-for="@Model.Name">Введите название должности</label><br />
+                    <input id="inputEmail" class="form-control" placeholder="Название должности" required="" autofocus="" asp-for="@Model.Name" />
+                    <span asp-validation-for="@Model.Name"></span>
+                </div>
+
+                <div class="modal-footer text-center">
+                    <button id="add-cart-style-grid" class="btn btn-dark" type="submit">Добавить должность</button>
+                </div>
+
+
+            </form>
+
+
+        </div>
+    </div>
+</div>

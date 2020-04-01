@@ -9,5 +9,7 @@ namespace Mentor.ViewModels
     public class FacultyViewModel
     {
         public IEnumerable<Faculty> AllFaculties { get; set; }
+
+        public string Name { get; set; }
     }
 }

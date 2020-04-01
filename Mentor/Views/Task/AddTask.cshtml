@@ -1,33 +1,37 @@
 ﻿@model AddTaskViewModel
+@{ 
+    ViewData["Title"] = "Добавление задания";
+}
 
-<h2>Добавление задания к курсу</h2>
+    <center>
+        <h2>Добавление задания к курсу</h2>
+    </center>
 
 <form method="post" asp-controller="Task" asp-action="AddTask" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly"></div>
     <input type="hidden" name="SubjectId" value="@Model.SubjectId" />
 
-    <div>
-        <label asp-for="TaskName"></label><br />
-        <input asp-for="TaskName" />
+    <div class="row">
+        <label asp-for="TaskName" class="col-lg-5" style="text-align:right">Название задания</label><br />
+        <input asp-for="TaskName" class="form-control col-lg-3"/>
         <span asp-validation-for="TaskName"></span>
     </div>
 
 
-    <div>
-        <label asp-for="Deadline"></label><br />
-        <input asp-for="Deadline" type="date"/>
+    <div class="row" style="padding-top:5px;">
+        <label asp-for="Deadline" class="col-lg-5" style="text-align:right">Конечная дата сдачи</label><br />
+        <input asp-for="Deadline" type="date" class="form-control col-lg-3"/>
         <span asp-validation-for="Deadline"></span>
     </div>
 
 
-    <div>
-        <label asp-for="UploadedFile"></label><br />
+    <div class="row" style="padding-top:5px;">
+        <label asp-for="UploadedFile" class="col-lg-5" style="text-align:right">Выберите файл</label><br />
         <input asp-for="UploadedFile" type="file" name="uploadedFile" />
 
     </div>
 
-
-    <div>
-        <input type="submit" value="Создать" />
+    <div style="padding-top:20px;">
+        <p align="center"><input type="submit" class="btn btn-success" value="Добавить" /></p>
     </div>
 </form>
