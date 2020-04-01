@@ -1,5 +1,6 @@
 ﻿using Mentor.Interfaces;
 using Mentor.Models;
+using Mentor.ViewModels.UserRelated;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,10 +19,11 @@ namespace Mentor.Controllers
             _authentication = authentication;
         }
 
-        public async Task<IActionResult> Index(string userId) 
+        public async Task<IActionResult> Index() 
         {
-            User givenUser = await _authentication.FindUserByIdAsync(userId);
-            return View(givenUser);
+            User givenUser = await _authentication.GetCurrentUserAsync();
+            UserMessageViewModel model = new UserMessageViewModel { User = givenUser, Subject ="", TextMessage = ""};
+            return View(model);
         }
 
     }

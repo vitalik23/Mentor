@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mentor.Models;
+using Mentor.ViewModels.UserRelated;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -19,26 +20,12 @@ namespace Mentor.Controllers
             this.service = service;
         }
 
-        //public IActionResult SendEmailDefault()
-        //{
-        //    service.SendEmailDefault();
-        //    return RedirectToAction("Index","Home");
-        //}
+        public IActionResult SendEmailDefault(UserMessageViewModel model)
+        {
+            service.SendEmailDefault(model.Email, model.Subject, model.TextMessage);
+            return RedirectToAction("Index", "Home");
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> SendMessage()
-        //{
-        //    try
-        //    {
-        //        EmailService emailService = new EmailService();
-        //        await emailService.SendEmailAsync(/*Емайл кому отправляете*/"saminindima113@gmail.com", /*Тема сообщения*/"Hello", /*"Тест письма: тест!"*/ "Hello");
-        //        return RedirectToAction("Index","Home");
-        //    }
-        //    catch
-        //    {
-        //        return RedirectToAction("Index","Home");
-        //    }
-
-        //}
+        
     }
 }

@@ -241,7 +241,7 @@ namespace Mentor.Controllers
             await _authentication.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
+        /*это для востановления пароля//////////////////////////*/
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
