@@ -1,6 +1,5 @@
 ﻿using Mentor.Interfaces;
 using Mentor.Models;
-using Mentor.ViewModels.UserRelated;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;

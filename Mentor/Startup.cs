@@ -36,6 +36,7 @@ namespace Mentor
             services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(connection));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<EmailService>();
 
             services.AddTransient<IAuthentication, AuthenticationService>();
             services.AddTransient<IDatabaseWorker, DatabaseWorkerService>();
