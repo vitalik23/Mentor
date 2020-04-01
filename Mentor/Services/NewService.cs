@@ -15,7 +15,7 @@ namespace Mentor.Services
         public NewService(DataBaseContext dataBaseContext)
         {
             _dataBaseContext = dataBaseContext;
-    }
+        }
 
         public async System.Threading.Tasks.Task  AddNew(New news)
         {
