@@ -18,12 +18,14 @@ namespace Mentor.Controllers
         private IAuthentication _authentication;
         private IDatabaseWorker _databaseWorker;
         private UserManager<User> _userManager;
+        private EmailService emailService;
 
-        public AccountController(IAuthentication authentication, IDatabaseWorker databaseWorker, UserManager<User> _userManager) 
+        public AccountController(IAuthentication authentication, IDatabaseWorker databaseWorker, UserManager<User> userManager, EmailService emailService) 
         {
             _authentication = authentication;
             _databaseWorker = databaseWorker;
-            this._userManager = _userManager;
+            _userManager = userManager;
+            this.emailService = emailService;
         }
 
         private List<SelectListItem> populateGroups() {
@@ -239,8 +241,7 @@ namespace Mentor.Controllers
             await _authentication.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
-
+        /*это для востановления пароля//////////////////////////*/
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
@@ -252,32 +253,28 @@ namespace Mentor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
+ 
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
-                    Console.WriteLine("Такого юзера нет");
                     // пользователь с данным email может отсутствовать в бд
                     // тем не менее мы выводим стандартное сообщение, чтобы скрыть 
                     // наличие или отсутствие пользователя в бд
                     return View("ForgotPasswordConfirmation");
                 }
-                else
-                {
-                    Console.WriteLine("Такой юзер есть");
-                }
+
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                EmailService emailService = new EmailService();
-                await emailService.SendEmailAsync(model.Email, "Reset Password",
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id/*, code = code*/ }, protocol: HttpContext.Request.Scheme);
+
+                emailService.SendEmailDefault(model.Email, "Reset Password",
                     $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
                 return View("ForgotPasswordConfirmation");
             }
             return View(model);
         }
-
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)

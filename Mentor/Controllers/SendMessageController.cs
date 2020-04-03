@@ -3,32 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mentor.Models;
+using Mentor.ViewModels.UserRelated;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Mentor.Controllers
 {
     public class SendMessageController : Controller
     {
-        private readonly User user;
-        public SendMessageController(User user)
+        private readonly EmailService service;
+        private readonly ILogger<HomeController> _logger;
+
+        public SendMessageController(ILogger<HomeController> logger, EmailService service)
         {
-            this.user = user;
+            _logger = logger;
+            this.service = service;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> SendMessage(string email,string subject,string textMessage)
+        public IActionResult SendEmailDefault(UserMessageViewModel model)
         {
-            try
-            {
-                EmailService emailService = new EmailService();
-                await emailService.SendEmailAsync(/*Емайл кому отправляете*/email, /*Тема сообщения*/subject, /*"Тест письма: тест!"*/ textMessage);
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return RedirectToAction("Index","Home");
-            }
-            
+            service.SendEmailDefault(model.Email, model.Subject, model.TextMessage);
+            return RedirectToAction("Index", "Home");
         }
+
+        
     }
 }
