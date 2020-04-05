@@ -19,9 +19,16 @@ namespace Mentor.Controllers
             _authentication = authentication;
         }
 
-        public async Task<IActionResult> Index() 
+        public async Task<IActionResult> Index(string userId) 
         {
-            User givenUser = await _authentication.GetCurrentUserAsync();
+
+            User givenUser = await _authentication.FindUserByIdAsync(userId);
+
+            if (givenUser == null) 
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             UserMessageViewModel model = new UserMessageViewModel { User = givenUser, Subject ="", TextMessage = ""};
             return View(model);
         }

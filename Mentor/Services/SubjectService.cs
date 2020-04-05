@@ -1,5 +1,6 @@
 ﻿using Mentor.Interfaces;
 using Mentor.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -105,12 +106,14 @@ namespace Mentor.Services
         {
             IEnumerable<N_To_N_TeacherSubject> list = _dataBaseContext.N_To_N_TeacherSubject.Where(x => x.SubjectId == subject.Id);
 
+            
+
             List<N_To_N_TeacherSubject> na = new List<N_To_N_TeacherSubject>(list);
             List<Teacher> teachers = new List<Teacher>();
 
             foreach (N_To_N_TeacherSubject n in na)
             {
-                teachers.Add(_dataBaseContext.Teacher.FirstOrDefault(h => h.Id == n.TeacherId));
+                teachers.Add(_dataBaseContext.Teacher.Include(p => p.User).FirstOrDefault(h => h.Id == n.TeacherId));
             }
 
             foreach (Teacher teacher in teachers)

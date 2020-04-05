@@ -97,6 +97,10 @@
         document.getElementById("sendBtn").addEventListener("click", function (e) {//я отправляю
             let message = document.getElementById("message").value;
 
+            if (message === "") {
+                return;
+            }
+
             let elem = document.createElement("p");
 
             elem.appendChild(document.createTextNode(message));

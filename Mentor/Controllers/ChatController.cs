@@ -26,6 +26,11 @@ namespace Mentor.Controllers
             User opositeUser = await _authentication.FindUserByIdAsync(oppositeUserId);
             User currentUser  = await _authentication.GetCurrentUserAsync();
 
+            if (oppositeUserId == currentUser.Id) 
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             Chat chat = await _chatService.GetOrCreateChat(currentUser, opositeUser); // 93
 
             // get messages

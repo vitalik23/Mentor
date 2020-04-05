@@ -4,35 +4,49 @@
     ViewData["Title"] = "Список преподавателей";
 }
 
-<h3>Преподаватели</h3>
-<table>
-    <tr>
-        <td>Имя</td>
-        <td>Фамилия</td>
-        <td>Отчество</td>
-        <td>Кафедра</td>
-        <td>Должность</td>
-        <td></td>
-    </tr>
 
-    @if (Model != null)
+
+@if (Model != null)
+{
+    if (Model.Teachers.Count() == 0)
     {
-        @foreach (Teacher teacher in Model.Teachers)
-        {
+        <h6>Список пуст</h6>
+    }
+    else
+    {
+        <h3>Преподаватели</h3>
+        <table>
             <tr>
-
-                 <td>@Html.DisplayFor(modelItem => teacher.User.Name)</td>
-                 <td>@Html.DisplayFor(modelItem => teacher.User.Surname)</td>
-                 <td>@Html.DisplayFor(modelItem => teacher.User.Patronymic)</td>
-
-                 <td>@Html.DisplayFor(modelItem => teacher.Departament.Name)</td>
-                 <td>@Html.DisplayFor(modelItem => teacher.Position.Name)</td>
-                 <td><a asp-controller="Subject" asp-action="DeleteTeacherFromSubject" asp-route-subjectId="@Model.Subject.Id" asp-route-teacherId="@teacher.Id">Удалить</a></td>
-                  
-
+                <td>Имя</td>
+                <td>Фамилия</td>
+                <td>Отчество</td>
+                <td>Кафедра</td>
+                <td>Должность</td>
+                <td></td>
             </tr>
-        }
+
+            @if (Model != null)
+            {
+                @foreach (Teacher teacher in Model.Teachers)
+                {
+                    <tr>
+
+                        <td>@Html.DisplayFor(modelItem => teacher.User.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => teacher.User.Surname)</td>
+                        <td>@Html.DisplayFor(modelItem => teacher.User.Patronymic)</td>
+
+                        <td>@Html.DisplayFor(modelItem => teacher.Departament.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => teacher.Position.Name)</td>
+                        <td><a asp-controller="Subject" asp-action="DeleteTeacherFromSubject" asp-route-subjectId="@Model.Subject.Id" asp-route-teacherId="@teacher.Id">Удалить</a></td>
+
+
+                    </tr>
+                }
+            }
+
+
+        </table>
     }
 
 
-</table>
+}

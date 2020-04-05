@@ -4,38 +4,48 @@
     ViewData["Title"] = "Список студентов";
 }
 
-<h3>Студенты</h3>
-<table>
-    <tr>
-        <td>Имя</td>
-        <td>Фамилия</td>
-        <td>Отчество</td>
-        <td>Группа</td>
-        <td></td>
-    </tr>
-
-    @if (Model != null)
+@if (Model != null)
+{
+    if (Model.Students.Count() == 0)
     {
-        @foreach (Student student in Model.Students)
-        {
+        <h6>Список пуст</h6>
+    }
+    else
+    {
+        <h3>Студенты</h3>
+        <table>
+            <tr>
+                <td>Имя</td>
+                <td>Фамилия</td>
+                <td>Отчество</td>
+                <td>Группа</td>
+                <td></td>
+            </tr>
 
-            if (student != null)
+            @foreach (Student student in Model.Students)
             {
-                <tr>
 
+                if (student != null)
+                {
+                    <tr>
 
-                    <td>@student.User.Name</td>
-                    <td>@student.User.Surname</td>
-                    <td>@student.User.Patronymic</td>
+                        <td>@student.User.Name</td>
+                        <td>@student.User.Surname</td>
+                        <td>@student.User.Patronymic</td>
 
-                    <td>@student.Group.Name</td>
-                    <td><a asp-controller="Subject" asp-action="DeleteStudentFromSubject" asp-route-subjectId="@Model.Subject.Id" asp-route-studentId="@student.Id">Удалить</a> |</td>
-                    
-                </tr>
+                        <td>@student.Group.Name</td>
+                        <td><a asp-controller="Subject" asp-action="DeleteStudentFromSubject" asp-route-subjectId="@Model.Subject.Id" asp-route-studentId="@student.Id">Удалить</a> |</td>
+
+                    </tr>
+                }
+
             }
 
-        }
+
+        </table>
     }
 
 
-</table>
+}
+
+

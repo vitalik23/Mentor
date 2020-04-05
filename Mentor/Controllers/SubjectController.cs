@@ -131,6 +131,7 @@ namespace Mentor.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = RoleInitializer.ROLE_TEACHER)]
         public async Task<IActionResult> ListTeacher(int subjectId)
         {
             Teacher teacher = await _authentication.GetCurrentTeacherAsync();
@@ -142,11 +143,23 @@ namespace Mentor.Controllers
 
             Subject subject = _databaseWorker.GetSubjectById(subjectId);
 
-            TeacherSubjectViewModel model = new TeacherSubjectViewModel { Subject = subject, Teachers = await _subjectService.GetTeachersBySubject(subject) };
+            IEnumerable<Teacher> teachers = await _subjectService.GetTeachersBySubject(subject);
+            User currentUser = await _authentication.GetCurrentUserAsync();
+
+            Teacher t = teachers.FirstOrDefault(x => x.User.Id == currentUser.Id);
+
+            Console.WriteLine(t.User.Id);
+
+            
+            List<Teacher> tchrs = new List<Teacher>(teachers);
+            tchrs.Remove(t);
+
+            TeacherSubjectViewModel model = new TeacherSubjectViewModel { Subject = subject, Teachers = tchrs };
 
             return View(model);
         }
 
+        [Authorize(Roles = RoleInitializer.ROLE_TEACHER)]
         public async Task<IActionResult> ListStudent(int subjectId)
         {
             Teacher teacher = await _authentication.GetCurrentTeacherAsync();

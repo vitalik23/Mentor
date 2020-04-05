@@ -16,17 +16,17 @@ namespace Mentor.Controllers
     {
 
         private IDatabaseWorker _databaseWorker;
+        private IAuthentication _authentication;
 
-        public PickupUserController(IDatabaseWorker databaseWorker) 
+        public PickupUserController(IDatabaseWorker databaseWorker, IAuthentication authentication) 
         {
             _databaseWorker = databaseWorker;
+            _authentication = authentication;
         }
-
-
        
       
         [HttpGet]
-        public IActionResult Index(string name, string surname, int facultyId, int departmentId, int groupId, int selector) {
+        public async Task<IActionResult> Index(string name, string surname, int facultyId, int departmentId, int groupId, int selector) {
 
             int departmentSelected = departmentId;
             int groupSelected = groupId;
@@ -125,6 +125,12 @@ namespace Mentor.Controllers
                 users = users.Where(p => p.Surname.Contains(surname));
             }
 
+            User currentUser = await _authentication.GetCurrentUserAsync();
+
+            User u = users.FirstOrDefault(p => p.Id == currentUser.Id);
+
+            ( (List<User>) users).Remove(u);
+            
         //    users = users.Where(p => p.IsAccepted == true);
 
             PickupUserViewModel viewModel = new PickupUserViewModel
