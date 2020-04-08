@@ -129,7 +129,7 @@ namespace Mentor.Controllers
 
             User u = users.FirstOrDefault(p => p.Id == currentUser.Id);
 
-            ( (List<User>) users).Remove(u);
+            ( (List<User>) users.ToList()).Remove(u);
             
         //    users = users.Where(p => p.IsAccepted == true);
 
