@@ -10,8 +10,9 @@
             <input type="submit" value="Отправить">
         </p>
     </form>*@
-
-<a href="@Url.Action("Download", new {path = Model.SolutionPath})" class="not-filled recent">Загрузить файл решения</a>
+    <center>
+        <a href="@Url.Action("Download", new {path = Model.SolutionPath})" class="not-filled recent">Загрузить файл решения</a>
+    </center>
 <br />
 
 <form method="post" asp-controller="Task" asp-action="MarkTask">
@@ -23,7 +24,7 @@
     <div class="form-group row">
         <p class="col-sm-4" align="right">Оценка</p>
 
-        <label asp-for="MarkValue"></label><br />
+        @*<label asp-for="MarkValue"></label><br />*@
         <div class="col-sm-4">
             <select asp-for="MarkValue" class="form-control" id="exampleFormControlSelect1">
                 @for (int i = 0; i <= 100; i++)
@@ -35,27 +36,23 @@
 
     </div>
 
-    <div>
-        <label asp-for="MarkDescription"></label><br />
-        <input asp-for="MarkDescription" />
+    <div class="form-group row">
+        <p class="col-sm-4" align="right">Комментарий</p>
+        <div>
+
+        </div>
+        @*<label asp-for="MarkDescription"></label><br />*@
+    <div class="col-sm-4">
+        <textarea class="form-control" asp-for="MarkDescription" id="exampleFormControlTextarea1" rows="3"></textarea>
         <span asp-validation-for="MarkDescription"></span>
+    </div>
     </div>
 
     <div>
-        <input type="submit" value="Оценить" />
+        <center>
+            <input type="submit" class="btn btn-success" value="Оценить" />
+        </center>
     </div>
 
 </form>
 
-
-
-@*<div class="form-group row">
-        <p class="col-sm-4" align="right">Комментарий</p>
-        <div class="col-sm-4">
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <button type="button" class="btn btn-success mx-auto">Оценить</button>
-    </div>*@
