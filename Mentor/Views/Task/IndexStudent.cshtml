@@ -3,9 +3,7 @@
 @{
     ViewData["Title"] = Model.Task.Name;
 }
-@*<a href="#" onclick="history.back();return false;">Вернуться назад</a>
-
-    <a href="@Url.Action("Download", new {path = Model.Task.TheoryPath})" class="not-filled recent">Загрузить теоретический материал</a>*@
+@*<a href="#" onclick="history.back();return false;">Вернуться назад</a>*@
 
 <h2>Информация о работе</h2>
 <table class="generaltable">
@@ -45,6 +43,9 @@
             }
         </tbody>
 </table>
+
+<a href="@Url.Action("Download", new {path = Model.Task.TheoryPath})" class="not-filled recent">Загрузить теоретический материал</a>
+
 @*<table>
     <tr>
         <td>
