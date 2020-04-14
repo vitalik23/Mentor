@@ -6,21 +6,21 @@
 
 <table>
     <tr>
-        <td>
-            <div>
+        <td >
+            <div >
                 <h1>Задание</h1>
                 @foreach (Mentor.Models.Task task in Model.Tasks)
                 {
-                     <a id="kindAA" asp-controller="Task" asp-action="IndexStudent" asp-route-taskId="@task.Id" asp-route-subjectId="@Model.Subject.Id">
-                         <p>@task.Name</p>
+                     <a id="kindAA" asp-controller="Task" asp-action="IndexStudent" 
+                        asp-route-taskId="@task.Id" asp-route-subjectId="@Model.Subject.Id">
+                         <p style="border:0.5px solid dashed; font-size:26px; margin-bottom:10px; background:white;">@task.Name</p>
                      </a>
                     
                 }
             </div>
-
             
         </td>
-        <td id="tdInfo">
+        <td id="tdInfo" >
 
         </td>
     </tr>
